@@ -16,7 +16,7 @@ from app.core.security import get_current_user
 from app.config import settings
 
 logger = structlog.get_logger()
-router = APIRouter(prefix="/api/ssh-keys", tags=["ssh-keys"])
+router = APIRouter(tags=["ssh-keys"])
 
 # Pydantic models
 from pydantic import BaseModel

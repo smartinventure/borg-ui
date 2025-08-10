@@ -6,8 +6,7 @@ import structlog
 import os
 from dotenv import load_dotenv
 
-from app.api import auth, dashboard, config, backup, archives, restore, schedule, logs, settings as settings_api, health, events, repositories
-# from app.api import ssh_keys  # Temporarily disabled for container startup
+from app.api import auth, dashboard, config, backup, archives, restore, schedule, logs, settings as settings_api, health, events, repositories, ssh_keys
 from app.database.database import engine
 from app.database.models import Base
 from app.core.security import create_first_user
@@ -75,7 +74,7 @@ app.include_router(settings_api.router, prefix="/api/settings", tags=["Settings"
 app.include_router(health.router, prefix="/api/health", tags=["Health"])
 app.include_router(events.router, prefix="/api/events", tags=["Events"])
 app.include_router(repositories.router, prefix="/api/repositories", tags=["Repositories"])
-# app.include_router(ssh_keys.router)  # Temporarily disabled for container startup
+app.include_router(ssh_keys.router, prefix="/api/ssh-keys", tags=["SSH Keys"])
 
 @app.on_event("startup")
 async def startup_event():

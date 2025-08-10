@@ -1512,3 +1512,53 @@ ImportError: cannot import name 'ScheduledJob' from 'app.database.models' (/app/
 [2025-08-10 16:57:07 +0530] [12] [INFO] Waiting for application startup.
 [2025-08-10 16:57:07 +0530] [12] [INFO] Application startup complete.
 [2025-08-10 16:57:07 +0530] [13] [INFO] Application startup complete.
+[2025-08-10 17:04:04 +0530] [1] [INFO] Handling signal: term
+[2025-08-10 17:04:04 +0530] [12] [INFO] Shutting down
+[2025-08-10 17:04:04 +0530] [12] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-08-10 17:04:04 +0530] [13] [INFO] Shutting down
+[2025-08-10 17:04:04 +0530] [13] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-08-10 17:04:04 +0530] [12] [INFO] Waiting for application shutdown.
+[2025-08-10 17:04:04 +0530] [13] [INFO] Waiting for application shutdown.
+[2025-08-10 17:04:04 +0530] [12] [INFO] Application shutdown complete.
+[2025-08-10 17:04:04 +0530] [12] [INFO] Finished server process [12]
+[2025-08-10 17:04:04 +0530] [13] [INFO] Application shutdown complete.
+[2025-08-10 17:04:04 +0530] [13] [INFO] Finished server process [13]
+[2025-08-10 17:04:04 +0530] [13] [INFO] Worker exiting (pid: 13)
+[2025-08-10 17:04:04 +0530] [12] [INFO] Worker exiting (pid: 12)
+[2025-08-10 17:04:04 +0530] [1] [INFO] Shutting down: Master
+[2025-08-10 17:04:05 +0530] [1] [INFO] Starting gunicorn 21.2.0
+[2025-08-10 17:04:05 +0530] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-08-10 17:04:05 +0530] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-08-10 17:04:05 +0530] [12] [INFO] Booting worker with pid: 12
+[2025-08-10 17:04:05 +0530] [13] [INFO] Booting worker with pid: 13
+[2025-08-10 17:04:09 +0530] [12] [INFO] Started server process [12]
+[2025-08-10 17:04:09 +0530] [13] [INFO] Started server process [13]
+[2025-08-10 17:04:09 +0530] [12] [INFO] Waiting for application startup.
+[2025-08-10 17:04:09 +0530] [13] [INFO] Waiting for application startup.
+[2025-08-10 17:04:10 +0530] [12] [INFO] Application startup complete.
+[2025-08-10 17:04:10 +0530] [13] [INFO] Application startup complete.
+[2025-08-10 17:05:47 +0530] [1] [INFO] Handling signal: term
+[2025-08-10 17:05:47 +0530] [13] [INFO] Shutting down
+[2025-08-10 17:05:47 +0530] [13] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-08-10 17:05:47 +0530] [12] [INFO] Shutting down
+[2025-08-10 17:05:47 +0530] [12] [INFO] Error while closing socket [Errno 9] Bad file descriptor
+[2025-08-10 17:05:47 +0530] [13] [INFO] Waiting for application shutdown.
+[2025-08-10 17:05:47 +0530] [12] [INFO] Waiting for application shutdown.
+[2025-08-10 17:05:47 +0530] [13] [INFO] Application shutdown complete.
+[2025-08-10 17:05:47 +0530] [13] [INFO] Finished server process [13]
+[2025-08-10 17:05:47 +0530] [12] [INFO] Application shutdown complete.
+[2025-08-10 17:05:47 +0530] [12] [INFO] Finished server process [12]
+[2025-08-10 17:05:47 +0530] [13] [INFO] Worker exiting (pid: 13)
+[2025-08-10 17:05:47 +0530] [12] [INFO] Worker exiting (pid: 12)
+[2025-08-10 17:05:47 +0530] [1] [INFO] Shutting down: Master
+[2025-08-10 17:05:48 +0530] [1] [INFO] Starting gunicorn 21.2.0
+[2025-08-10 17:05:48 +0530] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+[2025-08-10 17:05:48 +0530] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2025-08-10 17:05:48 +0530] [12] [INFO] Booting worker with pid: 12
+[2025-08-10 17:05:48 +0530] [13] [INFO] Booting worker with pid: 13
+[2025-08-10 17:05:52 +0530] [13] [INFO] Started server process [13]
+[2025-08-10 17:05:52 +0530] [13] [INFO] Waiting for application startup.
+[2025-08-10 17:05:52 +0530] [12] [INFO] Started server process [12]
+[2025-08-10 17:05:52 +0530] [12] [INFO] Waiting for application startup.
+[2025-08-10 17:05:52 +0530] [12] [INFO] Application startup complete.
+[2025-08-10 17:05:52 +0530] [13] [INFO] Application startup complete.
