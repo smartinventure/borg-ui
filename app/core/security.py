@@ -138,7 +138,12 @@ async def create_first_user():
                 username="admin"
             )
     except Exception as e:
-        logger.error("Failed to create first user", error=str(e))
+        # Check if it's a duplicate key error
+        if "UNIQUE constraint failed" in str(e) or "duplicate key" in str(e).lower():
+            logger.info("Admin user already exists (caught constraint error)", username="admin")
+        else:
+            logger.error("Failed to create first user", error=str(e))
+        db.rollback()
     finally:
         db.close()
 

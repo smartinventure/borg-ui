@@ -198,63 +198,51 @@ class BorgmaticInterface:
                 cmd = [self.borgmatic_cmd, "config", "validate", "--config", temp_file_path]
                 result = await self._execute_command(cmd, timeout=30)
                 
-                # Parse both stdout and stderr for warnings and errors
+                # Parse output for warnings and errors
                 stdout = result["stdout"].strip()
                 stderr = result["stderr"].strip()
                 
-                # Extract warnings and errors from both stdout and stderr
                 warnings = []
                 errors = []
                 
-                # Process stdout
+                # Process stderr for errors and warnings
+                if stderr:
+                    lines = stderr.split('\n')
+                    for line in lines:
+                        line = line.strip()
+                        if line:
+                            # Remove temporary file path prefix
+                            if temp_file_path in line:
+                                line = line.replace(temp_file_path, "config.yaml")
+                            
+                            # Skip the success message
+                            if "All configuration files are valid" in line:
+                                continue
+                                
+                            # Check for warnings vs errors
+                            if any(keyword in line.lower() for keyword in ["deprecated", "warning", "will be removed"]):
+                                warnings.append(line)
+                            elif line != "summary:" and line:  # Skip the "summary:" line as it's just a header
+                                errors.append(line)
+                
+                # Process stdout for any additional messages
                 if stdout:
                     lines = stdout.split('\n')
                     for line in lines:
                         line = line.strip()
-                        if line and not line.startswith("All configuration files are valid"):
-                            # Remove the temporary file path prefix
-                            if "/tmp/" in line and ".yaml:" in line:
-                                line = line.split(".yaml:", 1)[1].strip()
+                        if line and "All configuration files are valid" not in line:
+                            # Remove temporary file path prefix
+                            if temp_file_path in line:
+                                line = line.replace(temp_file_path, "config.yaml")
                             
-                            # Check if this looks like a deprecation warning
                             if any(keyword in line.lower() for keyword in ["deprecated", "warning", "will be removed"]):
                                 warnings.append(line)
-                            else:
+                            elif line != "summary:" and line:  # Skip the "summary:" line as it's just a header
                                 errors.append(line)
                 
-                # Process stderr
-                if stderr:
-                    # Split by newlines and also by the temporary file pattern
-                    lines = stderr.split('\n')
-                    for line in lines:
-                        line = line.strip()
-                        if line and not line.startswith("All configuration files are valid"):
-                            # Split by temporary file pattern to handle multiple warnings in one line
-                            if "/tmp/" in line and ".yaml:" in line:
-                                # Split by the pattern and process each part
-                                parts = line.split("/tmp/")
-                                for part in parts[1:]:  # Skip the first empty part
-                                    if ".yaml:" in part:
-                                        warning_part = part.split(".yaml:", 1)[1].strip()
-                                        # Split by embedded newlines and process each part
-                                        sub_parts = warning_part.split("\n")
-                                        for sub_part in sub_parts:
-                                            sub_part = sub_part.strip()
-                                            if sub_part:
-                                                # Check if this looks like a deprecation warning
-                                                if any(keyword in sub_part.lower() for keyword in ["deprecated", "warning", "will be removed"]):
-                                                    warnings.append(sub_part)
-                                                else:
-                                                    errors.append(sub_part)
-                            else:
-                                # Check if this looks like a deprecation warning
-                                if any(keyword in line.lower() for keyword in ["deprecated", "warning", "will be removed"]):
-                                    warnings.append(line)
-                                else:
-                                    errors.append(line)
-                
                 # Determine if validation was successful
-                is_valid = result["success"] and "All configuration files are valid" in (stdout + stderr)
+                # borgmatic config validate returns 0 on success, non-zero on failure
+                is_valid = result["success"]
                 
                 if is_valid:
                     return {
@@ -264,8 +252,10 @@ class BorgmaticInterface:
                         "errors": errors
                     }
                 else:
-                    # If still empty, use a generic message
-                    if not errors:
+                    # If no specific errors were found, use the stderr as error message
+                    if not errors and stderr:
+                        errors.append(stderr.strip())
+                    elif not errors:
                         errors.append("Configuration validation failed")
                     
                     return {
