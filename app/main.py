@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
@@ -94,6 +94,24 @@ async def shutdown_event():
 @app.get("/", response_class=HTMLResponse)
 async def root():
     """Serve the main application"""
+    try:
+        with open("app/static/index.html", "r") as f:
+            return HTMLResponse(content=f.read())
+    except FileNotFoundError:
+        return HTMLResponse(content="<h1>Borgmatic Web UI</h1><p>Frontend not built yet. Please run the build process.</p>")
+
+@app.get("/{full_path:path}", response_class=HTMLResponse)
+async def catch_all(full_path: str):
+    """Catch-all route for SPA routing - serves index.html for frontend routes"""
+    # Don't interfere with API routes
+    if full_path.startswith("api/"):
+        raise HTTPException(status_code=404, detail="Not Found")
+    
+    # Don't interfere with static assets
+    if full_path.startswith("assets/") or full_path.startswith("static/"):
+        raise HTTPException(status_code=404, detail="Not Found")
+    
+    # Serve index.html for all other routes (frontend routes)
     try:
         with open("app/static/index.html", "r") as f:
             return HTMLResponse(content=f.read())
