@@ -92,7 +92,32 @@ open http://localhost:7879
 # Default credentials
 # Username: admin
 # Password: admin123
+
+### **Testing the Application**
+
+Run the comprehensive test suite to verify all functionality:
+
+```bash
+# Run tests against localhost:7879 (default)
+./test.sh
+
+# Run tests against a different URL
+./test.sh http://your-server:7879
+
+# Run tests with detailed output
+python3 test_app.py --output test-results.json
 ```
+
+The test suite covers:
+- ✅ Server availability and accessibility
+- ✅ SPA routing (all frontend routes)
+- ✅ API endpoints and authentication
+- ✅ Protected endpoints with auth
+- ✅ Configuration management
+- ✅ Health monitoring
+- ✅ Static asset serving
+- ✅ Repository operations (create, list, delete)
+- ✅ Error handling
 
 ### **Local Development**
 

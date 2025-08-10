@@ -15,6 +15,8 @@ const Config: React.FC = () => {
   const [configContent, setConfigContent] = useState('')
   const [isValid, setIsValid] = useState<boolean | null>(null)
   const [validationMessage, setValidationMessage] = useState('')
+  const [validationErrors, setValidationErrors] = useState<string[]>([])
+  const [validationWarnings, setValidationWarnings] = useState<string[]>([])
   const [showTemplates, setShowTemplates] = useState(false)
   const queryClient = useQueryClient()
 
@@ -23,7 +25,7 @@ const Config: React.FC = () => {
     queryKey: ['config'],
     queryFn: configAPI.getConfig,
     onSuccess: (data: any) => {
-      setConfigContent(data.data || '')
+      setConfigContent(data.content || '')
     }
   })
 
@@ -49,14 +51,48 @@ const Config: React.FC = () => {
   // Validate configuration mutation
   const validateMutation = useMutation({
     mutationFn: configAPI.validateConfig,
-    onSuccess: () => {
-      setIsValid(true)
-      setValidationMessage('Configuration is valid!')
-      toast.success('Configuration is valid!')
+    onSuccess: ({data}: any) => {
+      if (data.valid) {
+        setIsValid(true)
+        setValidationMessage('Configuration is valid!')
+        setValidationErrors([])
+        setValidationWarnings(data.warnings || [])
+        toast.success('Configuration is valid!')
+      } else {
+        setIsValid(false)
+        setValidationMessage('Configuration validation failed')
+        
+        // Handle different error formats
+        let errors = []
+        if (data.errors && Array.isArray(data.errors)) {
+          errors = data.errors.filter((error: string) => error && error.trim() !== '')
+        } else if (data.error) {
+          errors = [data.error]
+        } else {
+          errors = ['Configuration validation failed']
+        }
+        
+        setValidationErrors(errors)
+        setValidationWarnings(data.warnings || [])
+        toast.error('Configuration validation failed')
+      }
     },
-    onError: (error: any) => {
+        onError: (error: any) => {
       setIsValid(false)
-      setValidationMessage(error.response?.data?.detail || 'Configuration is invalid')
+      setValidationMessage('Configuration validation failed')
+      
+      // Handle different error formats
+      let errors = []
+      if (error.response?.data?.detail) {
+        errors = [error.response.data.detail]
+      } else if (error.response?.data?.errors && Array.isArray(error.response.data.errors)) {
+        errors = error.response.data.errors.filter((error: string) => error && error.trim() !== '')
+      } else {
+        errors = ['Configuration validation failed']
+      }
+      
+      setValidationErrors(errors)
+      setValidationWarnings([])
       toast.error('Configuration validation failed')
     }
   })
@@ -229,7 +265,7 @@ const Config: React.FC = () => {
         <div className={`p-4 rounded-lg ${
           isValid ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
         }`}>
-          <div className="flex items-center">
+          <div className="flex items-center mb-2">
             {isValid ? (
               <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
             ) : (
@@ -241,6 +277,53 @@ const Config: React.FC = () => {
               {validationMessage}
             </span>
           </div>
+          
+          {/* Display Errors */}
+          {validationErrors.length > 0 && (
+            <div className="mt-3">
+              <h4 className="text-sm font-medium text-red-800 mb-2">Validation Errors:</h4>
+              <div className="bg-red-100 border border-red-300 rounded p-3">
+                <ul className="space-y-1">
+                  {validationErrors.map((error, index) => (
+                    <li key={index} className="text-sm text-red-800 font-mono">
+                      • {error}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+          
+          {/* Display Warnings */}
+          {validationWarnings.length > 0 && (
+            <div className="mt-3">
+              <h4 className="text-sm font-medium text-yellow-800 mb-2">Validation Warnings:</h4>
+              <div className="bg-yellow-100 border border-yellow-300 rounded p-3">
+                <ul className="space-y-1">
+                  {validationWarnings.map((warning, index) => (
+                    <li key={index} className="text-sm text-yellow-800 font-mono">
+                      • {warning}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+          
+          {/* Help for fixing errors - Show actual error messages */}
+          {!isValid && validationErrors.length > 0 && (
+            <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded">
+              <h4 className="text-sm font-medium text-blue-800 mb-1">How to fix:</h4>
+              <ul className="text-xs text-blue-700 space-y-1">
+                <li>• Check the error messages above for specific issues</li>
+                <li>• Ensure YAML syntax is correct (proper indentation, no typos)</li>
+                <li>• Verify that values match expected types (integers, strings, etc.)</li>
+                <li>• Remove any unsupported configuration sections</li>
+                <li>• Use the templates as a starting point for valid configurations</li>
+                <li>• If you see Python traceback errors, check for malformed YAML or invalid configuration structure</li>
+              </ul>
+            </div>
+          )}
         </div>
       )}
 
