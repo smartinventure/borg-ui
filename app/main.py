@@ -1,0 +1,133 @@
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+import structlog
+import os
+from dotenv import load_dotenv
+
+from app.api import auth, dashboard, config, backup, archives, restore, schedule, logs, settings as settings_api, health, events, repositories
+# from app.api import ssh_keys  # Temporarily disabled for container startup
+from app.database.database import engine
+from app.database.models import Base
+from app.core.security import create_first_user
+
+# Load environment variables
+load_dotenv()
+
+# Configure structured logging
+structlog.configure(
+    processors=[
+        structlog.stdlib.filter_by_level,
+        structlog.stdlib.add_logger_name,
+        structlog.stdlib.add_log_level,
+        structlog.stdlib.PositionalArgumentsFormatter(),
+        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.processors.StackInfoRenderer(),
+        structlog.processors.format_exc_info,
+        structlog.processors.UnicodeDecoder(),
+        structlog.processors.JSONRenderer()
+    ],
+    context_class=dict,
+    logger_factory=structlog.stdlib.LoggerFactory(),
+    wrapper_class=structlog.stdlib.BoundLogger,
+    cache_logger_on_first_use=True,
+)
+
+logger = structlog.get_logger()
+
+# Create database tables
+Base.metadata.create_all(bind=engine)
+
+# Create FastAPI app
+app = FastAPI(
+    title="Borgmatic Web UI",
+    description="A lightweight web interface for Borgmatic backup management",
+    version="1.0.0",
+    docs_url="/api/docs",
+    redoc_url="/api/redoc"
+)
+
+# Configure CORS
+from app.config import settings
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Mount static files for frontend
+app.mount("/assets", StaticFiles(directory="app/static/assets"), name="assets")
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+# Include API routers
+app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(dashboard.router, prefix="/api/dashboard", tags=["Dashboard"])
+app.include_router(config.router, prefix="/api/config", tags=["Configuration"])
+app.include_router(backup.router, prefix="/api/backup", tags=["Backup"])
+app.include_router(archives.router, prefix="/api/archives", tags=["Archives"])
+app.include_router(restore.router, prefix="/api/restore", tags=["Restore"])
+app.include_router(schedule.router, prefix="/api/schedule", tags=["Schedule"])
+app.include_router(logs.router, prefix="/api/logs", tags=["Logs"])
+app.include_router(settings_api.router, prefix="/api/settings", tags=["Settings"])
+app.include_router(health.router, prefix="/api/health", tags=["Health"])
+app.include_router(events.router, prefix="/api/events", tags=["Events"])
+app.include_router(repositories.router, prefix="/api/repositories", tags=["Repositories"])
+# app.include_router(ssh_keys.router)  # Temporarily disabled for container startup
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize application on startup"""
+    logger.info("Starting Borgmatic Web UI")
+    
+    # Create first user if no users exist
+    await create_first_user()
+    
+    logger.info("Borgmatic Web UI started successfully")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Cleanup on application shutdown"""
+    logger.info("Shutting down Borgmatic Web UI")
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    """Serve the main application"""
+    try:
+        with open("app/static/index.html", "r") as f:
+            return HTMLResponse(content=f.read())
+    except FileNotFoundError:
+        return HTMLResponse(content="<h1>Borgmatic Web UI</h1><p>Frontend not built yet. Please run the build process.</p>")
+
+@app.get("/api")
+async def api_info():
+    """API information endpoint"""
+    return {
+        "name": "Borgmatic Web UI API",
+        "version": "1.0.0",
+        "docs": "/api/docs",
+        "status": "running"
+    }
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    """Log all requests"""
+    logger.info(
+        "Request",
+        method=request.method,
+        url=str(request.url),
+        client_ip=request.client.host if request.client else None
+    )
+    
+    response = await call_next(request)
+    
+    logger.info(
+        "Response",
+        method=request.method,
+        url=str(request.url),
+        status_code=response.status_code
+    )
+    
+    return response 

@@ -11,7 +11,7 @@ import {
   RefreshCw,
   FileText
 } from 'lucide-react';
-import { repositoriesAPI } from '../services/api';
+import { repositoriesAPI, sshKeysAPI } from '../services/api';
 import { toast } from 'react-hot-toast';
 import { useAuth } from '../hooks/useAuth';
 
@@ -40,6 +40,12 @@ const Repositories: React.FC = () => {
   const { data: repositoriesData, isLoading } = useQuery({
     queryKey: ['repositories'],
     queryFn: repositoriesAPI.getRepositories,
+  });
+
+  // Get SSH keys for remote repositories
+  const { data: sshKeysData } = useQuery({
+    queryKey: ['ssh-keys'],
+    queryFn: sshKeysAPI.getSSHKeys,
   });
 
   // Create repository mutation
@@ -110,6 +116,11 @@ const Repositories: React.FC = () => {
     encryption: 'repokey',
     compression: 'lz4',
     passphrase: '',
+    repository_type: 'local',
+    host: '',
+    port: 22,
+    username: '',
+    ssh_key_id: null as number | null,
   });
 
   const [editForm, setEditForm] = useState({
@@ -158,6 +169,11 @@ const Repositories: React.FC = () => {
       encryption: 'repokey',
       compression: 'lz4',
       passphrase: '',
+      repository_type: 'local',
+      host: '',
+      port: 22,
+      username: '',
+      ssh_key_id: null,
     });
   };
 
@@ -350,16 +366,82 @@ const Repositories: React.FC = () => {
                   />
                 </div>
                 <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Repository Type</label>
+                  <select
+                    value={createForm.repository_type}
+                    onChange={(e) => setCreateForm({ ...createForm, repository_type: e.target.value })}
+                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    <option value="local">Local</option>
+                    <option value="ssh">SSH</option>
+                    <option value="sftp">SFTP</option>
+                  </select>
+                </div>
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Path</label>
                   <input
                     type="text"
                     value={createForm.path}
                     onChange={(e) => setCreateForm({ ...createForm, path: e.target.value })}
                     className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="/path/to/repository"
+                    placeholder={createForm.repository_type === 'local' ? '/path/to/repository' : '/mnt/backup/repo'}
                     required
                   />
                 </div>
+                {createForm.repository_type !== 'local' && (
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Host</label>
+                      <input
+                        type="text"
+                        value={createForm.host}
+                        onChange={(e) => setCreateForm({ ...createForm, host: e.target.value })}
+                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="192.168.1.100"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                      <input
+                        type="text"
+                        value={createForm.username}
+                        onChange={(e) => setCreateForm({ ...createForm, username: e.target.value })}
+                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="user"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Port</label>
+                      <input
+                        type="number"
+                        value={createForm.port}
+                        onChange={(e) => setCreateForm({ ...createForm, port: parseInt(e.target.value) })}
+                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        min="1"
+                        max="65535"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">SSH Key</label>
+                      <select
+                        value={createForm.ssh_key_id || ''}
+                        onChange={(e) => setCreateForm({ ...createForm, ssh_key_id: e.target.value ? parseInt(e.target.value) : null })}
+                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        required
+                      >
+                        <option value="">Select SSH Key</option>
+                        {sshKeysData?.data?.ssh_keys?.map((key: any) => (
+                          <option key={key.id} value={key.id}>
+                            {key.name} ({key.key_type})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </>
+                )}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Encryption</label>
                   <select

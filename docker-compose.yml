@@ -1,0 +1,171 @@
+version: '3.8'
+
+services:
+  borgmatic-ui:
+    build: .
+    container_name: borgmatic-web-ui
+    image: borgmatic-web-ui:latest
+    
+    # Portainer-friendly labels
+    labels:
+      - "com.docker.compose.project=borgmatic-ui"
+      - "com.docker.compose.service=borgmatic-ui"
+      - "traefik.enable=true"
+      - "traefik.http.routers.borgmatic-ui.rule=Host(`borgmatic.local`)"
+      - "traefik.http.services.borgmatic-ui.loadbalancer.server.port=8000"
+    
+    ports:
+      # Using port 7879 to avoid conflicts with common services
+      - "7879:8000"
+    
+    volumes:
+      # Configuration and data volumes
+      - ./config:/app/config:rw
+      - ./backups:/backups:rw
+      - ./logs:/app/logs:rw
+      - ./data:/app/data:rw
+      
+      # System volumes for cron and SSH
+      - /etc/cron.d:/etc/cron.d:ro
+      - /etc/localtime:/etc/localtime:ro
+      
+      # Optional: Mount host directories for backup sources
+      # - /path/to/backup/source:/backup-source:ro
+    
+    environment:
+      # Application settings
+      - BORGMATIC_CONFIG_PATH=/app/config/borgmatic.yaml
+      - BORGMATIC_BACKUP_PATH=/backups
+      - LOG_LEVEL=INFO
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-change-this-in-production}
+      - ENVIRONMENT=production
+      
+      # Cron settings
+      - ENABLE_CRON_BACKUPS=${ENABLE_CRON_BACKUPS:-false}
+      
+      # Database settings (if using PostgreSQL)
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./borgmatic.db}
+      
+      # CORS settings
+      - CORS_ORIGINS=${CORS_ORIGINS:-["http://localhost:7879","http://localhost:8000"]}
+    
+    restart: unless-stopped
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/system"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
+    
+    networks:
+      - borgmatic-network
+
+  # Optional: PostgreSQL for production use
+  postgres:
+    image: postgres:15-alpine
+    container_name: borgmatic-db
+    restart: unless-stopped
+    
+    # Portainer-friendly labels
+    labels:
+      - "com.docker.compose.project=borgmatic-ui"
+      - "com.docker.compose.service=postgres"
+    
+    environment:
+      - POSTGRES_DB=borgmatic
+      - POSTGRES_USER=borgmatic
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-borgmatic123}
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d:ro
+    
+    # Health check
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U borgmatic -d borgmatic"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    
+    networks:
+      - borgmatic-network
+    
+    profiles:
+      - production
+
+  # Optional: Redis for caching (if needed)
+  redis:
+    image: redis:7-alpine
+    container_name: borgmatic-redis
+    restart: unless-stopped
+    
+    # Portainer-friendly labels
+    labels:
+      - "com.docker.compose.project=borgmatic-ui"
+      - "com.docker.compose.service=redis"
+    
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-borgmatic123}
+    
+    volumes:
+      - redis_data:/data
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.25'
+        reservations:
+          memory: 128M
+          cpus: '0.1'
+    
+    networks:
+      - borgmatic-network
+    
+    profiles:
+      - production
+
+networks:
+  borgmatic-network:
+    driver: bridge
+    name: borgmatic-network
+
+volumes:
+  postgres_data:
+    driver: local
+    name: borgmatic-postgres-data
+  redis_data:
+    driver: local
+    name: borgmatic-redis-data 

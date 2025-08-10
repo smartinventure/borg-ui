@@ -15,6 +15,7 @@ import {
   LogOut,
   User,
   Database,
+  Key,
 } from 'lucide-react'
 
 const navigation = [
@@ -25,6 +26,7 @@ const navigation = [
   { name: 'Restore', href: '/restore', icon: RotateCcw },
   { name: 'Schedule', href: '/schedule', icon: Clock },
   { name: 'Repositories', href: '/repositories', icon: Database },
+  { name: 'SSH Keys', href: '/ssh-keys', icon: Key },
   { name: 'Logs', href: '/logs', icon: Activity },
   { name: 'Health', href: '/health', icon: Heart },
 ]

@@ -146,6 +146,17 @@ export const repositoriesAPI = {
   getRepositoryStats: (id: number) => api.get(`/repositories/${id}/stats`),
 }
 
+// SSH Keys API
+export const sshKeysAPI = {
+  getSSHKeys: () => api.get('/ssh-keys'),
+  createSSHKey: (data: any) => api.post('/ssh-keys', data),
+  generateSSHKey: (data: any) => api.post('/ssh-keys/generate', data),
+  getSSHKey: (id: number) => api.get(`/ssh-keys/${id}`),
+  updateSSHKey: (id: number, data: any) => api.put(`/ssh-keys/${id}`, data),
+  deleteSSHKey: (id: number) => api.delete(`/ssh-keys/${id}`),
+  testSSHConnection: (data: any) => api.post(`/ssh-keys/${data.key_id}/test-connection`, data),
+}
+
 // Schedule API
 export const scheduleAPI = {
   getScheduledJobs: () => api.get('/schedule'),

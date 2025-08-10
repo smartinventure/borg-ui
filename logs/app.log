@@ -1,0 +1,46 @@
+2024-01-15 10:00:00 [info] Borgmatic Web UI starting up
+2024-01-15 10:00:01 [info] Database connection established
+2024-01-15 10:00:02 [info] Borgmatic interface initialized
+2024-01-15 10:00:03 [info] Web server started on port 8000
+2024-01-15 10:00:04 [info] Application startup complete
+
+2024-01-15 10:05:15 [info] User admin logged in successfully
+2024-01-15 10:05:16 [info] Dashboard metrics requested
+2024-01-15 10:05:17 [info] Configuration loaded successfully
+2024-01-15 10:05:18 [info] Backup status retrieved
+
+2024-01-15 10:10:25 [info] Manual backup started by user admin
+2024-01-15 10:10:26 [info] Backup job created: job_12345
+2024-01-15 10:10:27 [info] Backup process initiated
+2024-01-15 10:10:28 [info] Real-time backup monitoring started
+
+2024-01-15 10:15:30 [info] Archive listing requested for repository /backups/default
+2024-01-15 10:15:31 [info] 5 archives found in repository
+2024-01-15 10:15:32 [info] Archive details retrieved successfully
+
+2024-01-15 10:20:15 [warning] Configuration validation warning: deprecated options detected
+2024-01-15 10:20:16 [info] Configuration updated by user admin
+2024-01-15 10:20:17 [info] Configuration saved successfully
+
+2024-01-15 10:25:45 [error] Failed to connect to repository /backups/remote
+2024-01-15 10:25:46 [error] Network timeout: 30 seconds exceeded
+2024-01-15 10:25:47 [info] User notified of connection failure
+2024-01-15 10:25:48 [info] Retry mechanism initiated
+
+2024-01-15 10:30:00 [info] Repository connection restored
+2024-01-15 10:30:01 [info] Backup operation resumed
+2024-01-15 10:30:02 [info] Archive creation completed successfully
+
+2024-01-15 10:35:15 [info] Log viewing requested
+2024-01-15 10:35:16 [info] Log file accessed: /app/logs/borgmatic.log
+2024-01-15 10:35:17 [info] 50 log entries retrieved
+2024-01-15 10:35:18 [info] Log filtering applied: level=error
+
+2024-01-15 10:40:25 [info] System health check requested
+2024-01-15 10:40:26 [info] CPU usage: 15.2%
+2024-01-15 10:40:27 [info] Memory usage: 45.8%
+2024-01-15 10:40:28 [info] Disk usage: 67.3%
+2024-01-15 10:40:29 [info] System health status: healthy
+
+2024-01-15 10:45:30 [info] User admin logged out
+2024-01-15 10:45:31 [info] Session terminated successfully

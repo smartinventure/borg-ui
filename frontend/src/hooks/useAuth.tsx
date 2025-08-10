@@ -29,7 +29,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .then(response => {
           setUser(response.data)
         })
-        .catch(() => {
+        .catch((error) => {
+          console.error('Failed to get profile:', error)
           localStorage.removeItem('access_token')
         })
         .finally(() => {
