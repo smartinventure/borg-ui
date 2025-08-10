@@ -110,9 +110,13 @@ COPY config/borgmatic.yaml.template /etc/borgmatic/config.yaml.template
 RUN mkdir -p /etc/cron.d && \
     chown -R borgmatic:borgmatic /etc/cron.d
 
-# Copy startup script
-COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh && \
+# Create startup script
+RUN echo '#!/bin/bash\n\
+echo "[$(date)] Starting Borgmatic Web UI..."\n\
+cd /app\n\
+exec gunicorn app.main:app --bind 0.0.0.0:8000 --workers 2 --worker-class uvicorn.workers.UvicornWorker --access-logfile /app/logs/access.log --error-logfile /app/logs/error.log\n\
+' > /app/start.sh && \
+    chmod +x /app/start.sh && \
     chown borgmatic:borgmatic /app/start.sh
 
 # Switch to non-root user
