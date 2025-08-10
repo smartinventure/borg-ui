@@ -2,9 +2,8 @@
 # This is a sample configuration file for Borgmatic Web UI
 
 # Repository configuration
-repositories:
-  - path: /backups/default
-    label: Default Repository
+# Add repositories here as needed
+repositories: []
 
 # Retention policy
 retention:

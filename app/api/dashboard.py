@@ -29,7 +29,7 @@ class SystemMetrics(BaseModel):
 class BackupStatus(BaseModel):
     repository: str
     status: str
-    last_backup: str = None
+    last_backup: str = "Never"
     archive_count: int = 0
     total_size: str = "0"
     health: str = "unknown"
@@ -302,11 +302,20 @@ async def get_dashboard_health(current_user: User = Depends(get_current_user)):
                 healthy_repos = sum(1 for repo in repo_status["repositories"] if repo["status"] == "healthy")
                 total_repos = len(repo_status["repositories"])
                 
-                checks["repositories"] = {
-                    "status": "healthy" if healthy_repos == total_repos else "warning",
-                    "healthy_count": healthy_repos,
-                    "total_count": total_repos
-                }
+                # If no repositories are configured, that's fine - not a warning
+                if total_repos == 0:
+                    checks["repositories"] = {
+                        "status": "healthy",
+                        "healthy_count": 0,
+                        "total_count": 0,
+                        "message": "No repositories configured"
+                    }
+                else:
+                    checks["repositories"] = {
+                        "status": "healthy" if healthy_repos == total_repos else "warning",
+                        "healthy_count": healthy_repos,
+                        "total_count": total_repos
+                    }
             else:
                 checks["repositories"] = {
                     "status": "error",
