@@ -44,9 +44,12 @@ const Health: React.FC = () => {
     isLoading: loadingSystem,
     error: systemError,
     refetch: refetchSystem
-  } = useQuery<{ data: SystemMetrics }>({
+  } = useQuery<SystemMetrics>({
     queryKey: ['system-health'],
-    queryFn: healthAPI.getSystemHealth,
+    queryFn: async () => {
+      const response = await healthAPI.getSystemHealth()
+      return response.data
+    },
     refetchInterval: autoRefresh ? refreshInterval * 1000 : false,
     refetchIntervalInBackground: true
   })
@@ -57,9 +60,12 @@ const Health: React.FC = () => {
     isLoading: loadingRepositories,
     error: repositoryError,
     refetch: refetchRepositories
-  } = useQuery({
+  } = useQuery<{ repositories: RepositoryHealth[]; status: string }>({
     queryKey: ['repository-health'],
-    queryFn: healthAPI.getRepositoryHealth,
+    queryFn: async () => {
+      const response = await healthAPI.getRepositoryHealth()
+      return response.data
+    },
     refetchInterval: autoRefresh ? refreshInterval * 1000 : false,
     refetchIntervalInBackground: true
   })
@@ -189,9 +195,9 @@ const Health: React.FC = () => {
                   <dd className="text-lg font-medium text-gray-900">
                     {loadingSystem ? (
                       <div className="animate-pulse bg-gray-200 h-6 w-16 rounded"></div>
-                    ) : systemHealth?.data?.cpu_usage ? (
-                      <span className={getUsageColor(systemHealth.data.cpu_usage)}>
-                        {systemHealth.data.cpu_usage.toFixed(1)}%
+                    ) : systemHealth?.cpu_usage ? (
+                      <span className={getUsageColor(systemHealth.cpu_usage)}>
+                        {systemHealth.cpu_usage.toFixed(1)}%
                       </span>
                     ) : (
                       'N/A'
@@ -216,9 +222,9 @@ const Health: React.FC = () => {
                   <dd className="text-lg font-medium text-gray-900">
                     {loadingSystem ? (
                       <div className="animate-pulse bg-gray-200 h-6 w-16 rounded"></div>
-                    ) : systemHealth?.data?.memory_usage ? (
-                      <span className={getUsageColor(systemHealth.data.memory_usage)}>
-                        {systemHealth.data.memory_usage.toFixed(1)}%
+                    ) : systemHealth?.memory_usage ? (
+                      <span className={getUsageColor(systemHealth.memory_usage)}>
+                        {systemHealth.memory_usage.toFixed(1)}%
                       </span>
                     ) : (
                       'N/A'
@@ -243,9 +249,9 @@ const Health: React.FC = () => {
                   <dd className="text-lg font-medium text-gray-900">
                     {loadingSystem ? (
                       <div className="animate-pulse bg-gray-200 h-6 w-16 rounded"></div>
-                    ) : systemHealth?.data?.disk_usage ? (
-                      <span className={getUsageColor(systemHealth.data.disk_usage)}>
-                        {systemHealth.data.disk_usage.toFixed(1)}%
+                    ) : systemHealth?.disk_usage ? (
+                      <span className={getUsageColor(systemHealth.disk_usage)}>
+                        {systemHealth.disk_usage.toFixed(1)}%
                       </span>
                     ) : (
                       'N/A'
@@ -270,7 +276,7 @@ const Health: React.FC = () => {
                   <dd className="text-lg font-medium text-gray-900">
                     {loadingSystem ? (
                       <div className="animate-pulse bg-gray-200 h-6 w-16 rounded"></div>
-                    ) : systemHealth?.data?.network_status ? (
+                    ) : systemHealth?.network_status ? (
                       <span className="text-green-600">Connected</span>
                     ) : (
                       <span className="text-red-600">Disconnected</span>
@@ -300,13 +306,13 @@ const Health: React.FC = () => {
               <div>
                 <dt className="text-sm font-medium text-gray-500">Uptime</dt>
                 <dd className="mt-1 text-sm text-gray-900">
-                  {systemHealth?.data?.uptime ? formatUptime(systemHealth.data.uptime) : 'N/A'}
+                  {systemHealth?.uptime ? formatUptime(systemHealth.uptime) : 'N/A'}
                 </dd>
               </div>
               <div>
                 <dt className="text-sm font-medium text-gray-500">Temperature</dt>
                 <dd className="mt-1 text-sm text-gray-900">
-                  {systemHealth?.data?.temperature ? `${systemHealth.data.temperature}°C` : 'N/A'}
+                  {systemHealth?.temperature ? `${systemHealth.temperature}°C` : 'N/A'}
                 </dd>
               </div>
             </div>
@@ -328,11 +334,11 @@ const Health: React.FC = () => {
             </div>
           ) : repositoryError ? (
             <div className="text-red-600">Failed to load repository health information</div>
-          ) : repositoryHealth?.data?.length === 0 ? (
+          ) : repositoryHealth?.repositories?.length === 0 ? (
             <div className="text-gray-500 text-center py-8">No repositories found</div>
           ) : (
             <div className="space-y-4">
-              {repositoryHealth?.data?.map((repo: RepositoryHealth) => (
+              {repositoryHealth?.repositories?.map((repo: RepositoryHealth) => (
                 <div key={repo.id} className="border border-gray-200 rounded-lg p-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
@@ -396,19 +402,19 @@ const Health: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600">
-                {repositoryHealth?.data?.filter((repo: RepositoryHealth) => repo.status === 'healthy').length || 0}
+                                    {repositoryHealth?.repositories?.filter((repo: RepositoryHealth) => repo.status === 'healthy').length || 0}
               </div>
               <div className="text-sm text-gray-500">Healthy Repositories</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-yellow-600">
-                {repositoryHealth?.data?.filter((repo: RepositoryHealth) => repo.status === 'warning').length || 0}
+                                    {repositoryHealth?.repositories?.filter((repo: RepositoryHealth) => repo.status === 'warning').length || 0}
               </div>
               <div className="text-sm text-gray-500">Warning Repositories</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-red-600">
-                {repositoryHealth?.data?.filter((repo: RepositoryHealth) => repo.status === 'error').length || 0}
+                                    {repositoryHealth?.repositories?.filter((repo: RepositoryHealth) => repo.status === 'error').length || 0}
               </div>
               <div className="text-sm text-gray-500">Error Repositories</div>
             </div>
