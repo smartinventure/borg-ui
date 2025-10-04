@@ -117,8 +117,13 @@ async def create_first_user():
         # Check if any users exist
         user_count = db.query(User).count()
         if user_count == 0:
-            # Create default admin user
-            default_password = "admin123"  # Should be changed on first login
+            # Generate secure random password
+            import secrets
+            import string
+            
+            # Generate 20-character password with mixed case, numbers, and symbols
+            alphabet = string.ascii_letters + string.digits + "!@#$%^&*"
+            default_password = ''.join(secrets.choice(alphabet) for _ in range(20))
             hashed_password = get_password_hash(default_password)
             
             admin_user = User(
@@ -134,9 +139,23 @@ async def create_first_user():
             
             logger.info("Created default admin user", username="admin")
             logger.warning(
-                "Default admin password is 'admin123'. Please change it immediately!",
-                username="admin"
+                "SECURE ADMIN PASSWORD GENERATED - SAVE THIS SECURELY!",
+                username="admin",
+                password=default_password
             )
+            
+            # Print password to console for user to save
+            print("\n" + "="*60)
+            print("🔐 SECURELY GENERATED ADMIN PASSWORD")
+            print("="*60)
+            print(f"Username: admin")
+            print(f"Password: {default_password}")
+            print("="*60)
+            print("⚠️  STORE THIS SECURELY - WILL NOT BE SHOWN AGAIN!")
+            print("="*60)
+            print("Press Enter to continue...")
+            input()
+            
     except Exception as e:
         # Check if it's a duplicate key error
         if "UNIQUE constraint failed" in str(e) or "duplicate key" in str(e).lower():

@@ -3,6 +3,7 @@ import subprocess
 import json
 import yaml
 import os
+import re
 import structlog
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime
@@ -17,6 +18,35 @@ class BorgmaticInterface:
         self.config_path = config_path or settings.borgmatic_config_path
         self.borgmatic_cmd = "borgmatic"
         self._validate_borgmatic_installation()
+    
+    def _validate_path(self, path: str) -> bool:
+        """Validate that a path is safe and doesn't contain dangerous characters"""
+        if not path or not isinstance(path, str):
+            return False
+        
+        # Check for dangerous characters that could be used for command injection
+        dangerous_chars = r'[;&|`$\\]'
+        if re.search(dangerous_chars, path):
+            return False
+        
+        # Check for directory traversal attempts
+        if '..' in path or path.startswith('/'):
+            return False
+        
+        # Path should only contain alphanumeric, forward slashes, dots, dashes, underscores
+        safe_pattern = r'^[a-zA-Z0-9/._-]+$'
+        return bool(re.match(safe_pattern, path))
+    
+    def _sanitize_arg(self, arg: str) -> str:
+        """Sanitize command line argument to prevent injection"""
+        if not arg or not isinstance(arg, str):
+            return ""
+        
+        # Remove dangerous characters
+        sanitized = re.sub(r'[;&|`$\\]', '', arg)
+        
+        # Limit length to prevent buffer overflow attacks
+        return sanitized[:1000]
     
     def _validate_borgmatic_installation(self):
         """Validate that borgmatic is installed and accessible"""
@@ -86,18 +116,47 @@ class BorgmaticInterface:
         cmd = [self.borgmatic_cmd, "create"]
         
         if repository:
-            cmd.extend(["--repository", repository])
+            if not self._validate_path(repository):
+                return {
+                    "return_code": -1,
+                    "stdout": "",
+                    "stderr": "Invalid repository path: contains dangerous characters",
+                    "success": False
+                }
+            cmd.extend(["--repository", self._sanitize_arg(repository)])
         
         if config_file:
-            cmd.extend(["--config", config_file])
+            if not self._validate_path(config_file):
+                return {
+                    "return_code": -1,
+                    "stdout": "",
+                    "stderr": "Invalid config file path: contains dangerous characters",
+                    "success": False
+                }
+            cmd.extend(["--config", self._sanitize_arg(config_file)])
         elif self.config_path:
-            cmd.extend(["--config", self.config_path])
+            if not self._validate_path(self.config_path):
+                return {
+                    "return_code": -1,
+                    "stdout": "",
+                    "stderr": "Invalid config path: contains dangerous characters",
+                    "success": False
+                }
+            cmd.extend(["--config", self._sanitize_arg(self.config_path)])
         
         return await self._execute_command(cmd, timeout=settings.backup_timeout)
     
     async def list_archives(self, repository: str) -> Dict:
         """List archives in repository"""
-        cmd = [self.borgmatic_cmd, "list", "--repository", repository, "--json"]
+        if not self._validate_path(repository):
+            return {
+                "return_code": -1,
+                "stdout": "",
+                "stderr": "Invalid repository path: contains dangerous characters",
+                "success": False
+            }
+        
+        cmd = [self.borgmatic_cmd, "list", "--repository", self._sanitize_arg(repository), "--json"]
         return await self._execute_command(cmd)
     
     async def info_archive(self, repository: str, archive: str) -> Dict:

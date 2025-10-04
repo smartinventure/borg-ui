@@ -102,7 +102,7 @@ export default function Login() {
 
           <div className="text-center">
             <p className="text-sm text-gray-600">
-              Default credentials: admin / admin123
+              Credentials will be generated during first setup
             </p>
           </div>
         </form>

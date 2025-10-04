@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     debug: bool = False
     
     # Security settings
-    secret_key: str = "your-secret-key-change-this-in-production"
+    secret_key: str = None  # Will be generated if not provided
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
     
@@ -64,6 +64,12 @@ if os.getenv("ENVIRONMENT") == "production":
 elif os.getenv("ENVIRONMENT") == "development":
     settings.debug = True
     settings.log_level = "DEBUG"
+
+# Generate secure secret key if not provided
+if not settings.secret_key:
+    import secrets
+    settings.secret_key = secrets.token_urlsafe(32)
+    print(f"🔑 Generated secure secret key: {settings.secret_key[:8]}...")
 
 # Override with environment variables if present
 settings.secret_key = os.getenv("SECRET_KEY", settings.secret_key)

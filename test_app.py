@@ -97,7 +97,9 @@ class BorgmaticWebUITester:
         """Test authentication flow"""
         try:
             # Test login with correct credentials
-            login_data = {"username": "admin", "password": "admin123"}
+            # Use environment variable for test password or generate one
+            test_password = os.getenv("TEST_ADMIN_PASSWORD", "test123")
+            login_data = {"username": "admin", "password": test_password}
             response = self.session.post(f"{self.base_url}/api/auth/login", data=login_data, timeout=5)
             
             if response.status_code == 200:
