@@ -12,6 +12,7 @@ interface LoginForm {
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   const { login } = useAuth()
   const navigate = useNavigate()
   
@@ -23,12 +24,23 @@ export default function Login() {
 
   const onSubmit = async (data: LoginForm) => {
     setIsLoading(true)
+    setErrorMessage('') // Clear previous errors
     try {
       await login(data.username, data.password)
       toast.success('Login successful!')
       navigate('/dashboard')
     } catch (error: any) {
-      toast.error(error.response?.data?.detail || 'Login failed')
+      console.error('Login error:', error)
+      const errorMsg = error.response?.data?.detail || 'Username or password incorrect!'
+      setErrorMessage(errorMsg)
+      toast.error(errorMsg, {
+        duration: 5000,
+        style: {
+          background: '#fef2f2',
+          color: '#dc2626',
+          border: '1px solid #fecaca',
+        }
+      })
     } finally {
       setIsLoading(false)
     }
@@ -89,6 +101,21 @@ export default function Login() {
               )}
             </div>
           </div>
+
+          {errorMessage && (
+            <div className="rounded-md bg-red-50 p-4">
+              <div className="flex">
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">
+                    Login Failed
+                  </h3>
+                  <div className="mt-2 text-sm text-red-700">
+                    {errorMessage}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div>
             <button

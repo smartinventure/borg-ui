@@ -2,10 +2,10 @@
 set -e
 
 # ============================================================================
-# Borg-UI Standalone Setup Script
+# Borg-UI Standalone Setup Script (Local Build Version)
 # 
-# This script sets up Borg-UI as a standalone application with secure
-# password generation and proper configuration.
+# This script sets up Borg-UI by building the Docker image locally
+# for testing purposes before publishing to registry.
 # ============================================================================
 
 # Colors for output
@@ -23,14 +23,14 @@ DATA_DIR="$BORGUI_DIR/data"
 LOGS_DIR="$BORGUI_DIR/logs"
 
 echo -e "${BLUE}================================================================"
-echo -e "🔐 Borg-UI Standalone Setup"
+echo -e "🔐 Borg-UI Standalone Setup (Local Build)"
 echo -e "================================================================"
 echo -e "${NC}"
 
 # Check if running as root
 if [ "$EUID" -ne 0 ]; then
     echo -e "${RED}❌ This script must be run as root${NC}"
-    echo "Please run: sudo bash setup-standalone.sh"
+    echo "Please run: sudo bash setup-standalone-local.sh"
     exit 1
 fi
 
@@ -51,6 +51,14 @@ fi
 
 echo -e "${GREEN}✅ Docker and Docker Compose are available${NC}"
 
+# Check if we're in the borg-ui directory
+if [ ! -f "Dockerfile" ]; then
+    echo -e "${RED}❌ Dockerfile not found${NC}"
+    echo "Please run this script from the borg-ui directory"
+    echo "Current directory: $(pwd)"
+    exit 1
+fi
+
 # Create directory structure
 echo -e "${BLUE}📁 Creating directory structure...${NC}"
 mkdir -p "$BORGUI_DIR"
@@ -68,9 +76,6 @@ ADMIN_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/$" | cut -c1-20 | sed 's/./
 
 # Generate secret key for JWT signing
 SECRET_KEY=$(openssl rand -base64 32 | tr -d "=+/$")
-
-# Generate database password
-DB_PASSWORD=$(openssl rand -base64 16 | tr -d "=+/$")
 
 # Generate encryption password for borgmatic backups
 ENCRYPTION_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/$" | cut -c1-32)
@@ -138,12 +143,12 @@ cat > "$BORGUI_DIR/encryption-password.txt" << EOF
 EOF
 chmod 600 "$BORGUI_DIR/encryption-password.txt"
 
-# Create docker-compose.yml
+# Create docker-compose.yml for local build
 echo -e "${BLUE}🐳 Creating Docker Compose configuration...${NC}"
 cat > "$BORGUI_DIR/docker-compose.yml" << EOF
 services:
   borgmatic-ui:
-    image: ghcr.io/speedbits/borgmatic-ui:latest
+    build: $(pwd)
     container_name: borgmatic-web-ui
     restart: unless-stopped
     
@@ -182,7 +187,6 @@ services:
         reservations:
           memory: 512M
           cpus: '0.5'
-
 EOF
 
 # Set proper permissions
@@ -191,14 +195,15 @@ chown -R 1001:1001 "$BORGUI_DIR"
 chmod -R 755 "$BORGUI_DIR"
 chmod 600 "$BORGUI_DIR/.env"
 
-# Start the application
-echo -e "${BLUE}🚀 Starting Borg-UI...${NC}"
+# Build and start the application
+echo -e "${BLUE}🔨 Building and starting Borg-UI...${NC}"
 cd "$BORGUI_DIR"
 
-# Pull and start the application
-echo -e "${BLUE}📦 Pulling Docker image...${NC}"
-docker compose pull
+# Build the Docker image
+echo -e "${BLUE}📦 Building Docker image...${NC}"
+docker compose build
 
+# Start the application
 echo -e "${BLUE}🚀 Starting Borg-UI...${NC}"
 docker compose up -d
 
@@ -261,7 +266,7 @@ echo -e "${BLUE}📝 Next Steps:${NC}"
 echo -e "  1. Open http://localhost:7879 in your browser"
 echo -e "  2. Login with the credentials above"
 echo -e "  3. Configure your backup sources and repositories"
-echo -e "  4. The encryption passphrase is already set securely in borgmatic.yaml"
+echo -e "  4. Change the default encryption passphrase in borgmatic.yaml"
 echo -e "  5. Test your first backup"
 echo ""
 

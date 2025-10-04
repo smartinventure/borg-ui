@@ -153,8 +153,7 @@ async def create_first_user():
             print("="*60)
             print("⚠️  STORE THIS SECURELY - WILL NOT BE SHOWN AGAIN!")
             print("="*60)
-            print("Press Enter to continue...")
-            input()
+            print("Admin user created successfully!")
             
     except Exception as e:
         # Check if it's a duplicate key error
