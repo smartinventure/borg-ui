@@ -21,7 +21,7 @@ services:
     volumes:
       # Configuration and data volumes
       - ./config:/app/config:rw
-      - ./backups:/backups:rw
+      - /opt/speedbits/backups:/backups:rw
       - ./logs:/app/logs:rw
       - ./data:/app/data:rw
       

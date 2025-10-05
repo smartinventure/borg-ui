@@ -9,7 +9,12 @@ import {
   Database,
   Shield,
   RefreshCw,
-  FileText
+  FileText,
+  Eye,
+  EyeOff,
+  FolderOpen,
+  CheckCircle2,
+  XCircle
 } from 'lucide-react';
 import { repositoriesAPI, sshKeysAPI } from '../services/api';
 import { toast } from 'react-hot-toast';
@@ -112,16 +117,25 @@ const Repositories: React.FC = () => {
   // Form states
   const [createForm, setCreateForm] = useState({
     name: '',
-    path: '',
+    path: '/opt/speedbits/backups', // Pre-fill with standard backup path
     encryption: 'repokey',
     compression: 'lz4',
     passphrase: '',
+    confirmPassphrase: '',
     repository_type: 'local',
     host: '',
     port: 22,
     username: '',
     ssh_key_id: null as number | null,
   });
+
+  // UI states
+  const [showPassphrase, setShowPassphrase] = useState(false);
+  const [pathTestResult, setPathTestResult] = useState<{
+    status: 'idle' | 'testing' | 'success' | 'error';
+    message: string;
+  }>({ status: 'idle', message: '' });
+  const [showPathModal, setShowPathModal] = useState(false);
 
   const [editForm, setEditForm] = useState({
     name: '',
@@ -130,8 +144,79 @@ const Repositories: React.FC = () => {
     is_active: true,
   });
 
+  // Test path functionality
+  const testPath = async () => {
+    if (!createForm.path.trim()) {
+      setPathTestResult({ status: 'error', message: 'Please enter a path' });
+      return;
+    }
+
+    setPathTestResult({ status: 'testing', message: 'Testing path...' });
+
+    try {
+      // Test if path exists
+      const response = await fetch('/api/repositories/test-path', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        },
+        body: JSON.stringify({ path: createForm.path })
+      });
+
+      const result = await response.json();
+
+      if (result.exists) {
+        setPathTestResult({ status: 'success', message: 'Path exists and is writable' });
+      } else {
+        setShowPathModal(true);
+      }
+    } catch (error) {
+      setPathTestResult({ status: 'error', message: 'Failed to test path' });
+    }
+  };
+
+  const createPath = async () => {
+    try {
+      const response = await fetch('/api/repositories/create-path', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        },
+        body: JSON.stringify({ path: createForm.path })
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setPathTestResult({ status: 'success', message: 'Path created successfully' });
+        setShowPathModal(false);
+      } else {
+        setPathTestResult({ status: 'error', message: result.message || 'Failed to create path' });
+        setShowPathModal(false);
+      }
+    } catch (error) {
+      setPathTestResult({ status: 'error', message: 'Failed to create path' });
+      setShowPathModal(false);
+    }
+  };
+
   const handleCreateRepository = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate passphrase confirmation
+    if (createForm.encryption !== 'none' && createForm.passphrase !== createForm.confirmPassphrase) {
+      toast.error('Passphrases do not match');
+      return;
+    }
+
+    // Test path before creating repository
+    if (pathTestResult.status !== 'success') {
+      toast.error('Please test the path first');
+      return;
+    }
+
     createRepositoryMutation.mutate(createForm);
   };
 
@@ -165,16 +250,19 @@ const Repositories: React.FC = () => {
     setShowCreateModal(true);
     setCreateForm({
       name: '',
-      path: '',
+      path: '/opt/speedbits/backups', // Pre-fill with standard path
       encryption: 'repokey',
       compression: 'lz4',
       passphrase: '',
+      confirmPassphrase: '',
       repository_type: 'local',
       host: '',
       port: 22,
       username: '',
       ssh_key_id: null,
     });
+    setShowPassphrase(false);
+    setPathTestResult({ status: 'idle', message: '' });
   };
 
   const openEditModal = (repository: Repository) => {
@@ -351,20 +439,22 @@ const Repositories: React.FC = () => {
       {/* Create Repository Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+          <div className="relative top-10 mx-auto p-5 border w-full max-w-2xl shadow-lg rounded-md bg-white">
             <div className="mt-3">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Create Repository</h3>
               <form onSubmit={handleCreateRepository} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Repository Name</label>
                   <input
                     type="text"
                     value={createForm.name}
                     onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
                     className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter repository name"
                     required
                   />
                 </div>
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Repository Type</label>
                   <select
@@ -377,16 +467,46 @@ const Repositories: React.FC = () => {
                     <option value="sftp">SFTP</option>
                   </select>
                 </div>
+
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Path</label>
-                  <input
-                    type="text"
-                    value={createForm.path}
-                    onChange={(e) => setCreateForm({ ...createForm, path: e.target.value })}
-                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    placeholder={createForm.repository_type === 'local' ? '/path/to/repository' : '/mnt/backup/repo'}
-                    required
-                  />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Path (Only provide base path, not repo name, this will be appended)
+                  </label>
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      value={createForm.path}
+                      onChange={(e) => {
+                        setCreateForm({ ...createForm, path: e.target.value });
+                        setPathTestResult({ status: 'idle', message: '' });
+                      }}
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="/opt/speedbits/backups"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={testPath}
+                      disabled={pathTestResult.status === 'testing'}
+                      className="flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                    >
+                      <FolderOpen className="w-4 h-4 mr-1" />
+                      Test Path
+                    </button>
+                  </div>
+                  
+                  {/* Path test result */}
+                  {pathTestResult.status !== 'idle' && (
+                    <div className={`mt-2 flex items-center text-sm ${
+                      pathTestResult.status === 'success' ? 'text-green-600' : 
+                      pathTestResult.status === 'error' ? 'text-red-600' : 'text-blue-600'
+                    }`}>
+                      {pathTestResult.status === 'success' && <CheckCircle2 className="w-4 h-4 mr-1" />}
+                      {pathTestResult.status === 'error' && <XCircle className="w-4 h-4 mr-1" />}
+                      {pathTestResult.status === 'testing' && <RefreshCw className="w-4 h-4 mr-1 animate-spin" />}
+                      {pathTestResult.message}
+                    </div>
+                  )}
                 </div>
                 {createForm.repository_type !== 'local' && (
                   <>
@@ -449,11 +569,14 @@ const Repositories: React.FC = () => {
                     onChange={(e) => setCreateForm({ ...createForm, encryption: e.target.value })}
                     className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   >
-                    <option value="repokey">Repokey (Recommended)</option>
+                    <option value="repokey-blake2">Repokey Blake2 (Recommended)</option>
+                    <option value="repokey">Repokey</option>
+                    <option value="keyfile-blake2">Keyfile Blake2</option>
                     <option value="keyfile">Keyfile</option>
                     <option value="none">None (Unencrypted)</option>
                   </select>
                 </div>
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Compression</label>
                   <select
@@ -467,17 +590,46 @@ const Repositories: React.FC = () => {
                     <option value="none">None</option>
                   </select>
                 </div>
+
                 {createForm.encryption !== 'none' && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Passphrase</label>
-                    <input
-                      type="password"
-                      value={createForm.passphrase}
-                      onChange={(e) => setCreateForm({ ...createForm, passphrase: e.target.value })}
-                      className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="Enter passphrase"
-                    />
-                  </div>
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Passphrase
+                        <button
+                          type="button"
+                          onClick={() => setShowPassphrase(!showPassphrase)}
+                          className="ml-2 text-sm text-blue-600 hover:text-blue-800"
+                        >
+                          {showPassphrase ? <EyeOff className="w-4 h-4 inline" /> : <Eye className="w-4 h-4 inline" />}
+                          {showPassphrase ? 'Hide' : 'Show'} password
+                        </button>
+                      </label>
+                      <input
+                        type={showPassphrase ? "text" : "password"}
+                        value={createForm.passphrase}
+                        onChange={(e) => setCreateForm({ ...createForm, passphrase: e.target.value })}
+                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter passphrase"
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Passphrase</label>
+                      <input
+                        type={showPassphrase ? "text" : "password"}
+                        value={createForm.confirmPassphrase}
+                        onChange={(e) => setCreateForm({ ...createForm, confirmPassphrase: e.target.value })}
+                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Confirm passphrase"
+                        required
+                      />
+                      {createForm.passphrase && createForm.confirmPassphrase && createForm.passphrase !== createForm.confirmPassphrase && (
+                        <p className="mt-1 text-sm text-red-600">Passphrases do not match</p>
+                      )}
+                    </div>
+                  </>
                 )}
                 <div className="flex justify-end space-x-3">
                   <button
@@ -567,6 +719,37 @@ const Repositories: React.FC = () => {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Path Creation Modal */}
+      {showPathModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div className="mt-3">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Path Does Not Exist</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                The path <code className="bg-gray-100 px-1 rounded">{createForm.path}</code> does not exist.
+                Do you want to create it?
+              </p>
+              <div className="flex justify-end space-x-3">
+                <button
+                  type="button"
+                  onClick={() => setShowPathModal(false)}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  No
+                </button>
+                <button
+                  type="button"
+                  onClick={createPath}
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                >
+                  Yes, Create Path
+                </button>
+              </div>
             </div>
           </div>
         </div>

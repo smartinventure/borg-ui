@@ -32,6 +32,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .catch((error) => {
           console.error('Failed to get profile:', error)
           localStorage.removeItem('access_token')
+          // Redirect to login if token is invalid
+          if (window.location.pathname !== '/login') {
+            window.location.href = '/login'
+          }
         })
         .finally(() => {
           setIsLoading(false)

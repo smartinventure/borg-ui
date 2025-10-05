@@ -61,7 +61,7 @@ class BorgmaticInterface:
             logger.error("Borgmatic not available", error=str(e))
             raise RuntimeError(f"Borgmatic not available: {str(e)}")
     
-    async def _execute_command(self, cmd: List[str], timeout: int = 3600) -> Dict:
+    async def _execute_command(self, cmd: List[str], timeout: int = 3600, env: Dict = None) -> Dict:
         """Execute a command with real-time output capture"""
         logger.info("Executing command", command=" ".join(cmd))
         
@@ -69,7 +69,8 @@ class BorgmaticInterface:
             process = await asyncio.create_subprocess_exec(
                 *cmd,
                 stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE
+                stderr=asyncio.subprocess.PIPE,
+                env=env or os.environ
             )
             
             stdout, stderr = await asyncio.wait_for(
@@ -111,7 +112,7 @@ class BorgmaticInterface:
                 "success": False
             }
     
-    async def run_backup(self, repository: str = None, config_file: str = None) -> Dict:
+    async def run_backup(self, repository: str = None, config_file: str = None, passphrase: str = None) -> Dict:
         """Execute backup operation"""
         cmd = [self.borgmatic_cmd, "create"]
         
@@ -144,7 +145,12 @@ class BorgmaticInterface:
                 }
             cmd.extend(["--config", self._sanitize_arg(self.config_path)])
         
-        return await self._execute_command(cmd, timeout=settings.backup_timeout)
+        # Set up environment with passphrase if provided
+        env = os.environ.copy()
+        if passphrase:
+            env["BORG_PASSPHRASE"] = passphrase
+        
+        return await self._execute_command(cmd, timeout=settings.backup_timeout, env=env)
     
     async def list_archives(self, repository: str) -> Dict:
         """List archives in repository"""

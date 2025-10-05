@@ -154,6 +154,25 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {children}
           </div>
         </main>
+
+        {/* Footer */}
+        <footer className="bg-white border-t border-gray-200 mt-auto">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+            <div className="text-center">
+              <p className="text-xs text-gray-500">
+                Adaptation (c) Smart In Venture 2025 from the original software from{' '}
+                <a 
+                  href="https://github.com/karanhudia/borg-ui" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800 underline"
+                >
+                  Karan Hudia
+                </a>
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   )

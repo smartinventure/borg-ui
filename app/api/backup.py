@@ -52,10 +52,18 @@ async def start_backup(
             str(current_user.id)
         )
         
+        # Get repository passphrase if repository is specified
+        passphrase = None
+        if backup_request.repository:
+            # For now, we'll need to implement proper passphrase retrieval
+            # This is a placeholder - in production, you'd decrypt the stored passphrase
+            passphrase = None  # TODO: Implement passphrase retrieval
+        
         # Execute backup
         result = await borgmatic.run_backup(
             repository=backup_request.repository,
-            config_file=backup_request.config_file
+            config_file=backup_request.config_file,
+            passphrase=passphrase
         )
         
         # Update job status

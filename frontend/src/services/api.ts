@@ -23,8 +23,14 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('access_token')
-      window.location.href = '/login'
+      // Don't redirect for login endpoint errors - let the login component handle them
+      if (!error.config?.url?.includes('/auth/login')) {
+        localStorage.removeItem('access_token')
+        // Only redirect if not already on login page
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login'
+        }
+      }
     }
     return Promise.reject(error)
   }
@@ -127,7 +133,11 @@ export const healthAPI = {
 
 // Events API (Server-Sent Events)
 export const eventsAPI = {
-  streamEvents: () => new EventSource('/api/events/stream'),
+  streamEvents: () => {
+    const token = localStorage.getItem('access_token');
+    // Use Vite proxy to avoid CORS issues
+    return new EventSource(`/api/events/stream?token=${token}`);
+  },
   getConnectionCount: () => api.get('/events/connections'),
   sendBackupProgress: (data: any) => api.post('/events/backup-progress', data),
   sendSystemStatus: (data: any) => api.post('/events/system-status', data),

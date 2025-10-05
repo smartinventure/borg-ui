@@ -21,6 +21,7 @@ export const useSSE = (): UseSSEReturn => {
   const [lastEvent, setLastEvent] = useState<SSEEvent | null>(null);
   const [events, setEvents] = useState<SSEEvent[]>([]);
   const eventSourceRef = useRef<EventSource | null>(null);
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const connect = useCallback(() => {
     if (eventSourceRef.current) {
@@ -54,6 +55,15 @@ export const useSSE = (): UseSSEReturn => {
       eventSource.onerror = (error) => {
         console.error('SSE connection error:', error);
         setIsConnected(false);
+        
+        // Reconnect after 5 seconds to prevent rapid reconnections
+        if (reconnectTimeoutRef.current) {
+          clearTimeout(reconnectTimeoutRef.current);
+        }
+        reconnectTimeoutRef.current = setTimeout(() => {
+          console.log('Attempting to reconnect SSE...');
+          connect();
+        }, 5000);
       };
 
       eventSource.addEventListener('error', (event) => {
@@ -65,12 +75,16 @@ export const useSSE = (): UseSSEReturn => {
       console.error('Failed to create SSE connection:', error);
       setIsConnected(false);
     }
-  }, [events.length]);
+  }, []);
 
   const disconnect = useCallback(() => {
     if (eventSourceRef.current) {
       eventSourceRef.current.close();
       eventSourceRef.current = null;
+    }
+    if (reconnectTimeoutRef.current) {
+      clearTimeout(reconnectTimeoutRef.current);
+      reconnectTimeoutRef.current = null;
     }
     setIsConnected(false);
   }, []);

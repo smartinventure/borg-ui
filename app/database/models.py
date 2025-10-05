@@ -38,6 +38,9 @@ class Repository(Base):
     username = Column(String, nullable=True)  # SSH username
     ssh_key_id = Column(Integer, ForeignKey("ssh_keys.id"), nullable=True)  # Associated SSH key
     
+    # Encryption passphrase (encrypted in database)
+    passphrase_hash = Column(String, nullable=True)  # Encrypted passphrase for this repository
+    
     # Relationships
     ssh_key = relationship("SSHKey", back_populates="repositories")
 

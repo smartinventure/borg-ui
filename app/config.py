@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     # Security settings
     secret_key: str = None  # Will be generated if not provided
     algorithm: str = "HS256"
-    access_token_expire_minutes: int = 30
+    access_token_expire_minutes: int = 1440  # 24 hours
     
     # Database settings
     database_url: str = "sqlite:///./borgmatic.db"

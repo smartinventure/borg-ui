@@ -1,0 +1,3114 @@
+<!doctype html>
+<html lang="en" class="elv-default">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta name="generator" content="Eleventy v3.0.0">
+		<link rel="icon" href="https://torsion.org/borgmatic/docs/static/borgmatic.png" type="image/x-icon">
+		<title>Configuration reference</title>
+		<style>
+@font-face {
+	font-family: BenchNine;
+	src: url("data:font/woff2;charset=utf-8;base64,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") format("woff2");
+	font-weight: 700;
+	font-display: swap;
+	unicode-range: U+20-7E,U+2014,U+2019;
+}
+
+* {
+	box-sizing: border-box;
+}
+body {
+	font-family: system-ui, sans-serif;
+	margin: 0;
+	color: #222;
+}
+img {
+	border: 0;
+}
+a,
+a:visited,
+a[href] {
+	color: #222;
+}
+
+strong,
+b {
+	font-weight: 600;
+}
+hr {
+	margin: 3em 0;
+	border: none;
+	border-top: 1px solid #ddd;
+}
+p {
+	max-width: 42em;
+	line-height: 1.5;
+}
+
+/* Blockquotes */
+blockquote {
+	font-family: Georgia, serif;
+	font-size: 1.1875em; /* 19px /16 */
+	color: #666;
+	margin: 1.5em 0;
+	padding: 0 1em;
+	max-width: 31.57894736842em; /* 600px /19 */
+	border-left: 6px solid #ddd;
+	/*text-indent: -0.3684210526316em;*/ /* 7px /19 */
+}
+blockquote + blockquote {
+	margin-top: 2em;
+}
+blockquote img {
+	height: 1.3em;
+	width: 1.3em;
+	border-radius: 50%;
+	vertical-align: text-top;
+	margin-left: 2px;
+	margin-right: 6px;
+}
+
+/* Main */
+main {
+	font-size: 1.125em; /* 18px /16 */
+}
+main:not(:empty) {
+	padding-bottom: 3em;
+	margin-bottom: 3em;
+}
+
+/* Tables */
+table {
+	border-collapse: collapse;
+	margin-bottom: 2em;
+}
+table th,
+table td {
+	text-align: left;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	padding: .4em;
+	font-size: 0.8125em; /* 13px /16 */
+}
+table th:first-child,
+table td:first-child {
+	padding-left: 0;
+}
+table th {
+	border-color: #ddd;
+}
+h2 + table {
+	margin-top: -0.625em; /* -10px /16 */
+}
+
+@media (min-width: 37.5em) { /* 600px */
+	table th,
+	table td {
+		padding: .4em .8em;
+		font-size: 1em; /* 16px /16 */
+	}
+}
+
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: BenchNine, system-ui, sans-serif;
+}
+h1 {
+	font-size: 2.666666666667em; /* 48px /18 */
+	margin: 0 0 .5em;
+}
+main .elv-toc + h1 {
+	margin-top: 1em;
+}
+main h1:first-child,
+main .elv-toc + h1 {
+	border-bottom: 2px dotted #666;
+}
+@media (min-width: 80em) {
+	main .elv-toc + h1,
+	main .elv-toc + h2 {
+		margin-top: 0;
+	}
+
+}
+h2 {
+	font-size: 2.222222222222em; /* 40px /18 */
+	border-bottom: 1px solid #ddd;
+	margin: 1em 0 .25em;
+}
+h3 {
+	font-size: 1.666666666667em; /* 30px /18 */
+	margin-bottom: .5em;
+}
+h4 {
+	font-size: 1.444444444444em; /* 26px /18 */
+	margin-bottom: .5em;
+}
+h5 {
+	font-size: 1.277777777778em; /* 23px /18 */
+	margin-bottom: .5em;
+}
+main h1,
+main h2,
+main h3 {
+	text-transform: uppercase;
+}
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code {
+	font-family: inherit;
+	text-transform: none;
+}
+
+/* Lists */
+ul {
+	padding: 0 1em;
+}
+li {
+	padding: .25em 0;
+        line-height: 1.5;
+}
+li ul {
+        list-style-type: disc;
+        padding-left: 2em;
+}
+li li:last-child {
+	padding-bottom: 0em;
+}
+
+/* Syntax highlighting and Code blocks */
+pre {
+	display: block;
+	padding: .5em;
+	margin: 1em -.5em 2em -.5em;
+	overflow-x: auto;
+	background-color: #fafafa;
+	font-size: 0.75em; /* 12px /16 */
+}
+pre,
+code {
+	font-family: Monaco, monospace;
+}
+code {
+	-ms-word-break: break-all;
+	word-break: break-word;
+	-webkit-hyphens: manual;
+	-moz-hyphens: manual;
+	hyphens: manual;
+	background-color: #fafafa;
+}
+pre + pre[class*="language-"] {
+	margin-top: 1em;
+}
+pre + .note {
+	font-size: 0.6666666666667em; /* 16px /24 */
+	margin-top: -2.875em; /* 46px /16 */
+	margin-bottom: 2.5em; /* 40px /16 */
+	text-align: right;
+}
+@media (min-width: 37.5em) { /* 600px */
+	pre {
+		font-size: 0.75em; /* 16px /16 */
+	}
+}
+
+
+#quick-start ~ .language-text {
+	border-top: 2px solid #666;
+	border-bottom: 2px solid #666;
+}
+@media (min-width: 42em) { /* 672px */
+	#quick-start ~ .language-text {
+		border: 2px solid #666;
+	}
+}
+#quick-start ~ .language-text,
+#quick-start ~ .language-text code {
+	background-color: #fafafa;
+	color: #222;
+}
+
+/* Layout */
+.elv-layout {
+	padding: 1rem;
+	margin: 0 auto;
+	max-width: 42rem;
+	clear: both;
+}
+header.elv-layout {
+	padding: 0 1rem;
+}
+footer.elv-layout {
+	margin-bottom: 5em;
+}
+.elv-layout-full {
+	max-width: none;
+}
+@media (min-width: 80em) {
+	.elv-layout-toc {
+		padding-left: 15rem;
+		max-width: 76rem;
+		margin-right: 1rem;
+		position: relative;
+	}
+}
+/*.elv-layout-wider {
+	max-width: 60rem;
+}*/
+
+/* Header */
+.elv-header {
+	position: relative;
+        text-align: center;
+}
+.elv-header-default {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding-top: 0;
+}
+.elv-header-c {
+	width: 100%;
+}
+.elv-header-docs .elv-header-c {
+	padding: 1rem 0;
+}
+.elv-header-docs:before,
+.elv-header-docs:after {
+	content: " ";
+	display: table;
+}
+.elv-header-docs:after {
+	clear: both;
+}
+/* Header Hero */
+.elv-hero {
+	background-color: #222;
+}
+.elv-hero img,
+.elv-hero svg {
+	width: 42.95774646vh;
+	height: 60vh;
+}
+.elv-hero:hover img,
+.elv-hero:hover svg {
+	background-color: inherit;
+}
+.elv-header-default .elv-hero {
+	display: flex;
+	justify-content: center;
+	width: calc(100% + 2rem);
+	margin-left: -1rem;
+	margin-right: -1rem;
+}
+.elv-hero:hover {
+	background-color: #333;
+}
+
+.elv-header-docs .elv-hero {
+	float: left;
+	margin-right: .5em;
+}
+.elv-header-default .elv-hero img,
+.elv-header-default .elv-hero svg {
+	position: relative;
+	background-color: transparent;
+	z-index: 1;
+}
+.elv-header-docs .elv-hero img,
+.elv-header-docs .elv-hero svg {
+	width: auto;
+	height: 3em;
+}
+@media (min-width: 43.75em) { /* 700px */
+	.elv-header-docs .elv-hero {
+		margin-right: 1em;
+	}
+	.elv-header-docs .elv-hero img,
+	.elv-header-docs .elv-hero svg {
+		width: 4.303125em; /* 68.85px /16 */
+		height: 6em;
+	}
+}
+/* Header Possum */
+.elv-possum-anchor {
+	display: block;
+}
+.elv-possum {
+	position: absolute;
+	right: .5rem;
+	top: 1rem;
+	transition: .3s opacity ease-out;
+}
+.elv-header-docs .elv-possum {
+	width: 15vw;
+	max-width: 6.25rem; /* 100px /16 */
+}
+.elv-header-default {
+	overflow: hidden;
+}
+.elv-header-default .elv-possum {
+	pointer-events: none;
+	width: auto;
+	height: calc((60vh - 2rem) / 1.6);
+	top: 36%;
+	left: 1vw;
+	right: auto;
+	animation-duration: 180s;
+	animation-name: balloonFloat;
+}
+@media (prefers-reduced-motion: reduce) {
+	.elv-header-default .elv-possum {
+		display: none;
+	}
+}
+
+/* Navigation */
+.elv-nav {
+	padding: 0;
+	margin: 1em 0 0 0;
+	clear: both;
+	list-style: none;
+}
+.elv-nav-item {
+	float: left;
+	padding-left: .25em;
+	padding-right: .25em;
+	font-size: 0.8125rem; /* 13px /16 */
+}
+.elv-nav-item:first-child {
+	padding-left: 0;
+}
+.elv-nav-item:last-child {
+	padding-right: 0;
+}
+.elv-nav-item a {
+		font-weight: 600;
+	}
+.elv-nav-item .elv-nav-light {
+	font-weight: 300;
+}
+@media (min-width: 20em) { /* 320px */
+	.elv-nav-item {
+		font-size: 4vw;
+	}
+}
+@media (min-width: 25em) { /* 400px */
+	.elv-nav-item {
+		font-size: 1rem; /* 16px /16 */
+		padding-left: .45em;
+		padding-right: .45em;
+	}
+}
+@media (min-width: 35.625em) { /* 570px */
+	.elv-nav {
+		clear: none;
+		width: auto;
+		margin-top: 0;
+	}
+	.elv-nav-item {
+		float: left;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.elv-nav-item a:not(:hover) {
+		text-decoration: none;
+	}
+	.elv-nav-item:not(:first-child):before {
+		content: "";
+		border-left: 1px solid #ccc;
+		padding: 0 0 0 .75em;
+		margin-left: .75em;
+	}
+}
+
+/* Version */
+.latestversion {
+	font-size: 2em;
+	margin-top: 0;
+}
+.latestversion code {
+	font-size: 0.75em; /* 24px /32 */
+}
+.latestversion {
+	font-family: BenchNine, system-ui, sans-serif;
+}
+.tmpl-docs .latestversion {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	margin: 0;
+}
+
+/* News */
+.news {
+	text-align: center;
+}
+
+/* Direct Links / Markdown Headers */
+.direct-link {
+	font-family: sans-serif;
+	text-decoration: none;
+	font-style: normal;
+	margin-left: .1em;
+}
+a[href].direct-link,
+a[href].direct-link:visited {
+	color: transparent;
+}
+a[href].direct-link:focus,
+a[href].direct-link:focus:visited,
+:hover > a[href].direct-link,
+:hover > a[href].direct-link:visited,
+:focus > a[href].direct-link,
+:focus > a[href].direct-link:visited {
+	color: #aaa;
+}
+/* don’t use a direct link, should be a link to the page */
+main .elv-toc + h1 .direct-link {
+	display: none;
+}
+
+/* Style Guide */
+.elv-sg-component {
+	background-color: #f9f9f9;
+	border-top: 1px dotted #ddd;
+	border-bottom: 1px dotted #ddd;
+	margin: 2rem 0;
+}
+
+/* Screen readers only */
+.sr-only {
+	position: absolute;
+	height: 1px;
+	width: 1px; 
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* Language List */
+.elv-langlist {
+	font-size: 0.8333333333333em; /* 15px /18 */
+	background-color: #f7f7f7;
+	padding: .5rem;
+	margin: 2em 0;
+}
+.elv-langlist-hed {
+	margin: 0;
+	float: left;
+	border: none;
+	font-size: 1.4em; /* 21px /15 */
+}
+.elv-langlist > .inlinelist {
+	display: inline;
+	margin-left: 1em;
+}
+
+@media (min-width: 37.5em) { /* 600px */
+	.quicktipstoc {
+		margin: 0 0 3% 3%;
+		float: right;
+		width: 32%;
+		border-radius: .25em;
+		font-size: 0.8125em; /* 13px /16 */
+	}
+}
+
+/* Breakpoint Overrides */
+@media (max-width: 37.4375em) { /* 599px */
+	.bp-notsm.bp-notsm.bp-notsm.bp-notsm {
+		display: none;
+	}
+}
+@media (min-width: 37.5em) { /* 600px */
+	.bp-sm.bp-sm.bp-sm.bp-sm {
+		display: none ;
+	}
+}
+
+.header-anchor {
+    text-decoration: none;
+}
+
+.header-anchor:hover::after {
+    content: " 🔗";
+}
+
+.mdi {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    -webkit-mask: no-repeat center / 100%;
+    mask: no-repeat center / 100%;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+}
+
+.mdi.mdi-content-copy {
+    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='black' d='M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z'/%3E%3C/svg%3E");
+}
+
+/* Buzzwords */
+@keyframes rainbow {
+	0% { background-position: 0% 50%; }
+	100% { background-position: 100% 50%; }
+}
+.buzzword-list,
+.inlinelist {
+	padding: 0;
+}
+.inlinelist:first-child:last-child {
+	margin: 0;
+}
+.buzzword,
+.buzzword-list li,
+.inlinelist .inlinelist-item {
+	display: inline;
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+	font-family: Georgia, serif;
+	font-size: 116%;
+	white-space: normal;
+	line-height: 1.85;
+	padding: .2em .5em;
+	margin: 4px 4px 4px 0;
+	transition: .15s linear outline;
+}
+
+.inlinelist .inlinelist-item.active {
+	background-color: #222;
+	color: #fff;
+	font-weight: inherit;
+}
+.inlinelist .inlinelist-item.active :link,
+.inlinelist .inlinelist-item.active :visited {
+	color: #fff;
+}
+.inlinelist .inlinelist-item code {
+	background-color: transparent;
+	font-size: 80%;
+	margin-left: 6px;
+	padding-left: 6px;
+	display: inline-block;
+	position: relative;
+}
+@media (max-width: 26.8125em) { /* 429px */
+	.inlinelist .inlinelist-item {
+		overflow: hidden;
+	}
+	.inlinelist .inlinelist-item code {
+		float: right;
+		line-height: 1.75;
+	}
+}
+@media (min-width: 26.875em) { /* 430px */
+	.inlinelist .inlinelist-item code {
+		float: none;
+	}
+	.inlinelist .inlinelist-item code:before {
+		content: " ";
+		border-left: 1px solid rgba(255,255,255,.8);
+		position: absolute;
+		left: -2px;
+		top: -2px;
+		bottom: 2px;
+	}
+}
+a.buzzword {
+	text-decoration: underline;
+}
+.buzzword-list a,
+.inlinelist a {
+	text-decoration: none;
+}
+.inlinelist .inlinelist-item {
+	font-size: 100%;
+	line-height: 2;
+}
+@supports not(-webkit-box-decoration-break: clone) {
+	.buzzword,
+	.buzzword-list li,
+	.inlinelist .inlinelist-item {
+		display: inline-block;
+	}
+}
+.buzzword-list li,
+.buzzword {
+	background-color: #f7f7f7;
+}
+.inlinelist .inlinelist-item {
+	background-color: #e9e9e9;
+}
+.inlinelist .inlinelist-item:hover,
+.inlinelist .inlinelist-item:focus,
+.buzzword-list li:hover,
+.buzzword-list li:focus,
+.buzzword:hover,
+.buzzword:focus,
+.rainbow-active:hover,
+.rainbow-active:focus {
+	position: relative;
+	background-image: linear-gradient(238deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff0080);
+	background-size: 1200% 1200%;
+	background-position: 2% 80%;
+	color: #fff;
+	text-shadow: 0 0 2px rgba(0,0,0,.9);
+	animation: rainbow 4s ease-out alternate infinite;
+}
+.rainbow-active-noanim {
+	animation: none !important;
+}
+.inlinelist .inlinelist-item:hover a,
+.inlinelist .inlinelist-item:focus a,
+.buzzword-list li:hover a,
+.buzzword-list li:focus a,
+a.buzzword:hover,
+a.buzzword:focus,
+a.rainbow-active:hover,
+a.rainbow-active:focus {
+	color: #fff;
+	text-decoration: none;
+}
+@media (prefers-reduced-motion: reduce) {
+	.inlinelist .inlinelist-item:hover,
+	.inlinelist .inlinelist-item:focus,
+	.buzzword-list li:hover,
+	.buzzword-list li:focus,
+	.buzzword:hover,
+	.buzzword:focus,
+	.rainbow-active:hover,
+	.rainbow-active:focus {
+		animation: none;
+	}
+}
+
+.buzzword-list li:hover:after,
+.buzzword-list li:focus:after,
+.buzzword:hover:after,
+.buzzword:focus:after {
+	font-family: system-ui, -apple-system, sans-serif;
+	content: "Buzzword alert!!!";
+	position: absolute;
+	left: 0;
+	top: 0;
+	max-width: 8em;
+	color: #f00;
+	font-weight: 700;
+	text-transform: uppercase;
+	transform: rotate(-10deg) translate(-25%, -125%);
+	text-shadow: 1px 1px 5px rgba(0,0,0,.6);
+	line-height: 1.2;
+	pointer-events: none;
+}
+main h2 .buzzword,
+main h3 .buzzword,
+main p .buzzword {
+	padding: 0px 7px;
+	font-size: 1em; /* 18px /18 */
+	margin: 0;
+	line-height: 1.444444444444; /* 26px /18 */
+	font-family: inherit;
+}
+main h2 a.buzzword,
+main h3 a.buzzword,
+main p a.buzzword {
+	text-decoration: underline;
+}
+
+/* Small viewport */
+@media (max-width: 26.8125em) { /* 429px */
+	.inlinelist .inlinelist-item {
+		display: block;
+		width: auto;
+		padding: 0;
+		line-height: 1.4;
+	}
+	.inlinelist .inlinelist-item > a {
+		display: block;
+		padding: .2em .5em;
+	}
+}
+@media (min-width: 26.875em) { /* 430px */
+	.inlinelist .inlinelist-item > a {
+		display: inline-block;
+		white-space: nowrap;
+	}
+}
+
+.numberflag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #dff7ff;
+	border-radius: 50%;
+	width: 1.75em;
+	height: 1.75em;
+	font-weight: 600;
+}
+h1 .numberflag,
+h2 .numberflag,
+h3 .numberflag,
+h4 .numberflag,
+h5 .numberflag {
+	width: 1.25em;
+	height: 1.25em;
+}
+h2 .numberflag {
+	position: relative;
+	margin-right: 0.25em; /* 10px /40 */
+}
+h2 .numberflag:after {
+	content: " ";
+	position: absolute;
+	bottom: -1px;
+	left: 0;
+	height: 1px;
+	background-color: #fff;
+	width: calc(100% + 0.4em); /* 16px /40 */
+}
+
+/* Super featured list on home page */
+.list-superfeatured .avatar {
+	width: calc(30px + 5vw);
+	height: calc(30px + 5vw);
+	max-width: 60px;
+	max-height: 60px;
+	margin-left: 0;
+}
+@media (max-width: 26.8125em) { /* 429px */
+	.list-superfeatured .inlinelist-item > a {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+@media (min-width: 26.875em) { /* 430px */
+	.list-superfeatured .inlinelist-item {
+		font-size: 110%;
+	}
+}
+
+/* Only top level */
+.inlinelist-no-nest ul,
+.inlinelist-no-nest ol {
+	display: none;
+}
+
+/* External links */
+a[href^="http://"]:not(.minilink):not(.elv-externalexempt),
+a[href^="https://"]:not(.minilink):not(.elv-externalexempt), 
+a[href^="//"]:not(.minilink):not(.elv-externalexempt) {
+	text-decoration-color: inherit;
+}
+/* External link hovers */
+a[href^="http://"]:not(.minilink):not(.elv-externalexempt):hover,
+a[href^="https://"]:not(.minilink):not(.elv-externalexempt):hover, 
+a[href^="//"]:not(.minilink):not(.elv-externalexempt):hover {
+	text-decoration-color: #00bcd4;
+}
+
+/* Mini link */
+.minilink {
+	display: inline-block;
+	padding: .125em .375em;
+	text-transform: uppercase;
+	font-size: 0.875rem; /* 14px /16 */
+	text-decoration: none;
+	background-color: #ddd;
+	border-radius: 0.1875em; /* 3px /16 */
+	font-weight: 500;
+	margin: 0 0.4285714285714em 0.07142857142857em 0; /* 0 6px 1px 0 /14 */
+	line-height: 1.285714285714; /* 18px /14 */
+	font-family: system-ui, -apple-system, sans-serif;
+}
+table .minilink {
+	margin-top: 6px;
+}
+.minilink[href] {
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.5);
+}
+.minilink[href]:hover,
+.minilink[href]:focus {
+	background-color: #bbb;
+}
+pre + .minilink {
+	color: #fff;
+	border-radius: 0 0 0.2857142857143em 0.2857142857143em; /* 4px /14 */
+	float: right;
+	background-color: #444;
+	color: #fff;
+}
+pre[class*=language-] + .minilink {
+	position: relative;
+	top: -0.7142857142857em; /* -10px /14 */
+}
+p.minilink {
+	float: right;
+	margin-left: 2em;
+	margin-bottom: 2em;
+}
+h1 .minilink,
+h2 .minilink,
+h3 .minilink,
+h4 .minilink {
+	font-size: 0.9375rem; /* 15px /16 */
+	vertical-align: middle;
+	margin-left: 1em;
+}
+h3 .minilink,
+h4 .minilink {
+	font-size: 0.8125rem; /* 13px /16 */
+}
+.minilink + pre[class*=language-] {
+	clear: both;
+}
+
+.minilink-addedin {
+	text-transform: none;
+	box-shadow: 0 0 0 1px rgba(0,0,0,0.3);
+}
+.minilink-addedin:not(:first-child) {
+	margin-left: .5em;
+}
+.minilink-addedin.minilink-inline {
+	margin: 0 4px;
+	background-color: #fff;
+}
+
+.minilink-lower {
+	text-transform: none;
+	background-color: transparent;
+}
+.minilink-lower[href] {
+	box-shadow: 0 0 0 1px rgba(0,0,0,0.5);
+}
+.minilink-lower[href]:hover,
+.minilink-lower[href]:focus {
+	background-color: #eee;
+}
+
+.minilink > .minilink {
+	margin: -.125em .375em -.125em -.375em;
+	box-shadow: none;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.elv-toc {
+	font-size: 1rem; /* Reset */
+}
+.elv-toc details {
+	--details-force-closed: (max-width: 79.9375em); /* 1023px */
+}
+.elv-toc details > summary {
+	font-size: 1.375rem; /* 22px /16 */
+	margin-bottom: .5em;
+}
+@media (min-width: 80em) {
+	.elv-toc {
+		position: absolute;
+		left: 3rem;
+		width: 16rem;
+		z-index: 1;
+	}
+	.elv-toc details > summary {
+		margin-top: 0;
+	}
+	.js .elv-toc details > summary {
+		display: none;
+	}
+}
+
+.elv-toc-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding-left: 0;
+	padding-right: 0;
+	margin: 0 0 2.5em;
+	list-style: none;
+}
+.elv-toc-list li {
+	font-size: 0.9375em; /* 15px /16 */
+	line-height: 1.466666666667; /* 22px /15 */
+}
+/* Nested lists */
+.elv-toc-list ul {
+	padding: 0 0 .75em 0;
+	margin: 0;
+	list-style: none;
+}
+
+/* Menus nested 2 or more deep */
+.elv-toc-list ul ul {
+	padding-bottom: 0;
+	padding-left: 0.625rem; /* 10px /16 */
+}
+/* Hide inactive menus 3 or more deep */
+.elv-toc-list ul ul > li:not(.elv-toc-active) > ul > li:not(.elv-toc-active) {
+	display: none;
+}
+
+/* List items */
+.elv-toc summary,
+.elv-toc-list a {
+	padding: .15em .25em;
+}
+.elv-toc-list a {
+	display: block;
+}
+.elv-toc-list a:not(:hover) {
+	text-decoration: none;
+}
+.elv-toc-list li {
+	margin: 0;
+	padding: 0;
+}
+.elv-toc-list > li {
+	flex-grow: 1;
+	flex-basis: 14.375rem; /* 230px /16 */
+}
+/* Top level links */
+.elv-toc-list > li > a {
+	color: #222;
+	font-weight: 600;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 0.25em; /* 4px /16 */
+}
+
+/* Active links */
+.elv-toc-list li.elv-toc-active > a {
+	background-color: #dff7ff;
+}
+.elv-toc-list ul .elv-toc-active > a:after {
+	content: "";
+}
+
+/* Show only active nested lists */
+.elv-toc-list ul.elv-toc-active,
+.elv-toc-list li.elv-toc-active > ul {
+	display: block;
+}
+
+/* Footer category navigation */
+.elv-cat-list-active {
+	font-weight: 600;
+}
+
+/* Warning */
+.elv-info {
+	line-height: 1.5;
+	padding: 0.8125em 1em 0.75em; /* 13px 16px 12px /16 */
+	margin-left: -1rem;
+	margin-right: -1rem;
+	margin-bottom: 2em;
+	background-color: #dff7ff;
+}
+.elv-info:before {
+	content: "ℹ️ ";
+}
+.elv-info-warn {
+	background-color: #ffa;
+}
+.elv-info-warn:before {
+	content: "⚠️ ";
+}
+.elv-info:first-child {
+	margin-top: 0;
+}
+body > .elv-info {
+	margin-left: 0;
+	margin-right: 0;
+	padding: .5rem 1rem;
+}
+@media (min-width: 37.5em) and (min-height: 25em) { /* 600px / 400px */
+	body > .elv-info-sticky {
+		position: sticky;
+		top: 0;
+		z-index: 2;
+		box-shadow: 0 3px 0 0 rgba(0,0,0,.08);
+	}
+}
+/**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+/*
+ * Modified with an approximation of the One Light syntax highlighting theme.
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #494b53;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+  text-shadow: none;
+  color: #232324;
+  background: #dbdbdc;
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+  text-shadow: none;
+  color: #232324;
+  background: #dbdbdc;
+}
+
+@media print {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    text-shadow: none;
+  }
+}
+/* Code blocks */
+pre[class*="language-"] {
+  padding: 1em;
+  margin: .5em 0;
+  overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: #fafafa;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #505157;
+}
+
+.token.punctuation {
+  color: #526fff;
+}
+
+.token.selector,
+.token.tag {
+  color: none;
+}
+
+.token.property,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.attr-name,
+.token.deleted {
+  color: #986801;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.builtin,
+.token.inserted {
+  color: #50a14f;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #526fff;
+}
+
+.token.atrule,
+.token.keyword {
+  color: #e45649;
+}
+
+.token.function {
+  color: #4078f2;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #e45649;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+pre.line-numbers {
+	position: relative;
+	padding-left: 3.8em;
+	counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+	position: relative;
+}
+
+.line-numbers .line-numbers-rows {
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	font-size: 100%;
+	left: -3.8em;
+	width: 3em; /* works for line-numbers below 1000 lines */
+	letter-spacing: -1px;
+	border-right: 0;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+}
+
+.line-numbers-rows > span {
+	pointer-events: none;
+	display: block;
+	counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+	content: counter(linenumber);
+	color: #5C6370;
+	display: block;
+	padding-right: 0.8em;
+	text-align: right;
+}
+
+.asciicast > iframe {
+    width: 100% !important;
+}
+
+</style>
+
+	</head>
+	<body>
+
+		<header class="elv-layout elv-layout-full elv-header elv-header-default">
+    <h3><a href="https://torsion.org/borgmatic/">borgmatic</a></h3>
+    <h1 class="elv-hed">Configuration reference</h1>
+</header>
+
+
+<main class="elv-layout">
+    <div id="documentation" class="elv-toc">
+        <div>
+            
+            
+
+            <ul class="elv-toc-list"><li>
+              <a >How-to guides</a><ul><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/set-up-backups/">📥 Set up backups</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/make-per-application-backups/">🔀 Make per-application backups</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/provide-your-passwords/">🔒 Provide your passwords</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/make-backups-redundant/">☁️  Make backups redundant</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/deal-with-very-large-backups/">📏 Deal with very large backups</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/inspect-your-backups/">🔎 Inspect your backups</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/monitor-your-backups/">🚨 Monitor your backups</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/extract-a-backup/">📤 Extract a backup</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/backup-your-databases/">🗄️ Backup your databases</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/snapshot-your-filesystems/">📸 Snapshot your filesystems</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/add-preparation-and-cleanup-steps-to-backups/">🧹 Add preparation and cleanup steps</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/backup-to-a-removable-drive-or-an-intermittent-server/">💾 Backup to a removable drive/server</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/run-arbitrary-borg-commands/">🔧 Run arbitrary Borg commands</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/customize-warnings-and-errors/">💥 Customize warnings/errors</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/upgrade/">📦 Upgrade borgmatic/Borg</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/how-to/develop-on-borgmatic/">🏗️ Develop on borgmatic</a></li></ul></li><li>
+              <a >Reference guides</a><ul><li class="elv-toc-active">
+              <a href="https://torsion.org/borgmatic/docs/reference/configuration/">⚙️ Configuration reference</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/reference/command-line/">⌨️ Command-line reference</a></li><li>
+              <a href="https://torsion.org/borgmatic/docs/reference/source-code/">🐍 Source code reference</a></li></ul></li></ul>
+        </div>
+    </div>
+
+    <h2 id="configuration-file" tabindex="-1"><a class="header-anchor" href="#configuration-file">Configuration file</a></h2>
+<p>Below is a sample borgmatic configuration file including all available options
+for the <a href="https://projects.torsion.org/borgmatic-collective/borgmatic/releases">most recent version of
+borgmatic</a>.
+This file is also <a href="https://torsion.org/borgmatic/docs/reference/config.yaml">available for
+download</a>.</p>
+<p>If you're using an older version of borgmatic, some of these options may not
+work, and you should instead <a href="https://torsion.org/borgmatic/docs/how-to/set-up-backups/#configuration">generate a sample configuration file specific to
+your borgmatic
+version</a>.</p>
+
+<div style="position: relative" id="code-container-9" >
+  <pre class="language-yaml"><code id="code-9" class="language-yaml"><span class="token comment"># Constants to use in the configuration file. Within option values,</span>
+<span class="token comment"># all occurrences of the constant name in curly braces will be</span>
+<span class="token comment"># replaced with the constant value. For example, if you have a</span>
+<span class="token comment"># constant named "app_name" with the value "myapp", then the string</span>
+<span class="token comment"># "{app_name}" will be replaced with "myapp" in the configuration</span>
+<span class="token comment"># file.</span>
+<span class="token comment"># constants:</span>
+    <span class="token comment"># app_name: myapp</span>
+    <span class="token comment"># user: myuser</span>
+
+<span class="token comment"># List of source directories and files to back up. Globs and tildes</span>
+<span class="token comment"># are expanded. Do not backslash spaces in path names.</span>
+<span class="token key atrule">source_directories</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> /home
+    <span class="token punctuation">-</span> /etc
+    <span class="token punctuation">-</span> /var/log/syslog*
+    <span class="token punctuation">-</span> /home/user/path with spaces
+
+<span class="token comment"># A required list of local or remote repositories with paths and</span>
+<span class="token comment"># optional labels (which can be used with the --repository flag to</span>
+<span class="token comment"># select a repository). Tildes are expanded. Multiple repositories are</span>
+<span class="token comment"># backed up to in sequence. Borg placeholders can be used. See the</span>
+<span class="token comment"># output of "borg help placeholders" for details. See ssh_command for</span>
+<span class="token comment"># SSH options like identity file or port. If systemd service is used,</span>
+<span class="token comment"># then add local repository paths in the systemd service file to the</span>
+<span class="token comment"># ReadWritePaths list.</span>
+<span class="token key atrule">repositories</span><span class="token punctuation">:</span>
+    <span class="token comment"># The local path or Borg URL of the repository.</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> ssh<span class="token punctuation">:</span>//user@backupserver/./sourcehostname.borg
+
+      <span class="token comment"># An optional label for the repository, used in logging</span>
+      <span class="token comment"># and to make selecting the repository easier on the</span>
+      <span class="token comment"># command-line.</span>
+      <span class="token comment"># label: backupserver</span>
+
+      <span class="token comment"># The encryption mode with which to create the repository,</span>
+      <span class="token comment"># only used for the repo-create action. To see the</span>
+      <span class="token comment"># available encryption modes, run "borg init --help" with</span>
+      <span class="token comment"># Borg 1 or "borg repo-create --help" with Borg 2.</span>
+      <span class="token comment"># encryption: repokey-blake2</span>
+
+      <span class="token comment"># Whether the repository should be created append-only,</span>
+      <span class="token comment"># only used for the repo-create action. Defaults to false.</span>
+      <span class="token comment"># append_only: true</span>
+
+      <span class="token comment"># The storage quota with which to create the repository,</span>
+      <span class="token comment"># only used for the repo-create action. Defaults to no</span>
+      <span class="token comment"># quota.</span>
+      <span class="token comment"># storage_quota: 5G</span>
+
+      <span class="token comment"># Whether any missing parent directories of the repository</span>
+      <span class="token comment"># path should be created, only used for the repo-create</span>
+      <span class="token comment"># action. Defaults to false. (This option is supported </span>
+      <span class="token comment"># for Borg 1.x only)</span>
+      <span class="token comment"># make_parent_directories: true</span>
+
+<span class="token comment"># Working directory to use when running actions, useful for backing up</span>
+<span class="token comment"># using relative source directory paths. Does not currently apply to</span>
+<span class="token comment"># borgmatic configuration file paths or includes. Tildes are expanded.</span>
+<span class="token comment"># See http://borgbackup.readthedocs.io/en/stable/usage/create.html for</span>
+<span class="token comment"># details. Defaults to not set.</span>
+<span class="token comment"># working_directory: /path/to/working/directory</span>
+
+<span class="token comment"># Stay in same file system; do not cross mount points beyond the given</span>
+<span class="token comment"># source directories. Defaults to false.</span>
+<span class="token comment"># one_file_system: true</span>
+
+<span class="token comment"># Only store/extract numeric user and group identifiers. Defaults to</span>
+<span class="token comment"># false.</span>
+<span class="token comment"># numeric_ids: true</span>
+
+<span class="token comment"># Store atime into archive. Defaults to true in Borg &lt; 1.2, false in</span>
+<span class="token comment"># Borg 1.2+.</span>
+<span class="token comment"># atime: false</span>
+
+<span class="token comment"># Store ctime into archive. Defaults to true.</span>
+<span class="token comment"># ctime: false</span>
+
+<span class="token comment"># Store birthtime (creation date) into archive. Defaults to true.</span>
+<span class="token comment"># birthtime: false</span>
+
+<span class="token comment"># Use Borg's --read-special flag to allow backup of block and other</span>
+<span class="token comment"># special devices. Use with caution, as it will lead to problems if</span>
+<span class="token comment"># used when backing up special devices such as /dev/zero. Defaults to</span>
+<span class="token comment"># false. But when a database hook is used, the setting here is ignored</span>
+<span class="token comment"># and read_special is considered true.</span>
+<span class="token comment"># read_special: true</span>
+
+<span class="token comment"># Record filesystem flags (e.g. NODUMP, IMMUTABLE) in archive.</span>
+<span class="token comment"># Defaults to true.</span>
+<span class="token comment"># flags: false</span>
+
+<span class="token comment"># Mode in which to operate the files cache. See</span>
+<span class="token comment"># http://borgbackup.readthedocs.io/en/stable/usage/create.html for</span>
+<span class="token comment"># details. Defaults to "ctime,size,inode".</span>
+<span class="token comment"># files_cache: ctime,size,inode</span>
+
+<span class="token comment"># Alternate Borg local executable. Defaults to "borg".</span>
+<span class="token comment"># local_path: borg1</span>
+
+<span class="token comment"># Alternate Borg remote executable. Defaults to "borg".</span>
+<span class="token comment"># remote_path: borg1</span>
+
+<span class="token comment"># Any paths matching these patterns are included/excluded from</span>
+<span class="token comment"># backups. Globs are expanded. (Tildes are not.) See the output of</span>
+<span class="token comment"># "borg help patterns" for more details. Quote any value if it</span>
+<span class="token comment"># contains leading punctuation, so it parses correctly.</span>
+<span class="token comment"># patterns:</span>
+    <span class="token comment"># - R /</span>
+    <span class="token comment"># - '- /home/*/.cache'</span>
+    <span class="token comment"># - + /home/susan</span>
+    <span class="token comment"># - '- /home/*'</span>
+
+<span class="token comment"># Read include/exclude patterns from one or more separate named files,</span>
+<span class="token comment"># one pattern per line. See the output of "borg help patterns" for</span>
+<span class="token comment"># more details.</span>
+<span class="token comment"># patterns_from:</span>
+    <span class="token comment"># - /etc/borgmatic/patterns</span>
+
+<span class="token comment"># Any paths matching these patterns are excluded from backups. Globs</span>
+<span class="token comment"># and tildes are expanded. Note that a glob pattern must either start</span>
+<span class="token comment"># with a glob or be an absolute path. Do not backslash spaces in path</span>
+<span class="token comment"># names. See the output of "borg help patterns" for more details.</span>
+<span class="token comment"># exclude_patterns:</span>
+    <span class="token comment"># - '*.pyc'</span>
+    <span class="token comment"># - /home/*/.cache</span>
+    <span class="token comment"># - '*/.vim*.tmp'</span>
+    <span class="token comment"># - /etc/ssl</span>
+    <span class="token comment"># - /home/user/path with spaces</span>
+
+<span class="token comment"># Read exclude patterns from one or more separate named files, one</span>
+<span class="token comment"># pattern per line. See the output of "borg help patterns" for more</span>
+<span class="token comment"># details.</span>
+<span class="token comment"># exclude_from:</span>
+    <span class="token comment"># - /etc/borgmatic/excludes</span>
+
+<span class="token comment"># Exclude directories that contain a CACHEDIR.TAG file. See</span>
+<span class="token comment"># http://www.brynosaurus.com/cachedir/spec.html for details. Defaults</span>
+<span class="token comment"># to false.</span>
+<span class="token comment"># exclude_caches: true</span>
+
+<span class="token comment"># Exclude directories that contain a file with the given filenames.</span>
+<span class="token comment"># Defaults to not set.</span>
+<span class="token comment"># exclude_if_present:</span>
+    <span class="token comment"># - .nobackup</span>
+
+<span class="token comment"># If true, the exclude_if_present filename is included in backups.</span>
+<span class="token comment"># Defaults to false, meaning that the exclude_if_present filename is</span>
+<span class="token comment"># omitted from backups.</span>
+<span class="token comment"># keep_exclude_tags: true</span>
+
+<span class="token comment"># Exclude files with the NODUMP flag. Defaults to false.</span>
+<span class="token comment"># exclude_nodump: true</span>
+
+<span class="token comment"># Deprecated. Only used for locating database dumps and bootstrap</span>
+<span class="token comment"># metadata within backup archives created prior to deprecation.</span>
+<span class="token comment"># Replaced by user_runtime_directory and user_state_directory.</span>
+<span class="token comment"># Defaults to ~/.borgmatic</span>
+<span class="token comment"># borgmatic_source_directory: /tmp/borgmatic</span>
+
+<span class="token comment"># Path for storing temporary runtime data like streaming database</span>
+<span class="token comment"># dumps and bootstrap metadata. borgmatic automatically creates and</span>
+<span class="token comment"># uses a "borgmatic" subdirectory here. Defaults to $XDG_RUNTIME_DIR</span>
+<span class="token comment"># or or $TMPDIR or $TEMP or /run/user/$UID.</span>
+<span class="token comment"># user_runtime_directory: /run/user/1001</span>
+
+<span class="token comment"># Path for storing borgmatic state files like records of when checks</span>
+<span class="token comment"># last ran. borgmatic automatically creates and uses a "borgmatic"</span>
+<span class="token comment"># subdirectory here. If you change this option, borgmatic must</span>
+<span class="token comment"># create the check records again (and therefore re-run checks).</span>
+<span class="token comment"># Defaults to $XDG_STATE_HOME or ~/.local/state.</span>
+<span class="token comment"># user_state_directory: /var/lib/borgmatic</span>
+
+<span class="token comment"># If true, then source directories (and root pattern paths) must</span>
+<span class="token comment"># exist. If they don't, an error is raised. Defaults to false.</span>
+<span class="token comment"># source_directories_must_exist: true</span>
+
+<span class="token comment"># The standard output of this command is used to unlock the encryption</span>
+<span class="token comment"># key. Only use on repositories that were initialized with</span>
+<span class="token comment"># passcommand/repokey/keyfile encryption. Note that if both</span>
+<span class="token comment"># encryption_passcommand and encryption_passphrase are set, then</span>
+<span class="token comment"># encryption_passphrase takes precedence. This can also be used to</span>
+<span class="token comment"># access encrypted systemd service credentials. Defaults to not set.</span>
+<span class="token comment"># For more details, see:</span>
+<span class="token comment"># https://torsion.org/borgmatic/docs/how-to/provide-your-passwords/</span>
+<span class="token comment"># encryption_passcommand: secret-tool lookup borg-repository repo-name</span>
+
+<span class="token comment"># Passphrase to unlock the encryption key with. Only use on</span>
+<span class="token comment"># repositories that were initialized with passphrase/repokey/keyfile</span>
+<span class="token comment"># encryption. Quote the value if it contains punctuation, so it parses</span>
+<span class="token comment"># correctly. And backslash any quote or backslash literals as well.</span>
+<span class="token comment"># Defaults to not set. Supports the "{credential ...}" syntax.</span>
+<span class="token comment"># encryption_passphrase: "!\"#$%&amp;'()*+,-./:;&lt;=>?@[\\]^_`{|}~"</span>
+
+<span class="token comment"># Number of seconds between each checkpoint during a long-running</span>
+<span class="token comment"># backup. See https://borgbackup.readthedocs.io/en/stable/faq.html for</span>
+<span class="token comment"># details. Defaults to checkpoints every 1800 seconds (30 minutes).</span>
+<span class="token comment"># checkpoint_interval: 1800</span>
+
+<span class="token comment"># Number of backed up bytes between each checkpoint during a</span>
+<span class="token comment"># long-running backup. Only supported with Borg 2+. See</span>
+<span class="token comment"># https://borgbackup.readthedocs.io/en/stable/faq.html for details.</span>
+<span class="token comment"># Defaults to only time-based checkpointing (see</span>
+<span class="token comment"># "checkpoint_interval") instead of volume-based checkpointing.</span>
+<span class="token comment"># checkpoint_volume: 1048576</span>
+
+<span class="token comment"># Specify the parameters passed to the chunker (CHUNK_MIN_EXP,</span>
+<span class="token comment"># CHUNK_MAX_EXP, HASH_MASK_BITS, HASH_WINDOW_SIZE). See</span>
+<span class="token comment"># https://borgbackup.readthedocs.io/en/stable/internals.html for</span>
+<span class="token comment"># details. Defaults to "19,23,21,4095".</span>
+<span class="token comment"># chunker_params: 19,23,21,4095</span>
+
+<span class="token comment"># Type of compression to use when creating archives. (Compression</span>
+<span class="token comment"># level can be added separated with a comma, like "zstd,7".) See</span>
+<span class="token comment"># http://borgbackup.readthedocs.io/en/stable/usage/create.html for</span>
+<span class="token comment"># details. Defaults to "lz4".</span>
+<span class="token comment"># compression: lz4</span>
+
+<span class="token comment"># Mode for recompressing data chunks according to MODE. </span>
+<span class="token comment"># Possible modes are:</span>
+<span class="token comment">#  * "if-different": Recompress if the current compression</span>
+<span class="token comment"># is with a different compression algorithm.</span>
+<span class="token comment">#  * "always": Recompress even if the current compression</span>
+<span class="token comment"># is with the same compression algorithm. Use this to change</span>
+<span class="token comment"># the compression level.</span>
+<span class="token comment">#  * "never": Do not recompress. Use this option to explicitly</span>
+<span class="token comment"># prevent recompression.</span>
+<span class="token comment"># See https://borgbackup.readthedocs.io/en/stable/usage/recreate.html</span>
+<span class="token comment"># for details. Defaults to "never".</span>
+<span class="token comment"># recompress: if-different</span>
+
+<span class="token comment"># Remote network upload rate limit in kiBytes/second. Defaults to</span>
+<span class="token comment"># unlimited.</span>
+<span class="token comment"># upload_rate_limit: 100</span>
+
+<span class="token comment"># Size of network upload buffer in MiB. Defaults to no buffer.</span>
+<span class="token comment"># upload_buffer_size: 160</span>
+
+<span class="token comment"># Number of times to retry a failing backup before giving up. Defaults</span>
+<span class="token comment"># to 0 (i.e., does not attempt retry).</span>
+<span class="token comment"># retries: 3</span>
+
+<span class="token comment"># Wait time between retries (in seconds) to allow transient issues</span>
+<span class="token comment"># to pass. Increases after each retry by that same wait time as a</span>
+<span class="token comment"># form of backoff. Defaults to 0 (no wait).</span>
+<span class="token comment"># retry_wait: 10</span>
+
+<span class="token comment"># Directory where temporary Borg files are stored. Defaults to</span>
+<span class="token comment"># $TMPDIR. See "Resource Usage" at</span>
+<span class="token comment"># https://borgbackup.readthedocs.io/en/stable/usage/general.html for</span>
+<span class="token comment"># details.</span>
+<span class="token comment"># temporary_directory: /path/to/tmpdir</span>
+
+<span class="token comment"># Command to use instead of "ssh". This can be used to specify ssh</span>
+<span class="token comment"># options. Defaults to not set.</span>
+<span class="token comment"># ssh_command: ssh -i /path/to/private/key</span>
+
+<span class="token comment"># Base path used for various Borg directories. Defaults to $HOME,</span>
+<span class="token comment"># ~$USER, or ~.</span>
+<span class="token comment"># borg_base_directory: /path/to/base</span>
+
+<span class="token comment"># Path for Borg configuration files. Defaults to</span>
+<span class="token comment"># $borg_base_directory/.config/borg</span>
+<span class="token comment"># borg_config_directory: /path/to/base/config</span>
+
+<span class="token comment"># Path for Borg cache files. Defaults to</span>
+<span class="token comment"># $borg_base_directory/.cache/borg</span>
+<span class="token comment"># borg_cache_directory: /path/to/base/cache</span>
+
+<span class="token comment"># Enables or disables the use of chunks.archive.d for faster cache</span>
+<span class="token comment"># resyncs in Borg. If true, value is set to "yes" (default) else</span>
+<span class="token comment"># it's set to "no", reducing disk usage but slowing resyncs.</span>
+<span class="token comment"># use_chunks_archive: true</span>
+
+<span class="token comment"># Maximum time to live (ttl) for entries in the Borg files cache.</span>
+<span class="token comment"># borg_files_cache_ttl: 20</span>
+
+<span class="token comment"># Path for Borg security and encryption nonce files. Defaults to</span>
+<span class="token comment"># $borg_base_directory/.config/borg/security</span>
+<span class="token comment"># borg_security_directory: /path/to/base/config/security</span>
+
+<span class="token comment"># Path for Borg encryption key files. Defaults to</span>
+<span class="token comment"># $borg_base_directory/.config/borg/keys</span>
+<span class="token comment"># borg_keys_directory: /path/to/base/config/keys</span>
+
+<span class="token comment"># A list of Borg exit codes that should be elevated to errors or</span>
+<span class="token comment"># squashed to warnings as indicated. By default, Borg error exit codes</span>
+<span class="token comment"># (2 to 99) are treated as errors while warning exit codes (1 and</span>
+<span class="token comment"># 100+) are treated as warnings. Exit codes other than 1 and 2 are</span>
+<span class="token comment"># only present in Borg 1.4.0+.</span>
+<span class="token comment"># borg_exit_codes:</span>
+    <span class="token comment"># The exit code for an existing Borg warning or error.</span>
+    <span class="token comment"># - code: 100</span>
+
+      <span class="token comment"># Whether to consider the exit code as an error or as a</span>
+      <span class="token comment"># warning in borgmatic.</span>
+      <span class="token comment"># treat_as: error</span>
+
+<span class="token comment"># Umask used for when executing Borg or calling hooks. Defaults to</span>
+<span class="token comment"># 0077 for Borg or the umask that borgmatic is run with for hooks.</span>
+<span class="token comment"># umask: 77</span>
+
+<span class="token comment"># Maximum seconds to wait for acquiring a repository/cache lock.</span>
+<span class="token comment"># Defaults to 1.</span>
+<span class="token comment"># lock_wait: 5</span>
+
+<span class="token comment"># Name of the archive to create. Borg placeholders can be used. See</span>
+<span class="token comment"># the output of "borg help placeholders" for details. Defaults to</span>
+<span class="token comment"># "{hostname}-{now:%Y-%m-%dT%H:%M:%S.%f}" with Borg 1 and</span>
+<span class="token comment"># "{hostname}" with Borg 2, as Borg 2 does not require unique</span>
+<span class="token comment"># archive names; identical archive names form a common "series" that</span>
+<span class="token comment"># can be targeted together. When running actions like repo-list,</span>
+<span class="token comment"># info, or check, borgmatic automatically tries to match only</span>
+<span class="token comment"># archives created with this name format.</span>
+<span class="token comment"># archive_name_format: '{hostname}-documents-{now}'</span>
+
+<span class="token comment"># A Borg pattern for filtering down the archives used by borgmatic</span>
+<span class="token comment"># actions that operate on multiple archives. For Borg 1.x, use a shell</span>
+<span class="token comment"># pattern here and see the output of "borg help placeholders" for</span>
+<span class="token comment"># details. For Borg 2.x, see the output of "borg help match-archives".</span>
+<span class="token comment"># If match_archives is not specified, borgmatic defaults to deriving</span>
+<span class="token comment"># the match_archives value from archive_name_format.</span>
+<span class="token comment"># match_archives: sh:{hostname}-*</span>
+
+<span class="token comment"># Bypass Borg error about a repository that has been moved. Defaults</span>
+<span class="token comment"># to false.</span>
+<span class="token comment"># relocated_repo_access_is_ok: true</span>
+
+<span class="token comment"># Bypass Borg error about a previously unknown unencrypted repository.</span>
+<span class="token comment"># Defaults to false.</span>
+<span class="token comment"># unknown_unencrypted_repo_access_is_ok: true</span>
+
+<span class="token comment"># When set true, display debugging information that includes </span>
+<span class="token comment"># passphrases used and passphrase related environment variables set. </span>
+<span class="token comment"># Defaults to false.</span>
+<span class="token comment"># debug_passphrase: true</span>
+
+<span class="token comment"># When set true, always shows passphrase and its hex UTF-8 byte</span>
+<span class="token comment"># sequence. Defaults to false.</span>
+<span class="token comment"># display_passphrase: true</span>
+
+<span class="token comment"># Bypass Borg confirmation about check with repair option. Defaults to</span>
+<span class="token comment"># false and an interactive prompt from Borg.</span>
+<span class="token comment"># check_i_know_what_i_am_doing: true</span>
+
+<span class="token comment"># Additional options to pass directly to particular Borg commands,</span>
+<span class="token comment"># handy for Borg options that borgmatic does not yet support natively.</span>
+<span class="token comment"># Note that borgmatic does not perform any validation on these</span>
+<span class="token comment"># options. Running borgmatic with "--verbosity 2" shows the exact Borg</span>
+<span class="token comment"># command-line invocation.</span>
+<span class="token comment"># extra_borg_options:</span>
+    <span class="token comment"># Extra command-line options to pass to "borg init".</span>
+    <span class="token comment"># init: --extra-option</span>
+
+    <span class="token comment"># Extra command-line options to pass to "borg create".</span>
+    <span class="token comment"># create: --extra-option</span>
+
+    <span class="token comment"># Extra command-line options to pass to "borg prune".</span>
+    <span class="token comment"># prune: --extra-option</span>
+
+    <span class="token comment"># Extra command-line options to pass to "borg compact".</span>
+    <span class="token comment"># compact: --extra-option</span>
+
+    <span class="token comment"># Extra command-line options to pass to "borg check".</span>
+    <span class="token comment"># check: --extra-option</span>
+
+<span class="token comment"># Keep all archives within this time interval. See "skip_actions" for</span>
+<span class="token comment"># disabling pruning altogether.</span>
+<span class="token comment"># keep_within: 3H</span>
+
+<span class="token comment"># Number of secondly archives to keep.</span>
+<span class="token comment"># keep_secondly: 60</span>
+
+<span class="token comment"># Number of minutely archives to keep.</span>
+<span class="token comment"># keep_minutely: 60</span>
+
+<span class="token comment"># Number of hourly archives to keep.</span>
+<span class="token comment"># keep_hourly: 24</span>
+
+<span class="token comment"># Number of daily archives to keep.</span>
+<span class="token key atrule">keep_daily</span><span class="token punctuation">:</span> <span class="token number">7</span>
+
+<span class="token comment"># Number of weekly archives to keep.</span>
+<span class="token comment"># keep_weekly: 4</span>
+
+<span class="token comment"># Number of monthly archives to keep.</span>
+<span class="token comment"># keep_monthly: 6</span>
+
+<span class="token comment"># Number of yearly archives to keep.</span>
+<span class="token comment"># keep_yearly: 1</span>
+
+<span class="token comment"># Number of quarterly archives to keep (13 week strategy).</span>
+<span class="token comment"># keep_13weekly: 13</span>
+
+<span class="token comment"># Number of quarterly archives to keep (3 month strategy).</span>
+<span class="token comment"># keep_3monthly: 3</span>
+
+<span class="token comment"># Deprecated. When pruning or checking archives, only consider archive</span>
+<span class="token comment"># names starting with this prefix. Borg placeholders can be used. See</span>
+<span class="token comment"># the output of "borg help placeholders" for details. If a prefix is</span>
+<span class="token comment"># not specified, borgmatic defaults to matching archives based on the</span>
+<span class="token comment"># archive_name_format (see above).</span>
+<span class="token comment"># prefix: sourcehostname</span>
+
+<span class="token comment"># Minimum saved space percentage threshold for compacting a segment,</span>
+<span class="token comment"># defaults to 10.</span>
+<span class="token comment"># compact_threshold: 20</span>
+
+<span class="token comment"># List of one or more consistency checks to run on a periodic basis</span>
+<span class="token comment"># (if "frequency" is set) or every time borgmatic runs checks (if</span>
+<span class="token comment"># "frequency" is omitted).</span>
+<span class="token comment"># checks:</span>
+    <span class="token comment"># Name of the consistency check to run:</span>
+    <span class="token comment">#  * "repository" checks the consistency of the</span>
+    <span class="token comment"># repository.</span>
+    <span class="token comment">#  * "archives" checks all of the archives.</span>
+    <span class="token comment">#  * "data" verifies the integrity of the data</span>
+    <span class="token comment"># within the archives and implies the "archives"</span>
+    <span class="token comment"># check as well.</span>
+    <span class="token comment">#  * "spot" checks that some percentage of source</span>
+    <span class="token comment"># files are found in the most recent archive (with</span>
+    <span class="token comment"># identical contents).</span>
+    <span class="token comment">#  * "extract" does an extraction dry-run of the</span>
+    <span class="token comment"># most recent archive.</span>
+    <span class="token comment">#  * See "skip_actions" for disabling checks</span>
+    <span class="token comment"># altogether.</span>
+    <span class="token comment"># - name: repository</span>
+
+      <span class="token comment"># How frequently to run this type of consistency</span>
+      <span class="token comment"># check (as a best effort). The value is a number</span>
+      <span class="token comment"># followed by a unit of time. E.g., "2 weeks" to</span>
+      <span class="token comment"># run this consistency check no more than every</span>
+      <span class="token comment"># two weeks for a given repository or "1 month" to</span>
+      <span class="token comment"># run it no more than monthly. Defaults to</span>
+      <span class="token comment"># "always": running this check every time checks</span>
+      <span class="token comment"># are run.</span>
+      <span class="token comment"># frequency: 2 weeks</span>
+
+      <span class="token comment"># After the "frequency" duration has elapsed, only</span>
+      <span class="token comment"># run this check if the current day of the week</span>
+      <span class="token comment"># matches one of these values (the name of a day of</span>
+      <span class="token comment"># the week in the current locale). "weekday" and</span>
+      <span class="token comment"># "weekend" are also accepted. Defaults to running</span>
+      <span class="token comment"># the check on any day of the week.</span>
+      <span class="token comment"># only_run_on:</span>
+          <span class="token comment"># - Saturday</span>
+          <span class="token comment"># - Sunday</span>
+
+      <span class="token comment"># How many seconds to check the repository before</span>
+      <span class="token comment"># interrupting the check. Useful for splitting a</span>
+      <span class="token comment"># long-running repository check into multiple</span>
+      <span class="token comment"># partial checks. Defaults to no interruption. Only</span>
+      <span class="token comment"># applies to the "repository" check, does not check</span>
+      <span class="token comment"># the repository index and is not compatible with</span>
+      <span class="token comment"># the "--repair" flag.</span>
+      <span class="token comment"># max_duration: 3600</span>
+
+      <span class="token comment"># The percentage delta between the source</span>
+      <span class="token comment"># directories file count and the most recent backup</span>
+      <span class="token comment"># archive file count that is allowed before the</span>
+      <span class="token comment"># entire consistency check fails. This can catch</span>
+      <span class="token comment"># problems like incorrect excludes, inadvertent</span>
+      <span class="token comment"># deletes, etc. Required (and only valid) for the</span>
+      <span class="token comment"># "spot" check.</span>
+      <span class="token comment"># count_tolerance_percentage: 10</span>
+
+      <span class="token comment"># The percentage of total files in the source</span>
+      <span class="token comment"># directories to randomly sample and compare to</span>
+      <span class="token comment"># their corresponding files in the most recent</span>
+      <span class="token comment"># backup archive. Required (and only valid) for the</span>
+      <span class="token comment"># "spot" check.</span>
+      <span class="token comment"># data_sample_percentage: 1</span>
+
+      <span class="token comment"># The percentage of total files in the source</span>
+      <span class="token comment"># directories that can fail a spot check comparison</span>
+      <span class="token comment"># without failing the entire consistency check. This</span>
+      <span class="token comment"># can catch problems like source files that have</span>
+      <span class="token comment"># been bulk-changed by malware, backups that have</span>
+      <span class="token comment"># been tampered with, etc. The value must be lower</span>
+      <span class="token comment"># than or equal to the "contents_sample_percentage".</span>
+      <span class="token comment"># Required (and only valid) for the "spot" check.</span>
+      <span class="token comment"># data_tolerance_percentage: 0.5</span>
+
+      <span class="token comment"># Command to use instead of "xxh64sum" to hash</span>
+      <span class="token comment"># source files, usually found in an OS package named</span>
+      <span class="token comment"># "xxhash". Do not substitute with a different hash</span>
+      <span class="token comment"># type (SHA, MD5, etc.) or the check will never</span>
+      <span class="token comment"># succeed. Only valid for the "spot" check.</span>
+      <span class="token comment"># xxh64sum_command: /usr/local/bin/xxh64sum</span>
+
+<span class="token comment"># Paths or labels for a subset of the configured "repositories" (see</span>
+<span class="token comment"># above) on which to run consistency checks. Handy in case some of</span>
+<span class="token comment"># your repositories are very large, and so running consistency checks</span>
+<span class="token comment"># on them would take too long. Defaults to running consistency checks</span>
+<span class="token comment"># on all configured repositories.</span>
+<span class="token comment"># check_repositories:</span>
+    <span class="token comment"># - user@backupserver:sourcehostname.borg</span>
+
+<span class="token comment"># Restrict the number of checked archives to the last n. Applies only</span>
+<span class="token comment"># to the "archives" check. Defaults to checking all archives.</span>
+<span class="token comment"># check_last: 3</span>
+
+<span class="token comment"># Apply color to console output. Defaults to true.</span>
+<span class="token comment"># color: false</span>
+
+<span class="token comment"># Display verbose output to the console: -2 (disabled), -1 (errors</span>
+<span class="token comment"># only), 0 (warnings and responses to actions, the default), 1 (info</span>
+<span class="token comment"># about steps borgmatic is taking), or 2 (debug).</span>
+<span class="token comment"># verbosity: 2</span>
+
+<span class="token comment"># Log verbose output to syslog: -2 (disabled, the default), -1 (errors</span>
+<span class="token comment"># only), 0 (warnings and responses to actions), 1 (info about steps</span>
+<span class="token comment"># borgmatic is taking), or 2 (debug).</span>
+<span class="token comment"># syslog_verbosity: 2</span>
+
+<span class="token comment"># Log verbose output to file: -2 (disabled), -1 (errors only), 0</span>
+<span class="token comment"># (warnings and responses to actions), 1 (info about steps borgmatic</span>
+<span class="token comment"># is taking, the default), or 2 (debug).</span>
+<span class="token comment"># log_file_verbosity: 2</span>
+
+<span class="token comment"># Write log messages to the file at this path.</span>
+<span class="token comment"># log_file: /var/log/borgmatic/logfile.txt</span>
+
+<span class="token comment"># Python format string used for log messages written to the log file.</span>
+<span class="token comment"># log_file_format: '[{asctime}] {levelname}: {prefix}{message}'</span>
+
+<span class="token comment"># When a monitoring integration supporting logging is configured, log</span>
+<span class="token comment"># verbose output to it: -2 (disabled), -1 (errors only), 0 (warnings</span>
+<span class="token comment"># and responses to actions), 1 (info about steps borgmatic is taking,</span>
+<span class="token comment"># the default), or 2 (debug).</span>
+<span class="token comment"># monitoring_verbosity: 2</span>
+
+<span class="token comment"># Write Borg log messages and console output as one JSON object per</span>
+<span class="token comment"># log line instead of formatted text. Defaults to false.</span>
+<span class="token comment"># log_json: true</span>
+
+<span class="token comment"># Display progress as each file or archive is processed when running</span>
+<span class="token comment"># supported actions. Corresponds to the "--progress" flag on those</span>
+<span class="token comment"># actions. Defaults to false.</span>
+<span class="token comment"># progress: true</span>
+
+<span class="token comment"># Display statistics for an archive when running supported actions.</span>
+<span class="token comment"># Corresponds to the "--stats" flag on those actions. Defaults to</span>
+<span class="token comment"># false.</span>
+<span class="token comment"># statistics: true</span>
+
+<span class="token comment"># Display details for each file or archive as it is processed when</span>
+<span class="token comment"># running supported actions. Corresponds to the "--list" flag on those</span>
+<span class="token comment"># actions. Defaults to false.</span>
+<span class="token comment"># list_details: true</span>
+
+<span class="token comment"># Whether to apply default actions (create, prune, compact and check)</span>
+<span class="token comment"># when no arguments are supplied to the borgmatic command. If set to</span>
+<span class="token comment"># false, borgmatic displays the help message instead.</span>
+<span class="token comment"># default_actions: true</span>
+
+<span class="token comment"># List of one or more actions to skip running for this configuration</span>
+<span class="token comment"># file, even if specified on the command-line (explicitly or</span>
+<span class="token comment"># implicitly). This is handy for append-only configurations where you</span>
+<span class="token comment"># never want to run "compact" or checkless configuration where you</span>
+<span class="token comment"># want to skip "check". Defaults to not skipping any actions.</span>
+<span class="token comment"># skip_actions:</span>
+    <span class="token comment"># - compact</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute before all the actions for each</span>
+<span class="token comment"># repository.</span>
+<span class="token comment"># before_actions:</span>
+    <span class="token comment"># - echo Starting actions.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute before creating a backup, run once</span>
+<span class="token comment"># per repository.</span>
+<span class="token comment"># before_backup:</span>
+    <span class="token comment"># - echo Starting a backup.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute before pruning, run once per</span>
+<span class="token comment"># repository.</span>
+<span class="token comment"># before_prune:</span>
+    <span class="token comment"># - echo Starting pruning.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute before compaction, run once per</span>
+<span class="token comment"># repository.</span>
+<span class="token comment"># before_compact:</span>
+    <span class="token comment"># - echo Starting compaction.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute before consistency checks, run once</span>
+<span class="token comment"># per repository.</span>
+<span class="token comment"># before_check:</span>
+    <span class="token comment"># - echo Starting checks.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute before extracting a backup, run once</span>
+<span class="token comment"># per repository.</span>
+<span class="token comment"># before_extract:</span>
+    <span class="token comment"># - echo Starting extracting.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute after creating a backup, run once per</span>
+<span class="token comment"># repository.</span>
+<span class="token comment"># after_backup:</span>
+    <span class="token comment"># - echo Finished a backup.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute after compaction, run once per</span>
+<span class="token comment"># repository.</span>
+<span class="token comment"># after_compact:</span>
+    <span class="token comment"># - echo Finished compaction.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute after pruning, run once per</span>
+<span class="token comment"># repository.</span>
+<span class="token comment"># after_prune:</span>
+    <span class="token comment"># - echo Finished pruning.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute after consistency checks, run once</span>
+<span class="token comment"># per repository.</span>
+<span class="token comment"># after_check:</span>
+    <span class="token comment"># - echo Finished checks.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute after extracting a backup, run once</span>
+<span class="token comment"># per repository.</span>
+<span class="token comment"># after_extract:</span>
+    <span class="token comment"># - echo Finished extracting.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute after all actions for each</span>
+<span class="token comment"># repository.</span>
+<span class="token comment"># after_actions:</span>
+    <span class="token comment"># - echo Finished actions.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute when an exception occurs during a</span>
+<span class="token comment"># "create", "prune", "compact", or "check" action or an associated</span>
+<span class="token comment"># before/after hook.</span>
+<span class="token comment"># on_error:</span>
+    <span class="token comment"># - echo Error during create/prune/compact/check.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute before running all actions (if one of</span>
+<span class="token comment"># them is "create"). These are collected from all configuration files</span>
+<span class="token comment"># and then run once before all of them (prior to all actions).</span>
+<span class="token comment"># before_everything:</span>
+    <span class="token comment"># - echo Starting actions.</span>
+
+<span class="token comment"># Deprecated. Use "commands:" instead. List of one or more shell</span>
+<span class="token comment"># commands or scripts to execute after running all actions (if one of</span>
+<span class="token comment"># them is "create"). These are collected from all configuration files</span>
+<span class="token comment"># and then run once after all of them (after any action).</span>
+<span class="token comment"># after_everything:</span>
+    <span class="token comment"># - echo Completed actions.</span>
+
+<span class="token comment"># List of one or more command hooks to execute, triggered at</span>
+<span class="token comment"># particular points during borgmatic's execution. For each command</span>
+<span class="token comment"># hook, specify one of "before" or "after", not both.</span>
+<span class="token comment"># commands:</span>
+    <span class="token comment"># Name for the point in borgmatic's execution that</span>
+    <span class="token comment"># the commands should be run before (required if</span>
+    <span class="token comment"># "after" isn't set):</span>
+    <span class="token comment">#  * "action" runs before each action for each</span>
+    <span class="token comment"># repository.</span>
+    <span class="token comment">#  * "repository" runs before all actions for each</span>
+    <span class="token comment"># repository.</span>
+    <span class="token comment">#  * "configuration" runs before all actions and</span>
+    <span class="token comment"># repositories in the current configuration file.</span>
+    <span class="token comment">#  * "everything" runs before all configuration</span>
+    <span class="token comment"># files.</span>
+    <span class="token comment"># - before: action</span>
+
+      <span class="token comment"># Name for the point in borgmatic's execution that</span>
+      <span class="token comment"># the commands should be run after (required if</span>
+      <span class="token comment"># "before" isn't set):</span>
+      <span class="token comment">#  * "action" runs after each action for each</span>
+      <span class="token comment"># repository.</span>
+      <span class="token comment">#  * "repository" runs after all actions for each</span>
+      <span class="token comment"># repository.</span>
+      <span class="token comment">#  * "configuration" runs after all actions and</span>
+      <span class="token comment"># repositories in the current configuration file.</span>
+      <span class="token comment">#  * "everything" runs after all configuration</span>
+      <span class="token comment"># files.</span>
+      <span class="token comment">#  * "error" runs after an error occurs.</span>
+      <span class="token comment"># after: action</span>
+
+      <span class="token comment"># Only trigger the hook when borgmatic is run with</span>
+      <span class="token comment"># particular actions listed here. Defaults to</span>
+      <span class="token comment"># running for all actions.</span>
+      <span class="token comment"># when:</span>
+          <span class="token comment"># - create</span>
+          <span class="token comment"># - prune</span>
+          <span class="token comment"># - compact</span>
+          <span class="token comment"># - check</span>
+
+      <span class="token comment"># List of one or more shell commands or scripts to</span>
+      <span class="token comment"># run when this command hook is triggered. Required.</span>
+      <span class="token comment"># run:</span>
+          <span class="token comment"># - echo Doing stuff.</span>
+
+      <span class="token comment"># Only trigger the hook if borgmatic encounters one</span>
+      <span class="token comment"># of the states (execution results) listed here,</span>
+      <span class="token comment"># where:</span>
+      <span class="token comment">#  * "finish": No errors occurred.</span>
+      <span class="token comment">#  * "fail": An error occurred.</span>
+      <span class="token comment"># This state is evaluated only for the scope of the</span>
+      <span class="token comment"># configured "action", "repository", etc., rather</span>
+      <span class="token comment"># than for the entire borgmatic run. Only available</span>
+      <span class="token comment"># for "after" hooks. Defaults to running the hook</span>
+      <span class="token comment"># for all states.</span>
+      <span class="token comment"># states:</span>
+          <span class="token comment"># - finish</span>
+
+<span class="token comment"># Support for the "borgmatic bootstrap" action, used to extract</span>
+<span class="token comment"># borgmatic configuration files from a backup archive.</span>
+<span class="token comment"># bootstrap:</span>
+    <span class="token comment"># Store configuration files used to create a backup inside the</span>
+    <span class="token comment"># backup itself. Defaults to true. Changing this to false</span>
+    <span class="token comment"># prevents "borgmatic bootstrap" from extracting configuration</span>
+    <span class="token comment"># files from the backup.</span>
+    <span class="token comment"># store_config_files: false</span>
+
+<span class="token comment"># List of one or more PostgreSQL databases to dump before creating a</span>
+<span class="token comment"># backup, run once per configuration file. The database dumps are</span>
+<span class="token comment"># added to your source directories at runtime and streamed directly</span>
+<span class="token comment"># to Borg. Requires pg_dump/pg_dumpall/pg_restore commands. See</span>
+<span class="token comment"># https://www.postgresql.org/docs/current/app-pgdump.html and</span>
+<span class="token comment"># https://www.postgresql.org/docs/current/libpq-ssl.html for</span>
+<span class="token comment"># details.</span>
+<span class="token comment"># postgresql_databases:</span>
+    <span class="token comment"># Database name (required if using this hook). Or "all" to</span>
+    <span class="token comment"># dump all databases on the host. (Also set the "format"</span>
+    <span class="token comment"># to dump each database to a separate file instead of one</span>
+    <span class="token comment"># combined file.) Note that using this database hook</span>
+    <span class="token comment"># implicitly enables read_special (see above) to support</span>
+    <span class="token comment"># dump and restore streaming.</span>
+    <span class="token comment"># - name: users</span>
+
+      <span class="token comment"># Label to identify the database dump in the backup.</span>
+      <span class="token comment"># label: my_backup_label</span>
+
+      <span class="token comment"># Container name/id to connect to. When specified the</span>
+      <span class="token comment"># hostname is ignored. Requires docker/podman CLI.</span>
+      <span class="token comment"># container: debian_stable</span>
+
+      <span class="token comment"># Container name/id to restore to. Defaults to the</span>
+      <span class="token comment"># "container" option.</span>
+      <span class="token comment"># restore_container: restore_container</span>
+
+      <span class="token comment"># Database hostname to connect to. Defaults to connecting</span>
+      <span class="token comment"># via local Unix socket.</span>
+      <span class="token comment"># hostname: database.example.org</span>
+
+      <span class="token comment"># Database hostname to restore to. Defaults to the</span>
+      <span class="token comment"># "hostname" option.</span>
+      <span class="token comment"># restore_hostname: database.example.org</span>
+
+      <span class="token comment"># Port to connect to. Defaults to 5432.</span>
+      <span class="token comment"># port: 5433</span>
+
+      <span class="token comment"># Port to restore to. Defaults to the "port" option.</span>
+      <span class="token comment"># restore_port: 5433</span>
+
+      <span class="token comment"># Username with which to connect to the database. Defaults</span>
+      <span class="token comment"># to the username of the current user. You probably want</span>
+      <span class="token comment"># to specify the "postgres" superuser here when the</span>
+      <span class="token comment"># database name is "all". Supports the "{credential ...}"</span>
+      <span class="token comment"># syntax.</span>
+      <span class="token comment"># username: dbuser</span>
+
+      <span class="token comment"># Username with which to restore the database. Defaults to</span>
+      <span class="token comment"># the "username" option. Supports the "{credential ...}"</span>
+      <span class="token comment"># syntax.</span>
+      <span class="token comment"># restore_username: dbuser</span>
+
+      <span class="token comment"># Password with which to connect to the database. Omitting</span>
+      <span class="token comment"># a password will only work if PostgreSQL is configured to</span>
+      <span class="token comment"># trust the configured username without a password or you</span>
+      <span class="token comment"># create a ~/.pgpass file. Supports the "{credential ...}"</span>
+      <span class="token comment"># syntax.</span>
+      <span class="token comment"># password: trustsome1</span>
+
+      <span class="token comment"># Password with which to connect to the restore database.</span>
+      <span class="token comment"># Defaults to the "password" option. Supports the</span>
+      <span class="token comment"># "{credential ...}" syntax.</span>
+      <span class="token comment"># restore_password: trustsome1</span>
+
+      <span class="token comment"># Do not output commands to set ownership of objects to</span>
+      <span class="token comment"># match the original database. By default, pg_dump and</span>
+      <span class="token comment"># pg_restore issue ALTER OWNER or SET SESSION</span>
+      <span class="token comment"># AUTHORIZATION statements to set ownership of created</span>
+      <span class="token comment"># schema elements. These statements will fail unless the</span>
+      <span class="token comment"># initial connection to the database is made by a</span>
+      <span class="token comment"># superuser.</span>
+      <span class="token comment"># no_owner: true</span>
+
+      <span class="token comment"># Database dump output format. One of "plain", "custom",</span>
+      <span class="token comment"># "directory", or "tar". Defaults to "custom" (unlike raw</span>
+      <span class="token comment"># pg_dump) for a single database. Or, when database name</span>
+      <span class="token comment"># is "all" and format is blank, dumps all databases to a</span>
+      <span class="token comment"># single file. But if a format is specified with an "all"</span>
+      <span class="token comment"># database name, dumps each database to a separate file of</span>
+      <span class="token comment"># that format, allowing more convenient restores of</span>
+      <span class="token comment"># individual databases. See the pg_dump documentation for</span>
+      <span class="token comment"># more about formats.</span>
+      <span class="token comment"># format: directory</span>
+
+      <span class="token comment"># Database dump compression level (integer) or method</span>
+      <span class="token comment"># ("gzip", "lz4", "zstd", or "none") and optional</span>
+      <span class="token comment"># colon-separated detail. Defaults to moderate "gzip" for</span>
+      <span class="token comment"># "custom" and "directory" formats and no compression for</span>
+      <span class="token comment"># the "plain" format. Compression is not supported for the</span>
+      <span class="token comment"># "tar" format. Be aware that Borg does its own</span>
+      <span class="token comment"># compression as well, so you may not need it in both</span>
+      <span class="token comment"># places.</span>
+      <span class="token comment"># compression: none</span>
+
+      <span class="token comment"># SSL mode to use to connect to the database server. One</span>
+      <span class="token comment"># of "disable", "allow", "prefer", "require", "verify-ca"</span>
+      <span class="token comment"># or "verify-full". Defaults to "disable".</span>
+      <span class="token comment"># ssl_mode: require</span>
+
+      <span class="token comment"># Path to a client certificate.</span>
+      <span class="token comment"># ssl_cert: /root/.postgresql/postgresql.crt</span>
+
+      <span class="token comment"># Path to a private client key.</span>
+      <span class="token comment"># ssl_key: /root/.postgresql/postgresql.key</span>
+
+      <span class="token comment"># Path to a root certificate containing a list of trusted</span>
+      <span class="token comment"># certificate authorities.</span>
+      <span class="token comment"># ssl_root_cert: /root/.postgresql/root.crt</span>
+
+      <span class="token comment"># Path to a certificate revocation list.</span>
+      <span class="token comment"># ssl_crl: /root/.postgresql/root.crl</span>
+
+      <span class="token comment"># Command to use instead of "pg_dump" or "pg_dumpall".</span>
+      <span class="token comment"># This can be used to run a specific pg_dump version</span>
+      <span class="token comment"># (e.g., one inside a running container). If you run it</span>
+      <span class="token comment"># from within a container, make sure to mount the path in</span>
+      <span class="token comment"># the "user_runtime_directory" option from the host into</span>
+      <span class="token comment"># the container at the same location. Defaults to</span>
+      <span class="token comment"># "pg_dump" for single database dump or "pg_dumpall" to</span>
+      <span class="token comment"># dump all databases.</span>
+      <span class="token comment"># pg_dump_command: docker exec my_pg_container pg_dump</span>
+
+      <span class="token comment"># Command to use instead of "pg_restore". This can be used</span>
+      <span class="token comment"># to run a specific pg_restore version (e.g., one inside a</span>
+      <span class="token comment"># running container). Defaults to "pg_restore".</span>
+      <span class="token comment"># pg_restore_command: docker exec my_pg_container pg_restore</span>
+
+      <span class="token comment"># Command to use instead of "psql". This can be used to</span>
+      <span class="token comment"># run a specific psql version (e.g., one inside a running</span>
+      <span class="token comment"># container). Defaults to "psql".</span>
+      <span class="token comment"># psql_command: docker exec my_pg_container psql</span>
+
+      <span class="token comment"># Additional pg_dump/pg_dumpall options to pass directly</span>
+      <span class="token comment"># to the dump command, without performing any validation</span>
+      <span class="token comment"># on them. See pg_dump documentation for details.</span>
+      <span class="token comment"># options: --role=someone</span>
+
+      <span class="token comment"># Additional psql options to pass directly to the psql</span>
+      <span class="token comment"># command that lists available databases, without</span>
+      <span class="token comment"># performing any validation on them. See psql</span>
+      <span class="token comment"># documentation for details.</span>
+      <span class="token comment"># list_options: --role=someone</span>
+
+      <span class="token comment"># Additional pg_restore/psql options to pass directly to</span>
+      <span class="token comment"># the restore command, without performing any validation</span>
+      <span class="token comment"># on them. See pg_restore/psql documentation for details.</span>
+      <span class="token comment"># restore_options: --role=someone</span>
+
+      <span class="token comment"># Additional psql options to pass directly to the analyze</span>
+      <span class="token comment"># command run after a restore, without performing any</span>
+      <span class="token comment"># validation on them. See psql documentation for details.</span>
+      <span class="token comment"># analyze_options: --role=someone</span>
+
+<span class="token comment"># List of one or more MariaDB databases to dump before creating a</span>
+<span class="token comment"># backup, run once per configuration file. The database dumps are</span>
+<span class="token comment"># added to your source directories at runtime and streamed directly</span>
+<span class="token comment"># to Borg. Requires mariadb-dump/mariadb commands. See</span>
+<span class="token comment"># https://mariadb.com/kb/en/library/mysqldump/ for details.</span>
+<span class="token comment"># mariadb_databases:</span>
+    <span class="token comment"># Database name (required if using this hook). Or "all" to</span>
+    <span class="token comment"># dump all databases on the host. Note that using this</span>
+    <span class="token comment"># database hook implicitly enables read_special (see</span>
+    <span class="token comment"># above) to support dump and restore streaming.</span>
+    <span class="token comment"># - name: users</span>
+
+      <span class="token comment"># Label to identify the database dump in the backup.</span>
+      <span class="token comment"># label: my_backup_label</span>
+
+      <span class="token comment"># Container name/id to connect to. When specified the</span>
+      <span class="token comment"># hostname is ignored. Requires docker/podman CLI.</span>
+      <span class="token comment"># container: debian_stable</span>
+
+      <span class="token comment"># Container name/id to restore to. Defaults to the</span>
+      <span class="token comment"># "container" option.</span>
+      <span class="token comment"># restore_container: restore_container</span>
+
+      <span class="token comment"># Database hostname to connect to. Defaults to connecting</span>
+      <span class="token comment"># via local Unix socket.</span>
+      <span class="token comment"># hostname: database.example.org</span>
+
+      <span class="token comment"># Database hostname to restore to. Defaults to the</span>
+      <span class="token comment"># "hostname" option.</span>
+      <span class="token comment"># restore_hostname: database.example.org</span>
+
+      <span class="token comment"># Port to connect to. Defaults to 3306.</span>
+      <span class="token comment"># port: 3307</span>
+
+      <span class="token comment"># Port to restore to. Defaults to the "port" option.</span>
+      <span class="token comment"># restore_port: 5433</span>
+
+      <span class="token comment"># Username with which to connect to the database. Defaults</span>
+      <span class="token comment"># to the username of the current user. Supports the</span>
+      <span class="token comment"># "{credential ...}" syntax.</span>
+      <span class="token comment"># username: dbuser</span>
+
+      <span class="token comment"># Username with which to restore the database. Defaults to</span>
+      <span class="token comment"># the "username" option. Supports the "{credential ...}"</span>
+      <span class="token comment"># syntax.</span>
+      <span class="token comment"># restore_username: dbuser</span>
+
+      <span class="token comment"># Password with which to connect to the database. Omitting</span>
+      <span class="token comment"># a password will only work if MariaDB is configured to</span>
+      <span class="token comment"># trust the configured username without a password.</span>
+      <span class="token comment"># Supports the "{credential ...}" syntax.</span>
+      <span class="token comment"># password: trustsome1</span>
+
+      <span class="token comment"># Password with which to connect to the restore database.</span>
+      <span class="token comment"># Defaults to the "password" option. Supports the</span>
+      <span class="token comment"># "{credential ...}" syntax.</span>
+      <span class="token comment"># restore_password: trustsome1</span>
+
+      <span class="token comment"># How to transmit database passwords from borgmatic to the</span>
+      <span class="token comment"># MariaDB client, one of:</span>
+      <span class="token comment">#  * "pipe": Securely transmit passwords via anonymous</span>
+      <span class="token comment">#    pipe. Only works if the database client is on the</span>
+      <span class="token comment">#    same host as borgmatic. (The server can be</span>
+      <span class="token comment">#    somewhere else.) This is the default value.</span>
+      <span class="token comment">#  * "environment": Transmit passwords via environment</span>
+      <span class="token comment">#    variable. Potentially less secure than a pipe, but</span>
+      <span class="token comment">#    necessary when the database client is elsewhere, e.g.</span>
+      <span class="token comment">#    when "mariadb_dump_command" is configured to "exec"</span>
+      <span class="token comment">#    into a container and run a client there.</span>
+      <span class="token comment"># password_transport:</span>
+
+      <span class="token comment"># Whether to TLS-encrypt data transmitted between the</span>
+      <span class="token comment"># client and server. The default varies based on the</span>
+      <span class="token comment"># MariaDB version.</span>
+      <span class="token comment"># tls: false</span>
+
+      <span class="token comment"># Whether to TLS-encrypt data transmitted between the</span>
+      <span class="token comment"># client and restore server. The default varies based on</span>
+      <span class="token comment"># the MariaDB version.</span>
+      <span class="token comment"># restore_tls: false</span>
+
+      <span class="token comment"># Command to use instead of "mariadb-dump". This can be</span>
+      <span class="token comment"># used to run a specific mariadb_dump version (e.g., one</span>
+      <span class="token comment"># inside a running container). If you run it from within a</span>
+      <span class="token comment"># container, make sure to mount the path in the</span>
+      <span class="token comment"># "user_runtime_directory" option from the host into the</span>
+      <span class="token comment"># container at the same location. Defaults to</span>
+      <span class="token comment"># "mariadb-dump".</span>
+      <span class="token comment"># mariadb_dump_command: docker exec mariadb_container mariadb-dump</span>
+
+      <span class="token comment"># Command to run instead of "mariadb". This can be used to</span>
+      <span class="token comment"># run a specific mariadb version (e.g., one inside a</span>
+      <span class="token comment"># running container). Defaults to "mariadb".</span>
+      <span class="token comment"># mariadb_command: docker exec mariadb_container mariadb</span>
+
+      <span class="token comment"># Database dump output format. Currently only "sql" is</span>
+      <span class="token comment"># supported. Defaults to "sql" for a single database. Or,</span>
+      <span class="token comment"># when database name is "all" and format is blank, dumps</span>
+      <span class="token comment"># all databases to a single file. But if a format is</span>
+      <span class="token comment"># specified with an "all" database name, dumps each</span>
+      <span class="token comment"># database to a separate file of that format, allowing</span>
+      <span class="token comment"># more convenient restores of individual databases.</span>
+      <span class="token comment"># format: directory</span>
+
+      <span class="token comment"># Use the "--add-drop-database" flag with mariadb-dump,</span>
+      <span class="token comment"># causing the database to be dropped right before restore.</span>
+      <span class="token comment"># Defaults to true.</span>
+      <span class="token comment"># add_drop_database: false</span>
+
+      <span class="token comment"># Additional mariadb-dump options to pass directly to the</span>
+      <span class="token comment"># dump command, without performing any validation on them.</span>
+      <span class="token comment"># See mariadb-dump documentation for details.</span>
+      <span class="token comment"># options: --skip-comments</span>
+
+      <span class="token comment"># Additional options to pass directly to the mariadb</span>
+      <span class="token comment"># command that lists available databases, without</span>
+      <span class="token comment"># performing any validation on them. See mariadb command</span>
+      <span class="token comment"># documentation for details.</span>
+      <span class="token comment"># list_options: --defaults-extra-file=mariadb.cnf</span>
+
+      <span class="token comment"># Additional options to pass directly to the mariadb</span>
+      <span class="token comment"># command that restores database dumps, without</span>
+      <span class="token comment"># performing any validation on them. See mariadb command</span>
+      <span class="token comment"># documentation for details.</span>
+      <span class="token comment"># restore_options: --defaults-extra-file=mariadb.cnf</span>
+
+<span class="token comment"># List of one or more MySQL databases to dump before creating a</span>
+<span class="token comment"># backup, run once per configuration file. The database dumps are</span>
+<span class="token comment"># added to your source directories at runtime and streamed directly</span>
+<span class="token comment"># to Borg. Requires mysqldump/mysql commands. See</span>
+<span class="token comment"># https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html for</span>
+<span class="token comment"># details.</span>
+<span class="token comment"># mysql_databases:</span>
+    <span class="token comment"># Database name (required if using this hook). Or "all" to</span>
+    <span class="token comment"># dump all databases on the host. Note that using this</span>
+    <span class="token comment"># database hook implicitly enables read_special (see</span>
+    <span class="token comment"># above) to support dump and restore streaming.</span>
+    <span class="token comment"># - name: users</span>
+
+      <span class="token comment"># Label to identify the database dump in the backup.</span>
+      <span class="token comment"># label: my_backup_label</span>
+
+      <span class="token comment"># Container name/id to connect to. When specified the</span>
+      <span class="token comment"># hostname is ignored. Requires docker/podman CLI.</span>
+      <span class="token comment"># container: debian_stable</span>
+
+      <span class="token comment"># Container name/id to restore to. Defaults to the</span>
+      <span class="token comment"># "container" option.</span>
+      <span class="token comment"># restore_container: restore_container</span>
+
+      <span class="token comment"># Database hostname to connect to. Defaults to connecting</span>
+      <span class="token comment"># via local Unix socket.</span>
+      <span class="token comment"># hostname: database.example.org</span>
+
+      <span class="token comment"># Database hostname to restore to. Defaults to the</span>
+      <span class="token comment"># "hostname" option.</span>
+      <span class="token comment"># restore_hostname: database.example.org</span>
+
+      <span class="token comment"># Port to connect to. Defaults to 3306.</span>
+      <span class="token comment"># port: 3307</span>
+
+      <span class="token comment"># Port to restore to. Defaults to the "port" option.</span>
+      <span class="token comment"># restore_port: 5433</span>
+
+      <span class="token comment"># Username with which to connect to the database. Defaults</span>
+      <span class="token comment"># to the username of the current user. Supports the</span>
+      <span class="token comment"># "{credential ...}" syntax.</span>
+      <span class="token comment"># username: dbuser</span>
+
+      <span class="token comment"># Username with which to restore the database. Defaults to</span>
+      <span class="token comment"># the "username" option. Supports the "{credential ...}"</span>
+      <span class="token comment"># syntax.</span>
+      <span class="token comment"># restore_username: dbuser</span>
+
+      <span class="token comment"># Password with which to connect to the database. Omitting</span>
+      <span class="token comment"># a password will only work if MySQL is configured to</span>
+      <span class="token comment"># trust the configured username without a password.</span>
+      <span class="token comment"># Supports the "{credential ...}" syntax.</span>
+      <span class="token comment"># password: trustsome1</span>
+
+      <span class="token comment"># Password with which to connect to the restore database.</span>
+      <span class="token comment"># Defaults to the "password" option. Supports the</span>
+      <span class="token comment"># "{credential ...}" syntax.</span>
+      <span class="token comment"># restore_password: trustsome1</span>
+
+      <span class="token comment"># How to transmit database passwords from borgmatic to the</span>
+      <span class="token comment"># MySQL client, one of:</span>
+      <span class="token comment">#  * "pipe": Securely transmit passwords via anonymous</span>
+      <span class="token comment">#    pipe. Only works if the database client is on the</span>
+      <span class="token comment">#    same host as borgmatic. (The server can be</span>
+      <span class="token comment">#    somewhere else.) This is the default value.</span>
+      <span class="token comment">#  * "environment": Transmit passwords via environment</span>
+      <span class="token comment">#    variable. Potentially less secure than a pipe, but</span>
+      <span class="token comment">#    necessary when the database client is elsewhere, e.g.</span>
+      <span class="token comment">#    when "mysql_dump_command" is configured to "exec"</span>
+      <span class="token comment">#    into a container and run a client there.</span>
+      <span class="token comment"># password_transport:</span>
+
+      <span class="token comment"># Whether to TLS-encrypt data transmitted between the</span>
+      <span class="token comment"># client and server. The default varies based on the</span>
+      <span class="token comment"># MySQL installation.</span>
+      <span class="token comment"># tls: false</span>
+
+      <span class="token comment"># Whether to TLS-encrypt data transmitted between the</span>
+      <span class="token comment"># client and restore server. The default varies based on</span>
+      <span class="token comment"># the MySQL installation.</span>
+      <span class="token comment"># restore_tls: false</span>
+
+      <span class="token comment"># Command to use instead of "mysqldump". This can be used</span>
+      <span class="token comment"># to run a specific mysql_dump version (e.g., one inside a</span>
+      <span class="token comment"># running container). If you run it from within a</span>
+      <span class="token comment"># container, make sure to mount the path in the</span>
+      <span class="token comment"># "user_runtime_directory" option from the host into the</span>
+      <span class="token comment"># container at the same location. Defaults to "mysqldump".</span>
+      <span class="token comment"># mysql_dump_command: docker exec mysql_container mysqldump</span>
+
+      <span class="token comment"># Command to run instead of "mysql". This can be used to</span>
+      <span class="token comment"># run a specific mysql version (e.g., one inside a running</span>
+      <span class="token comment"># container). Defaults to "mysql".</span>
+      <span class="token comment"># mysql_command: docker exec mysql_container mysql</span>
+
+      <span class="token comment"># Database dump output format. Currently only "sql" is</span>
+      <span class="token comment"># supported. Defaults to "sql" for a single database. Or,</span>
+      <span class="token comment"># when database name is "all" and format is blank, dumps</span>
+      <span class="token comment"># all databases to a single file. But if a format is</span>
+      <span class="token comment"># specified with an "all" database name, dumps each</span>
+      <span class="token comment"># database to a separate file of that format, allowing</span>
+      <span class="token comment"># more convenient restores of individual databases.</span>
+      <span class="token comment"># format: directory</span>
+
+      <span class="token comment"># Use the "--add-drop-database" flag with mysqldump,</span>
+      <span class="token comment"># causing the database to be dropped right before restore.</span>
+      <span class="token comment"># Defaults to true.</span>
+      <span class="token comment"># add_drop_database: false</span>
+
+      <span class="token comment"># Additional mysqldump options to pass directly to the</span>
+      <span class="token comment"># dump command, without performing any validation on them.</span>
+      <span class="token comment"># See mysqldump documentation for details.</span>
+      <span class="token comment"># options: --skip-comments</span>
+
+      <span class="token comment"># Additional options to pass directly to the mysql</span>
+      <span class="token comment"># command that lists available databases, without</span>
+      <span class="token comment"># performing any validation on them. See mysql command</span>
+      <span class="token comment"># documentation for details.</span>
+      <span class="token comment"># list_options: --defaults-extra-file=my.cnf</span>
+
+      <span class="token comment"># Additional options to pass directly to the mysql</span>
+      <span class="token comment"># command that restores database dumps, without</span>
+      <span class="token comment"># performing any validation on them. See mysql command</span>
+      <span class="token comment"># documentation for details.</span>
+      <span class="token comment"># restore_options: --defaults-extra-file=my.cnf</span>
+
+<span class="token comment"># List of one or more SQLite databases to dump before creating a</span>
+<span class="token comment"># backup, run once per configuration file. The database dumps are</span>
+<span class="token comment"># added to your source directories at runtime and streamed directly to</span>
+<span class="token comment"># Borg. Requires the sqlite3 command. See https://sqlite.org/cli.html</span>
+<span class="token comment"># for details.</span>
+<span class="token comment"># sqlite_databases:</span>
+    <span class="token comment"># This is used to tag the database dump file with a name.</span>
+    <span class="token comment"># It is not the path to the database file itself. The name</span>
+    <span class="token comment"># "all" has no special meaning for SQLite databases.</span>
+    <span class="token comment"># - name: users</span>
+
+      <span class="token comment"># Path to the SQLite database file to dump. If relative,</span>
+      <span class="token comment"># it is relative to the current working directory. Note</span>
+      <span class="token comment"># that using this database hook implicitly enables</span>
+      <span class="token comment"># read_special (see above) to support dump and restore</span>
+      <span class="token comment"># streaming.</span>
+      <span class="token comment"># path: /var/lib/sqlite/users.db</span>
+
+      <span class="token comment"># Label to identify the database dump in the backup.</span>
+      <span class="token comment"># label: my_backup_label</span>
+
+      <span class="token comment"># Path to the SQLite database file to restore to. Defaults</span>
+      <span class="token comment"># to the "path" option.</span>
+      <span class="token comment"># restore_path: /var/lib/sqlite/users.db</span>
+
+      <span class="token comment"># Command to use instead of "sqlite3". This can be used to</span>
+      <span class="token comment"># run a specific sqlite3 version (e.g., one inside a</span>
+      <span class="token comment"># running container). If you run it from within a</span>
+      <span class="token comment"># container, make sure to mount the path in the</span>
+      <span class="token comment"># "user_runtime_directory" option from the host into the</span>
+      <span class="token comment"># container at the same location. Defaults to "sqlite3".</span>
+      <span class="token comment"># sqlite_command: docker exec sqlite_container sqlite3</span>
+
+      <span class="token comment"># Command to run when restoring a database instead</span>
+      <span class="token comment"># of "sqlite3". This can be used to run a specific </span>
+      <span class="token comment"># sqlite3 version (e.g., one inside a running container). </span>
+      <span class="token comment"># Defaults to "sqlite3".</span>
+      <span class="token comment"># sqlite_restore_command: docker exec sqlite_container sqlite3</span>
+
+<span class="token comment"># List of one or more MongoDB databases to dump before creating a</span>
+<span class="token comment"># backup, run once per configuration file. The database dumps are</span>
+<span class="token comment"># added to your source directories at runtime and streamed directly</span>
+<span class="token comment"># to Borg. Requires mongodump/mongorestore commands. See</span>
+<span class="token comment"># https://docs.mongodb.com/database-tools/mongodump/ and</span>
+<span class="token comment"># https://docs.mongodb.com/database-tools/mongorestore/ for details.</span>
+<span class="token comment"># mongodb_databases:</span>
+    <span class="token comment"># Database name (required if using this hook). Or "all" to</span>
+    <span class="token comment"># dump all databases on the host. Note that using this</span>
+    <span class="token comment"># database hook implicitly enables read_special (see</span>
+    <span class="token comment"># above) to support dump and restore streaming.</span>
+    <span class="token comment"># - name: users</span>
+
+      <span class="token comment"># Label to identify the database dump in the backup.</span>
+      <span class="token comment"># label: my_backup_label</span>
+
+      <span class="token comment"># Container name/id to connect to. When specified the</span>
+      <span class="token comment"># hostname is ignored. Requires docker/podman CLI.</span>
+      <span class="token comment"># container: debian_stable</span>
+
+      <span class="token comment"># Container name/id to restore to. Defaults to the</span>
+      <span class="token comment"># "container" option.</span>
+      <span class="token comment"># restore_container: restore_container</span>
+
+      <span class="token comment"># Database hostname to connect to. Defaults to connecting</span>
+      <span class="token comment"># to localhost.</span>
+      <span class="token comment"># hostname: database.example.org</span>
+
+      <span class="token comment"># Database hostname to restore to. Defaults to the</span>
+      <span class="token comment"># "hostname" option.</span>
+      <span class="token comment"># restore_hostname: database.example.org</span>
+
+      <span class="token comment"># Port to connect to. Defaults to 27017.</span>
+      <span class="token comment"># port: 27018</span>
+
+      <span class="token comment"># Port to restore to. Defaults to the "port" option.</span>
+      <span class="token comment"># restore_port: 5433</span>
+
+      <span class="token comment"># Username with which to connect to the database. Skip it</span>
+      <span class="token comment"># if no authentication is needed. Supports the</span>
+      <span class="token comment"># "{credential ...}" syntax.</span>
+      <span class="token comment"># username: dbuser</span>
+
+      <span class="token comment"># Username with which to restore the database. Defaults to</span>
+      <span class="token comment"># the "username" option. Supports the "{credential ...}"</span>
+      <span class="token comment"># syntax.</span>
+      <span class="token comment"># restore_username: dbuser</span>
+
+      <span class="token comment"># Password with which to connect to the database. Skip it</span>
+      <span class="token comment"># if no authentication is needed. Supports the</span>
+      <span class="token comment"># "{credential ...}" syntax.</span>
+      <span class="token comment"># password: trustsome1</span>
+
+      <span class="token comment"># Password with which to connect to the restore database.</span>
+      <span class="token comment"># Defaults to the "password" option. Supports the</span>
+      <span class="token comment"># "{credential ...}" syntax.</span>
+      <span class="token comment"># restore_password: trustsome1</span>
+
+      <span class="token comment"># Authentication database where the specified username</span>
+      <span class="token comment"># exists. If no authentication database is specified, the</span>
+      <span class="token comment"># database provided in "name" is used. If "name" is "all",</span>
+      <span class="token comment"># the "admin" database is used.</span>
+      <span class="token comment"># authentication_database: admin</span>
+
+      <span class="token comment"># Database dump output format. One of "archive", or</span>
+      <span class="token comment"># "directory". Defaults to "archive". See mongodump</span>
+      <span class="token comment"># documentation for details. Note that format is ignored</span>
+      <span class="token comment"># when the database name is "all".</span>
+      <span class="token comment"># format: directory</span>
+
+      <span class="token comment"># Additional mongodump options to pass directly to the</span>
+      <span class="token comment"># dump command, without performing any validation on them.</span>
+      <span class="token comment"># See mongodump documentation for details.</span>
+      <span class="token comment"># options: --dumpDbUsersAndRoles</span>
+
+      <span class="token comment"># Additional mongorestore options to pass directly to the</span>
+      <span class="token comment"># dump command, without performing any validation on them.</span>
+      <span class="token comment"># See mongorestore documentation for details.</span>
+      <span class="token comment"># restore_options: --restoreDbUsersAndRoles</span>
+
+      <span class="token comment"># Command to use instead of "mongodump". This can be used</span>
+      <span class="token comment"># to run a specific mongodump version (e.g., one inside a</span>
+      <span class="token comment"># running container). If you run it from within a</span>
+      <span class="token comment"># container, make sure to mount the path in the</span>
+      <span class="token comment"># "user_runtime_directory" option from the host into the</span>
+      <span class="token comment"># container at the same location.  Defaults to</span>
+      <span class="token comment"># "mongodump".</span>
+      <span class="token comment"># mongodump_command: docker exec mongodb_container mongodump</span>
+
+      <span class="token comment"># Command to run when restoring a database instead of</span>
+      <span class="token comment"># "mongorestore". This can be used to run a specific</span>
+      <span class="token comment"># mongorestore version (e.g., one inside a running</span>
+      <span class="token comment"># container). Defaults to "mongorestore".</span>
+      <span class="token comment"># mongorestore_command: docker exec mongodb_container mongorestore</span>
+
+<span class="token comment"># ntfy:</span>
+    <span class="token comment"># The topic to publish to. See https://ntfy.sh/docs/publish/</span>
+    <span class="token comment"># for details.</span>
+    <span class="token comment"># topic: topic</span>
+
+    <span class="token comment"># The address of your self-hosted ntfy.sh instance.</span>
+    <span class="token comment"># server: https://ntfy.your-domain.com</span>
+
+    <span class="token comment"># The username used for authentication. Supports the</span>
+    <span class="token comment"># "{credential ...}" syntax.</span>
+    <span class="token comment"># username: testuser</span>
+
+    <span class="token comment"># The password used for authentication. Supports the</span>
+    <span class="token comment"># "{credential ...}" syntax.</span>
+    <span class="token comment"># password: fakepassword</span>
+
+    <span class="token comment"># An ntfy access token to authenticate with instead of</span>
+    <span class="token comment"># username/password. Supports the "{credential ...}" syntax.</span>
+    <span class="token comment"># access_token: tk_AgQdq7mVBoFD37zQVN29RhuMzNIz2</span>
+
+    <span class="token comment"># start:</span>
+        <span class="token comment"># The title of the message.</span>
+        <span class="token comment"># title: Ping!</span>
+
+        <span class="token comment"># The message body to publish.</span>
+        <span class="token comment"># message: Your backups have failed.</span>
+
+        <span class="token comment"># The priority to set.</span>
+        <span class="token comment"># priority: urgent</span>
+
+        <span class="token comment"># Tags to attach to the message.</span>
+        <span class="token comment"># tags: incoming_envelope</span>
+
+    <span class="token comment"># finish:</span>
+        <span class="token comment"># The title of the message.</span>
+        <span class="token comment"># title: Ping!</span>
+
+        <span class="token comment"># The message body to publish.</span>
+        <span class="token comment"># message: Your backups have failed.</span>
+
+        <span class="token comment"># The priority to set.</span>
+        <span class="token comment"># priority: urgent</span>
+
+        <span class="token comment"># Tags to attach to the message.</span>
+        <span class="token comment"># tags: incoming_envelope</span>
+
+    <span class="token comment"># fail:</span>
+        <span class="token comment"># The title of the message.</span>
+        <span class="token comment"># title: Ping!</span>
+
+        <span class="token comment"># The message body to publish.</span>
+        <span class="token comment"># message: Your backups have failed.</span>
+
+        <span class="token comment"># The priority to set.</span>
+        <span class="token comment"># priority: urgent</span>
+
+        <span class="token comment"># Tags to attach to the message.</span>
+        <span class="token comment"># tags: incoming_envelope</span>
+
+    <span class="token comment"># List of one or more monitoring states to ping for: "start",</span>
+    <span class="token comment"># "finish", and/or "fail". Defaults to pinging for failure</span>
+    <span class="token comment"># only.</span>
+    <span class="token comment"># states:</span>
+        <span class="token comment"># - start</span>
+        <span class="token comment"># - finish</span>
+
+<span class="token comment"># pushover:</span>
+    <span class="token comment"># Your application's API token. Supports the "{credential</span>
+    <span class="token comment"># ...}" syntax.</span>
+    <span class="token comment"># token: 7ms6TXHpTokTou2P6x4SodDeentHRa</span>
+
+    <span class="token comment"># Your user/group key (or that of your target user), viewable</span>
+    <span class="token comment"># when logged into your dashboard: often referred to as</span>
+    <span class="token comment"># USER_KEY in Pushover documentation and code examples.</span>
+    <span class="token comment"># Supports the "{credential ...}" syntax.</span>
+    <span class="token comment"># user: hwRwoWsXMBWwgrSecfa9EfPey55WSN</span>
+
+    <span class="token comment"># start:</span>
+        <span class="token comment"># Message to be sent to the user or group. If omitted</span>
+        <span class="token comment"># the default is the name of the state.</span>
+        <span class="token comment"># message: A backup job has started.</span>
+
+        <span class="token comment"># A value of -2, -1, 0 (default), 1 or 2 that </span>
+        <span class="token comment"># indicates the message priority.</span>
+        <span class="token comment"># priority: 0</span>
+
+        <span class="token comment"># How many seconds your notification will continue </span>
+        <span class="token comment"># to be retried (every retry seconds). Defaults to</span>
+        <span class="token comment"># 600. This settings only applies to priority 2</span>
+        <span class="token comment"># notifications.</span>
+        <span class="token comment"># expire: 600</span>
+
+        <span class="token comment"># The retry parameter specifies how often </span>
+        <span class="token comment"># (in seconds) the Pushover servers will send the </span>
+        <span class="token comment"># same notification to the user. Defaults to 30. This</span>
+        <span class="token comment"># settings only applies to priority 2 notifications.</span>
+        <span class="token comment"># retry: 30</span>
+
+        <span class="token comment"># The name of one of your devices to send just to </span>
+        <span class="token comment"># that device instead of all devices.</span>
+        <span class="token comment"># device: pixel8</span>
+
+        <span class="token comment"># Set to True to enable HTML parsing of the message.</span>
+        <span class="token comment"># Set to false for plain text.</span>
+        <span class="token comment"># html: true</span>
+
+        <span class="token comment"># The name of a supported sound to override your </span>
+        <span class="token comment"># default sound choice. All options can be found </span>
+        <span class="token comment"># here: https://pushover.net/api#sounds</span>
+        <span class="token comment"># sound: bike</span>
+
+        <span class="token comment"># Your message's title, otherwise your app's name is </span>
+        <span class="token comment"># used.</span>
+        <span class="token comment"># title: A backup job has started.</span>
+
+        <span class="token comment"># The number of seconds that the message will live, </span>
+        <span class="token comment"># before being deleted automatically. The ttl </span>
+        <span class="token comment"># parameter is ignored for messages with a priority.</span>
+        <span class="token comment"># value of 2.</span>
+        <span class="token comment"># ttl: 3600</span>
+
+        <span class="token comment"># A supplementary URL to show with your message.</span>
+        <span class="token comment"># url: https://pushover.net/apps/xxxxx-borgbackup</span>
+
+        <span class="token comment"># A title for the URL specified as the url parameter,</span>
+        <span class="token comment"># otherwise just the URL is shown.</span>
+        <span class="token comment"># url_title: Pushover Link</span>
+
+    <span class="token comment"># finish:</span>
+        <span class="token comment"># Message to be sent to the user or group. If omitted</span>
+        <span class="token comment"># the default is the name of the state.</span>
+        <span class="token comment"># message: A backup job has finished.</span>
+
+        <span class="token comment"># A value of -2, -1, 0 (default), 1 or 2 that </span>
+        <span class="token comment"># indicates the message priority.</span>
+        <span class="token comment"># priority: 0</span>
+
+        <span class="token comment"># How many seconds your notification will continue </span>
+        <span class="token comment"># to be retried (every retry seconds). Defaults to</span>
+        <span class="token comment"># 600. This settings only applies to priority 2</span>
+        <span class="token comment"># notifications.</span>
+        <span class="token comment"># expire: 600</span>
+
+        <span class="token comment"># The retry parameter specifies how often </span>
+        <span class="token comment"># (in seconds) the Pushover servers will send the </span>
+        <span class="token comment"># same notification to the user. Defaults to 30. This</span>
+        <span class="token comment"># settings only applies to priority 2 notifications.</span>
+        <span class="token comment"># retry: 30</span>
+
+        <span class="token comment"># The name of one of your devices to send just to </span>
+        <span class="token comment"># that device instead of all devices.</span>
+        <span class="token comment"># device: pixel8</span>
+
+        <span class="token comment"># Set to True to enable HTML parsing of the message.</span>
+        <span class="token comment"># Set to false for plain text.</span>
+        <span class="token comment"># html: true</span>
+
+        <span class="token comment"># The name of a supported sound to override your </span>
+        <span class="token comment"># default sound choice. All options can be found </span>
+        <span class="token comment"># here: https://pushover.net/api#sounds</span>
+        <span class="token comment"># sound: bike</span>
+
+        <span class="token comment"># Your message's title, otherwise your app's name is </span>
+        <span class="token comment"># used.</span>
+        <span class="token comment"># title: A backup job has started.</span>
+
+        <span class="token comment"># The number of seconds that the message will live, </span>
+        <span class="token comment"># before being deleted automatically. The ttl </span>
+        <span class="token comment"># parameter is ignored for messages with a priority.</span>
+        <span class="token comment"># value of 2.</span>
+        <span class="token comment"># ttl: 3600</span>
+
+        <span class="token comment"># A supplementary URL to show with your message.</span>
+        <span class="token comment"># url: https://pushover.net/apps/xxxxx-borgbackup</span>
+
+        <span class="token comment"># A title for the URL specified as the url parameter,</span>
+        <span class="token comment"># otherwise just the URL is shown.</span>
+        <span class="token comment"># url_title: Pushover Link</span>
+
+    <span class="token comment"># fail:</span>
+        <span class="token comment"># Message to be sent to the user or group. If omitted</span>
+        <span class="token comment"># the default is the name of the state.</span>
+        <span class="token comment"># message: A backup job has failed.</span>
+
+        <span class="token comment"># A value of -2, -1, 0 (default), 1 or 2 that </span>
+        <span class="token comment"># indicates the message priority.</span>
+        <span class="token comment"># priority: 0</span>
+
+        <span class="token comment"># How many seconds your notification will continue </span>
+        <span class="token comment"># to be retried (every retry seconds). Defaults to</span>
+        <span class="token comment"># 600. This settings only applies to priority 2</span>
+        <span class="token comment"># notifications.</span>
+        <span class="token comment"># expire: 600</span>
+
+        <span class="token comment"># The retry parameter specifies how often </span>
+        <span class="token comment"># (in seconds) the Pushover servers will send the </span>
+        <span class="token comment"># same notification to the user. Defaults to 30. This</span>
+        <span class="token comment"># settings only applies to priority 2 notifications.</span>
+        <span class="token comment"># retry: 30</span>
+
+        <span class="token comment"># The name of one of your devices to send just to </span>
+        <span class="token comment"># that device instead of all devices.</span>
+        <span class="token comment"># device: pixel8</span>
+
+        <span class="token comment"># Set to True to enable HTML parsing of the message.</span>
+        <span class="token comment"># Set to false for plain text.</span>
+        <span class="token comment"># html: true</span>
+
+        <span class="token comment"># The name of a supported sound to override your </span>
+        <span class="token comment"># default sound choice. All options can be found </span>
+        <span class="token comment"># here: https://pushover.net/api#sounds</span>
+        <span class="token comment"># sound: bike</span>
+
+        <span class="token comment"># Your message's title, otherwise your app's name is </span>
+        <span class="token comment"># used.</span>
+        <span class="token comment"># title: A backup job has started.</span>
+
+        <span class="token comment"># The number of seconds that the message will live, </span>
+        <span class="token comment"># before being deleted automatically. The ttl </span>
+        <span class="token comment"># parameter is ignored for messages with a priority.</span>
+        <span class="token comment"># value of 2.</span>
+        <span class="token comment"># ttl: 3600</span>
+
+        <span class="token comment"># A supplementary URL to show with your message.</span>
+        <span class="token comment"># url: https://pushover.net/apps/xxxxx-borgbackup</span>
+
+        <span class="token comment"># A title for the URL specified as the url parameter,</span>
+        <span class="token comment"># otherwise just the URL is shown.</span>
+        <span class="token comment"># url_title: Pushover Link</span>
+
+    <span class="token comment"># List of one or more monitoring states to ping for: "start",</span>
+    <span class="token comment"># "finish", and/or "fail". Defaults to pinging for failure</span>
+    <span class="token comment"># only.</span>
+    <span class="token comment"># states:</span>
+        <span class="token comment"># - start</span>
+        <span class="token comment"># - finish</span>
+
+<span class="token comment"># zabbix:</span>
+    <span class="token comment"># The ID of the Zabbix item used for collecting data.</span>
+    <span class="token comment"># Unique across the entire Zabbix system.</span>
+    <span class="token comment"># itemid: 55105</span>
+
+    <span class="token comment"># Host name where the item is stored. Required if "itemid"</span>
+    <span class="token comment"># is not set.</span>
+    <span class="token comment"># host: borg-server</span>
+
+    <span class="token comment"># Key of the host where the item is stored. Required if</span>
+    <span class="token comment"># "itemid" is not set.</span>
+    <span class="token comment"># key: borg.status</span>
+
+    <span class="token comment"># The API endpoint URL of your Zabbix instance, usually ending</span>
+    <span class="token comment"># with "/api_jsonrpc.php". Required.</span>
+    <span class="token comment"># server: https://zabbix.your-domain.com</span>
+
+    <span class="token comment"># The username used for authentication. Not needed if using</span>
+    <span class="token comment"># an API key. Supports the "{credential ...}" syntax.</span>
+    <span class="token comment"># username: testuser</span>
+
+    <span class="token comment"># The password used for authentication. Not needed if using</span>
+    <span class="token comment"># an API key. Supports the "{credential ...}" syntax.</span>
+    <span class="token comment"># password: fakepassword</span>
+
+    <span class="token comment"># The API key used for authentication. Not needed if using an</span>
+    <span class="token comment"># username/password. Supports the "{credential ...}" syntax.</span>
+    <span class="token comment"># api_key: fakekey</span>
+
+    <span class="token comment"># start:</span>
+        <span class="token comment"># The value to set the item to on start.</span>
+        <span class="token comment"># value: STARTED</span>
+
+    <span class="token comment"># finish:</span>
+        <span class="token comment"># The value to set the item to on finish.</span>
+        <span class="token comment"># value: FINISH</span>
+
+    <span class="token comment"># fail:</span>
+        <span class="token comment"># The value to set the item to on fail.</span>
+        <span class="token comment"># value: ERROR</span>
+
+    <span class="token comment"># List of one or more monitoring states to ping for: "start",</span>
+    <span class="token comment"># "finish", and/or "fail". Defaults to pinging for failure</span>
+    <span class="token comment"># only.</span>
+    <span class="token comment"># states:</span>
+        <span class="token comment"># - start</span>
+        <span class="token comment"># - finish</span>
+
+<span class="token comment"># apprise:</span>
+    <span class="token comment"># A list of Apprise services to publish to with URLs and</span>
+    <span class="token comment"># labels. The labels are used for logging. A full list of</span>
+    <span class="token comment"># services and their configuration can be found at</span>
+    <span class="token comment"># https://github.com/caronc/apprise/wiki.</span>
+    <span class="token comment"># services:</span>
+        <span class="token comment"># URL of this Apprise service.</span>
+        <span class="token comment"># - url: gotify://hostname/token</span>
+
+          <span class="token comment"># Label used in borgmatic logs for this Apprise</span>
+          <span class="token comment"># service.</span>
+          <span class="token comment"># label: gotify</span>
+
+    <span class="token comment"># Send borgmatic logs to Apprise services as part of the</span>
+    <span class="token comment"># "finish", "fail", and "log" states. Defaults to true.</span>
+    <span class="token comment"># send_logs: false</span>
+
+    <span class="token comment"># Number of bytes of borgmatic logs to send to Apprise</span>
+    <span class="token comment"># services. Set to 0 to send all logs and disable this</span>
+    <span class="token comment"># truncation. Defaults to 1500.</span>
+    <span class="token comment"># logs_size_limit: 100000</span>
+
+    <span class="token comment"># start:</span>
+        <span class="token comment"># Specify the message title. If left unspecified, no</span>
+        <span class="token comment"># title is sent.</span>
+        <span class="token comment"># title: Ping!</span>
+
+        <span class="token comment"># Specify the message body.</span>
+        <span class="token comment"># body: Starting backup process.</span>
+
+    <span class="token comment"># finish:</span>
+        <span class="token comment"># Specify the message title. If left unspecified, no</span>
+        <span class="token comment"># title is sent.</span>
+        <span class="token comment"># title: Ping!</span>
+
+        <span class="token comment"># Specify the message body.</span>
+        <span class="token comment"># body: Backups successfully made.</span>
+
+    <span class="token comment"># fail:</span>
+        <span class="token comment"># Specify the message title. If left unspecified, no</span>
+        <span class="token comment"># title is sent.</span>
+        <span class="token comment"># title: Ping!</span>
+
+        <span class="token comment"># Specify the message body.</span>
+        <span class="token comment"># body: Your backups have failed.</span>
+
+    <span class="token comment"># log:</span>
+        <span class="token comment"># Specify the message title. If left unspecified, no</span>
+        <span class="token comment"># title is sent.</span>
+        <span class="token comment"># title: Ping!</span>
+
+        <span class="token comment"># Specify the message body.</span>
+        <span class="token comment"># body: Here is some info about your backups.</span>
+
+    <span class="token comment"># List of one or more monitoring states to ping for:</span>
+    <span class="token comment"># "start", "finish", "fail", and/or "log". Defaults to</span>
+    <span class="token comment"># pinging for failure only. For each selected state,</span>
+    <span class="token comment"># corresponding configuration for the message title and body</span>
+    <span class="token comment"># should be given. If any is left unspecified, a generic</span>
+    <span class="token comment"># message is emitted instead.</span>
+    <span class="token comment"># states:</span>
+        <span class="token comment"># - start</span>
+        <span class="token comment"># - finish</span>
+
+<span class="token comment"># Configuration for a monitoring integration with Healthchecks. Create</span>
+<span class="token comment"># an account at https://healthchecks.io (or self-host Healthchecks) if</span>
+<span class="token comment"># you'd like to use this service. See borgmatic monitoring</span>
+<span class="token comment"># documentation for details.</span>
+<span class="token comment"># healthchecks:</span>
+    <span class="token comment"># Healthchecks ping URL or UUID to notify when a backup</span>
+    <span class="token comment"># begins, ends, errors, or to send only logs.</span>
+    <span class="token comment"># ping_url: https://hc-ping.com/your-uuid-here</span>
+
+    <span class="token comment"># Verify the TLS certificate of the ping URL host. Defaults to</span>
+    <span class="token comment"># true.</span>
+    <span class="token comment"># verify_tls: false</span>
+
+    <span class="token comment"># Send borgmatic logs to Healthchecks as part of the "finish",</span>
+    <span class="token comment"># "fail", and "log" states. Defaults to true.</span>
+    <span class="token comment"># send_logs: false</span>
+
+    <span class="token comment"># Number of bytes of borgmatic logs to send to Healthchecks,</span>
+    <span class="token comment"># ideally the same as PING_BODY_LIMIT configured on the</span>
+    <span class="token comment"># Healthchecks server. Set to 0 to send all logs and disable</span>
+    <span class="token comment"># this truncation. Defaults to 100000.</span>
+    <span class="token comment"># ping_body_limit: 200000</span>
+
+    <span class="token comment"># List of one or more monitoring states to ping for: "start",</span>
+    <span class="token comment"># "finish", "fail", and/or "log". Defaults to pinging for all</span>
+    <span class="token comment"># states.</span>
+    <span class="token comment"># states:</span>
+        <span class="token comment"># - finish</span>
+
+    <span class="token comment"># Create the check if it does not exist. Only works with</span>
+    <span class="token comment"># the slug URL scheme (https://hc-ping.com/&lt;ping-key>/&lt;slug></span>
+    <span class="token comment"># as opposed to https://hc-ping.com/&lt;uuid>).</span>
+    <span class="token comment"># Defaults to false.</span>
+    <span class="token comment"># create_slug: true</span>
+
+<span class="token comment"># Configuration for a monitoring integration with Uptime Kuma using</span>
+<span class="token comment"># the Push monitor type.</span>
+<span class="token comment"># See more information here: https://uptime.kuma.pet</span>
+<span class="token comment"># uptime_kuma:</span>
+    <span class="token comment"># Uptime Kuma push URL without query string (do not include the</span>
+    <span class="token comment"># question mark or anything after it).</span>
+    <span class="token comment"># push_url: https://example.uptime.kuma/api/push/abcd1234</span>
+
+    <span class="token comment"># List of one or more monitoring states to push for: "start",</span>
+    <span class="token comment"># "finish", and/or "fail". Defaults to pushing for all</span>
+    <span class="token comment"># states.</span>
+    <span class="token comment"># states:</span>
+        <span class="token comment"># - start</span>
+        <span class="token comment"># - finish</span>
+        <span class="token comment"># - fail</span>
+
+    <span class="token comment"># Verify the TLS certificate of the push URL host. Defaults to</span>
+    <span class="token comment"># true.</span>
+    <span class="token comment"># verify_tls: false</span>
+
+<span class="token comment"># Configuration for a monitoring integration with Cronitor. Create an</span>
+<span class="token comment"># account at https://cronitor.io if you'd like to use this service.</span>
+<span class="token comment"># See borgmatic monitoring documentation for details.</span>
+<span class="token comment"># cronitor:</span>
+    <span class="token comment"># Cronitor ping URL to notify when a backup begins,</span>
+    <span class="token comment"># ends, or errors.</span>
+    <span class="token comment"># ping_url: https://cronitor.link/d3x0c1</span>
+
+<span class="token comment"># Configuration for a monitoring integration with PagerDuty. Create an</span>
+<span class="token comment"># account at https://www.pagerduty.com if you'd like to use this</span>
+<span class="token comment"># service. See borgmatic monitoring documentation for details.</span>
+<span class="token comment"># pagerduty:</span>
+    <span class="token comment"># PagerDuty integration key used to notify PagerDuty when a</span>
+    <span class="token comment"># backup errors. Supports the "{credential ...}" syntax.</span>
+    <span class="token comment"># integration_key: a177cad45bd374409f78906a810a3074</span>
+
+    <span class="token comment"># Send borgmatic logs to PagerDuty when a backup errors.</span>
+    <span class="token comment"># Defaults to true.</span>
+    <span class="token comment"># send_logs: false</span>
+
+<span class="token comment"># Configuration for a monitoring integration with Cronhub. Create an</span>
+<span class="token comment"># account at https://cronhub.io if you'd like to use this service. See</span>
+<span class="token comment"># borgmatic monitoring documentation for details.</span>
+<span class="token comment"># cronhub:</span>
+    <span class="token comment"># Cronhub ping URL to notify when a backup begins,</span>
+    <span class="token comment"># ends, or errors.</span>
+    <span class="token comment"># ping_url: https://cronhub.io/ping/1f5e3410-254c-5587</span>
+
+<span class="token comment"># Configuration for a monitoring integration with Grafana Loki. You</span>
+<span class="token comment"># can send the logs to a self-hosted instance or create an account at</span>
+<span class="token comment"># https://grafana.com/auth/sign-up/create-user. See borgmatic</span>
+<span class="token comment"># monitoring documentation for details.</span>
+<span class="token comment"># loki:</span>
+    <span class="token comment"># Grafana loki log URL to notify when a backup begins,</span>
+    <span class="token comment"># ends, or fails.</span>
+    <span class="token comment"># url: http://localhost:3100/loki/api/v1/push</span>
+
+    <span class="token comment"># Allows setting custom labels for the logging stream. At</span>
+    <span class="token comment"># least one label is required. "__hostname" gets replaced by</span>
+    <span class="token comment"># the machine hostname automatically. "__config" gets replaced</span>
+    <span class="token comment"># by the name of the configuration file. "__config_path" gets</span>
+    <span class="token comment"># replaced by the full path of the configuration file.</span>
+    <span class="token comment"># labels:</span>
+        <span class="token comment"># app: borgmatic</span>
+        <span class="token comment"># config: __config</span>
+        <span class="token comment"># hostname: __hostname</span>
+
+<span class="token comment"># Configuration for a monitoring integration with Sentry. You can use</span>
+<span class="token comment"># a self-hosted instance via https://develop.sentry.dev/self-hosted/</span>
+<span class="token comment"># or create a cloud-hosted account at https://sentry.io. See borgmatic</span>
+<span class="token comment"># monitoring documentation for details.</span>
+<span class="token comment"># sentry:</span>
+    <span class="token comment"># Sentry Data Source Name (DSN) URL, associated with a</span>
+    <span class="token comment"># particular Sentry project. Used to construct a cron URL,</span>
+    <span class="token comment"># notified when a backup begins, ends, or errors.</span>
+    <span class="token comment"># data_source_name_url: https://5f80ec@o294220.ingest.us.sentry.io/203069</span>
+
+    <span class="token comment"># Sentry monitor slug, associated with a particular Sentry</span>
+    <span class="token comment"># project monitor. Used along with the data source name URL to</span>
+    <span class="token comment"># construct a cron URL.</span>
+    <span class="token comment"># monitor_slug: mymonitor</span>
+
+    <span class="token comment"># List of one or more monitoring states to ping for: "start",</span>
+    <span class="token comment"># "finish", and/or "fail". Defaults to pinging for all states.</span>
+    <span class="token comment"># states:</span>
+        <span class="token comment"># - start</span>
+        <span class="token comment"># - finish</span>
+
+<span class="token comment"># Configuration for integration with the ZFS filesystem.</span>
+<span class="token comment"># zfs:</span>
+    <span class="token comment"># Command to use instead of "zfs".</span>
+    <span class="token comment"># zfs_command: /usr/local/bin/zfs</span>
+
+    <span class="token comment"># Command to use instead of "mount".</span>
+    <span class="token comment"># mount_command: /usr/local/bin/mount</span>
+
+    <span class="token comment"># Command to use instead of "umount".</span>
+    <span class="token comment"># umount_command: /usr/local/bin/umount</span>
+
+<span class="token comment"># Configuration for integration with the Btrfs filesystem.</span>
+<span class="token comment"># btrfs:</span>
+    <span class="token comment"># Command to use instead of "btrfs".</span>
+    <span class="token comment"># btrfs_command: /usr/local/bin/btrfs</span>
+
+    <span class="token comment"># Deprecated and unused. Was the command to use instead of</span>
+    <span class="token comment"># "findmnt".</span>
+    <span class="token comment"># findmnt_command: /usr/local/bin/findmnt</span>
+
+<span class="token comment"># Configuration for integration with Linux LVM (Logical Volume</span>
+<span class="token comment"># Manager).</span>
+<span class="token comment"># lvm:</span>
+    <span class="token comment"># Size to allocate for each snapshot taken, including the</span>
+    <span class="token comment"># units to use for that size. Defaults to "10%ORIGIN" (10%</span>
+    <span class="token comment"># of the size of logical volume being snapshotted). See the</span>
+    <span class="token comment"># lvcreate "--size" and "--extents" documentation for more</span>
+    <span class="token comment"># information:</span>
+    <span class="token comment"># https://www.man7.org/linux/man-pages/man8/lvcreate.8.html</span>
+    <span class="token comment"># snapshot_size: 5GB</span>
+
+    <span class="token comment"># Command to use instead of "lvcreate".</span>
+    <span class="token comment"># lvcreate_command: /usr/local/bin/lvcreate</span>
+
+    <span class="token comment"># Command to use instead of "lvremove".</span>
+    <span class="token comment"># lvremove_command: /usr/local/bin/lvremove</span>
+
+    <span class="token comment"># Command to use instead of "lvs".</span>
+    <span class="token comment"># lvs_command: /usr/local/bin/lvs</span>
+
+    <span class="token comment"># Command to use instead of "lsblk".</span>
+    <span class="token comment"># lsblk_command: /usr/local/bin/lsblk</span>
+
+    <span class="token comment"># Command to use instead of "mount".</span>
+    <span class="token comment"># mount_command: /usr/local/bin/mount</span>
+
+    <span class="token comment"># Command to use instead of "umount".</span>
+    <span class="token comment"># umount_command: /usr/local/bin/umount</span>
+
+<span class="token comment"># Configuration for integration with systemd credentials.</span>
+<span class="token comment"># systemd:</span>
+    <span class="token comment"># Command to use instead of "systemd-creds". Only used as a</span>
+    <span class="token comment"># fallback when borgmatic is run outside of a systemd service.</span>
+    <span class="token comment"># systemd_creds_command: /usr/local/bin/systemd-creds</span>
+
+    <span class="token comment"># Directory containing encrypted credentials for</span>
+    <span class="token comment"># "systemd-creds" to use instead of</span>
+    <span class="token comment"># "/etc/credstore.encrypted".</span>
+    <span class="token comment"># encrypted_credentials_directory: /path/to/credstore.encrypted</span>
+
+<span class="token comment"># Configuration for integration with Docker or Podman secrets.</span>
+<span class="token comment"># container:</span>
+    <span class="token comment"># Secrets directory to use instead of "/run/secrets".</span>
+    <span class="token comment"># secrets_directory: /path/to/secrets</span>
+
+<span class="token comment"># Configuration for integration with the KeePassXC password manager.</span>
+<span class="token comment"># keepassxc:</span>
+    <span class="token comment"># Command to use instead of "keepassxc-cli".</span>
+    <span class="token comment"># keepassxc_cli_command: /usr/local/bin/keepassxc-cli</span>
+
+    <span class="token comment"># Path to a key file for unlocking the KeePassXC database.</span>
+    <span class="token comment"># key_file: /path/to/keyfile</span>
+
+    <span class="token comment"># YubiKey slot and optional serial number used to access the</span>
+    <span class="token comment"># KeePassXC database. The format is "&lt;slot[:serial]>", where:</span>
+    <span class="token comment">#  * &lt;slot> is the YubiKey slot number (e.g., `1` or `2`).</span>
+    <span class="token comment">#  * &lt;serial> (optional) is the YubiKey's serial number (e.g.,</span>
+    <span class="token comment">#    `7370001`).</span>
+    <span class="token comment"># yubikey: 1:7370001</span>
+</code></pre>
+
+  <button class="code-copy "
+    data-clipboard-target="#code-9"
+    style="position: absolute; top: 7.5px; right: 6px; padding-top: 3px; cursor: pointer; outline: none; opacity: 0.8;" title="Copy">
+    <span style="display:inline-block;background:url(https://api.iconify.design/mdi/content-copy.svg) no-repeat center center / contain;width: 16px; height: 16px;" class=""></span>
+  </button>
+</div>
+
+
+    <h2>Improve this documentation</h2>
+
+<p>Have an idea on how to make this documentation even better? Use our <a
+href="https://torsion.org/borgmatic/#support-and-contributing">issue
+tracker</a> to send your feedback!</p>
+
+</main>
+
+		<script>function showTooltip(o,e){o.trigger.className.includes("tooltipped")||(o.trigger.children[0].className="tooltipped tooltipped-s",o.trigger.children[0].ariaLabel=e)}window.addEventListener("load",()=>{var o=new ClipboardJS(".code-copy");o.on("success",o=>showTooltip(o,"Copied!")),o.on("error",o=>showTooltip(o,"Failed..."))});</script>
+<script async src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+	</body>
+</html>

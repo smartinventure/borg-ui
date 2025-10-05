@@ -1,0 +1,41 @@
+{
+  "name": "borgmatic-ui",
+  "version": "1.0.0",
+  "description": "Borgmatic Web UI - Node.js Backend",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest",
+    "build": "echo 'No build step needed for Node.js'",
+    "reset-admin": "node src/utils/reset-admin.js",
+    "reset-admin-custom": "node src/utils/reset-admin.js",
+    "generate-ssl": "node src/utils/generate-ssl.js"
+  },
+  "dependencies": {
+    "async-mutex": "^0.4.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "execa": "^8.0.1",
+    "express": "^4.18.2",
+    "fs-extra": "^11.1.1",
+    "helmet": "^7.0.0",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.6.2",
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "borgmatic",
+    "backup",
+    "web-ui",
+    "nodejs"
+  ],
+  "author": "Smart In Venture",
+  "license": "MIT"
+}

@@ -108,6 +108,7 @@ async def create_repository(
             allowed_dirs = [
                 settings.borgmatic_backup_path,
                 "/backups",
+                "/opt/speedbits/backups",
                 "/app/backups",
                 "/tmp/backups"
             ]
@@ -122,6 +123,18 @@ async def create_repository(
                 raise HTTPException(
                     status_code=400, 
                     detail=f"Repository path must be within allowed directories: {', '.join(allowed_dirs)}"
+                )
+            
+            # Create directory if it doesn't exist
+            try:
+                os.makedirs(repo_path, exist_ok=True)
+                # Set proper permissions
+                os.chmod(repo_path, 0o755)
+                logger.info("Created repository directory", path=repo_path)
+            except OSError as e:
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Failed to create repository directory '{repo_path}': {str(e)}"
                 )
         elif repo_data.repository_type in ["ssh", "sftp"]:
             # For SSH repositories, validate required fields
@@ -147,9 +160,7 @@ async def create_repository(
         if existing_path:
             raise HTTPException(status_code=400, detail="Repository path already exists")
         
-        # Create repository directory if local
-        if repo_data.repository_type == "local":
-            os.makedirs(repo_path, exist_ok=True)
+        # Directory creation is now handled above in the validation section
         
         # Initialize Borg repository
         init_result = await initialize_borg_repository(
@@ -162,6 +173,10 @@ async def create_repository(
         if not init_result["success"]:
             raise HTTPException(status_code=500, detail=f"Failed to initialize repository: {init_result['error']}")
         
+        # Encrypt and store the passphrase securely
+        from app.core.security import get_password_hash
+        encrypted_passphrase = get_password_hash(repo_data.passphrase) if repo_data.passphrase else None
+        
         # Create repository record
         repository = Repository(
             name=repo_data.name,
@@ -173,7 +188,8 @@ async def create_repository(
             host=repo_data.host,
             port=repo_data.port,
             username=repo_data.username,
-            ssh_key_id=repo_data.ssh_key_id
+            ssh_key_id=repo_data.ssh_key_id,
+            passphrase_hash=encrypted_passphrase
         )
         
         db.add(repository)
@@ -506,6 +522,25 @@ async def initialize_borg_repository(path: str, encryption: str, passphrase: str
             "success": False,
             "error": str(e)
         }
+
+async def get_repository_passphrase(repository_id: int, db: Session) -> str:
+    """Get the decrypted passphrase for a repository"""
+    try:
+        repository = db.query(Repository).filter(Repository.id == repository_id).first()
+        if not repository or not repository.passphrase_hash:
+            return None
+        
+        # For now, we'll need to implement a way to decrypt the passphrase
+        # This is a simplified version - in production, you'd want proper encryption
+        from app.core.security import verify_password
+        
+        # This is a placeholder - we need to implement proper passphrase decryption
+        # For now, we'll return None and handle this in the backup logic
+        return None
+        
+    except Exception as e:
+        logger.error("Failed to get repository passphrase", error=str(e))
+        return None
 
 async def get_repository_stats(path: str) -> Dict[str, Any]:
     """Get repository statistics"""
